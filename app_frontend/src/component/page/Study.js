@@ -1,7 +1,9 @@
 import React from 'react';
 
+import BigText from '../util/BigText';
 
-class Footer extends React.Component {
+
+class Study extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -9,11 +11,11 @@ class Footer extends React.Component {
   render() {
     return (
       <div>
-        Footer
+        <BigText>Study</BigText>
       </div>
     )
   }
 }
 
 
-export default Footer;
+export default Study;

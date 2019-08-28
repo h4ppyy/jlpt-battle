@@ -1,0 +1,50 @@
+.header-container {
+  background-color: #20232a;
+  -webkit-display:flex;
+  display: flex;
+  width:100%;
+  height: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+.header-flex-logo {
+  font-weight: bold;
+}
+.mt15 {
+  margin-top: 15px;
+}
+.h-item {
+  flex: 0.4;
+}
+.h-menu {
+  flex: 0.2;
+  text-align: center;
+  font-size: 15px;
+}
+.h-sub {
+  flex: 0.6;
+  text-align: center;
+}
+.header-subinfo-version {
+  color: #aadaff;
+  font-size: 12px;
+}
+.header-subinfo-github {
+  color: #ffffff;
+  margin-left: 15px;
+}
+
+.header-flex-item > a:link { text-decoration: none; color: #ffffff; }
+.header-flex-item > a:visited { text-decoration: none; color: #ffffff; }
+.header-flex-item > a:active { text-decoration: none; color: #ffffff; }
+.header-flex-item > a:hover { text-decoration: none; color: #ffffff; }
+
+.header-subinfo-github > a:link { text-decoration: none; color: #ffffff; }
+.header-subinfo-github > a:visited { text-decoration: none; color: #ffffff; }
+.header-subinfo-github > a:active { text-decoration: none; color: #ffffff; }
+.header-subinfo-github > a:hover { text-decoration: none; color: #ffffff; }
+
+.header-flex-logo > a:link { text-decoration: none; color: #61dafb; }
+.header-flex-logo > a:visited { text-decoration: none; color: #61dafb; }
+.header-flex-logo > a:active { text-decoration: none; color: #61dafb; }
+.header-flex-logo > a:hover { text-decoration: none; color: #61dafb; }

@@ -1,13 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import Header from './components/common/Header';
-import Footer from './components/common/Footer';
+import Header from './component/common/Header';
+import Footer from './component/common/Footer';
 
-import Main from './components/page/Main'
-import Mypage from './components/page/Mypage'
-import Ranking from './components/page/Ranking'
-import Study from './components/page/Study';
+import Main from './component/page/Main'
+import Mypage from './component/page/Mypage'
+import Ranking from './component/page/Ranking'
+import Study from './component/page/Study';
+import Login from './component/page/Login';
 
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
         <Route path="/mypage/" component={Mypage} />
         <Route path="/ranking/" component={Ranking} />
         <Route path="/study/" component={Study} />
+        <Route path="/login/" component={Login} />
+        <Route path='/github' component={() => { window.location = 'https://github.com/h4ppyy/jlpt-battle'; return null;} }/>
         <Footer/>
       </Router>
     </div>

@@ -1,7 +1,9 @@
 import React from 'react';
 
+import BigText from '../util/BigText';
 
-class Study extends React.Component {
+
+class Main extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -9,11 +11,11 @@ class Study extends React.Component {
   render() {
     return (
       <div>
-        Study
+        <BigText>Main</BigText>
       </div>
     )
   }
 }
 
 
-export default Study;
+export default Main;
