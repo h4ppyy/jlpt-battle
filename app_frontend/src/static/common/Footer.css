@@ -1,8 +1,12 @@
 .footer-container {
-  background-color: #3c3c3c;
-  color: white;
-  text-align: center;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  font-size: 12px;
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #3c3c3c;
+   color: white;
+   text-align: center;
+   padding-top: 12px;
+   padding-bottom: 12px;
+   font-size: 12px;
 }
