@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
-import Websocket from 'react-websocket';
+import socketIOClient from "socket.io-client";
 
 import BigText from '../util/BigText';
 
@@ -10,8 +10,19 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      endpoint: "192.168.33.50:4000",
       kanji: '愛想'
     };
+  }
+
+  componentDidMount = () => {
+     const socket = socketIOClient(this.state.endpoint);
+     socket.on('change color', (col) => {
+       this.setState({kanji: col});
+     })
+     setInterval(function(){
+       socket.emit('change color', Math.random());
+      }, 1000);
   }
 
   handleData(data) {
@@ -19,10 +30,18 @@ class Main extends React.Component {
     this.setState({kanji: result.movement});
   }
 
+  send = () => {
+    const socket = socketIOClient(this.state.endpoint);
+    socket.emit('change color', this.state.kanji) // change 'red' to this.state.color
+  }
+
+  setColor = (kanji) => {
+    this.setState({ kanji })
+  }
+
   render() {
     return (
       <div>
-        <Websocket url='ws://localhost:8888/live/product/12345/' onMessage={this.handleData.bind(this)}/>
 
         <div className='main-container'>
           <div className='main-content'>
@@ -48,6 +67,10 @@ class Main extends React.Component {
             <div className='sendbox-container'>
               <Form.Control className='x' type="text" placeholder="" />
               <Button className='y' variant="warning">전송</Button>
+              <button id="blue" onClick={() => this.setColor('x')}>Blue</button>
+              <button id="blue" onClick={() => this.setColor('y')}>Blue</button>
+              <button id="blue" onClick={() => this.setColor('z')}>Blue</button>
+              <button onClick={() => this.send() }>Change Color</button>
             </div>
           </div>
           <div className='main-history'>
