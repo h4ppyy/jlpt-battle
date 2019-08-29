@@ -1,11 +1,15 @@
-const express = require('express')
-const http = require('http')
-const socketIO = require('socket.io')
-const app = express()
-const port = 4000
+const express = require('express');
+const http = require('http');
+const socketIO = require('socket.io');
+const mysql = require('mysql');
+const app = express();
+const port = process.env.PORT || 4000;
 
-const server = http.createServer(app)
-const io = socketIO(server)
+const server = http.createServer(app);
+const io = socketIO(server);
+
+var dbconfig   = require('./config/database.js');
+var connection = mysql.createConnection(dbconfig);
 
 sample = [
   '愛想', '合間', '仰ぐ',
@@ -13,6 +17,18 @@ sample = [
   '欺く', 'あざ笑う', '痣',
   '悪しからず', '褪せる'
 ]
+
+app.get('/', function(req, res) {
+
+  connection.query('select * from tbl_user', function(err, rows, fields) {
+    if (!err)
+      console.log('The solution is: ', rows);
+    else
+      console.log('Error while performing Query.', err);
+  });
+
+  res.json({"result":200})
+});
 
 io.on('connection', socket => {
   console.log('INFO -> connected');
