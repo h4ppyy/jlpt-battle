@@ -17,23 +17,24 @@ class Header extends React.Component {
             <Link to="/">JLPT BATTLE</Link>
           </div>
           <div className='header-flex-item h-menu mt15'>
-            <Link to="/ranking/">Ranking</Link>
+            <a href="https://ja.dict.naver.com/jlpt/level-5/parts-0/p1.nhn" target="_blank">학습하기</a>
           </div>
           <div className='header-flex-item h-menu mt15'>
-            <Link to="/study/">Study</Link>
+            <Link to="/ranking/">랭킹</Link>
           </div>
           <div className='header-flex-item h-menu mt15'>
-            <Link to="/mypage/">MyPage</Link>
+            <Link to="/mypage/">내 정보</Link>
           </div>
           <div className='header-flex-item h-menu mt15'>
-            <Link to="/login/">Login/Regist</Link>
+            <Link to="/login/">로그인</Link>
           </div>
           <div className='header-flex-item h-sub mt15'>
               <span className='header-subinfo-version'>
                 v0.0.0
               </span>
               <span className='header-subinfo-github'>
-                <Link to="/github/">GitHub</Link>
+                <i className="fab fa-github"></i>
+                <a href="https://github.com/h4ppyy/jlpt-battle" target="_blank">GitHub</a>
               </span>
           </div>
 

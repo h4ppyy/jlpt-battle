@@ -7,7 +7,6 @@ import Footer from './component/common/Footer';
 import Main from './component/page/Main'
 import Mypage from './component/page/Mypage'
 import Ranking from './component/page/Ranking'
-import Study from './component/page/Study';
 import Login from './component/page/Login';
 
 
@@ -19,7 +18,6 @@ function App() {
         <Route path="/" exact component={Main} />
         <Route path="/mypage/" component={Mypage} />
         <Route path="/ranking/" component={Ranking} />
-        <Route path="/study/" component={Study} />
         <Route path="/login/" component={Login} />
         <Route path='/github' component={() => { window.location = 'https://github.com/h4ppyy/jlpt-battle'; return null;} }/>
         <Footer/>
