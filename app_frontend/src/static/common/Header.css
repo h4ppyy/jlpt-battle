@@ -54,3 +54,7 @@
 .header-flex-logo > a:visited { text-decoration: none; color: #ff5b2c; }
 .header-flex-logo > a:active { text-decoration: none; color: #ff5b2c; }
 .header-flex-logo > a:hover { text-decoration: none; color: #ff5b2c; }
+
+.study {
+  margin-left: 5px;
+}

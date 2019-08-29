@@ -1,0 +1,98 @@
+.main-container{
+  width: 100%;
+  display: flex;
+}
+.main-content {
+  flex: 0.7 1;
+  background: #000000;
+  color: #ffffff;
+}
+.main-history {
+  height: -webkit-fill-available;
+  flex: 0.3 1;
+  background: #000000;
+  color: #ffffff;
+}
+.hanja-container {
+  height: 220px;
+  border-bottom: solid 3px #000000;
+}
+.hanja-box {
+  width: 500px;
+  text-align: center;
+  font-size: 70px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+}
+.sendbox-container {
+  display: flex;
+}
+.x {
+  margin-left: 15px;
+  margin-right: 5px;
+  color: #ffffff;
+}
+.y {
+  width: 120px;
+  margin-left: 5px;
+}
+.chat-title {
+  margin-top: 10px;
+  font-size: 20px;
+  margin-left: 15px;
+}
+.chat-content {
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  height: 380px;
+}
+.history-title {
+  text-align: center;
+  margin: 10px;
+  font-size: 20px;
+  color: #dadada;
+}
+.history-content {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.history-box {
+  border: solid 1px #ffffff;
+  padding: 8px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+.flex {
+  display: flex
+}
+.flex-default {
+  flex: 1;
+  text-align: center;
+}
+.history-time {
+  text-align: center;
+  color: #b3b3b3;
+  font-weight: bold;
+  font-size: 12px;
+}
+.check-title {
+  margin-left: 8px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.green {
+  color: #4be04b;
+}
+.chat-title-font {
+  margin-left: 8px;
+  font-size: 15px;
+  font-weight: bold;
+}
+.dotdot {
+  margin-left: 5px;
+  margin-top: 15px;
+  color: #ff8900;
+}
