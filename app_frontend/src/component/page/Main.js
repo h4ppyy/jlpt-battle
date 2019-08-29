@@ -20,9 +20,6 @@ class Main extends React.Component {
      socket.on('change color', (col) => {
        this.setState({kanji: col});
      })
-     setInterval(function(){
-       socket.emit('change color', Math.random());
-      }, 1000);
   }
 
   handleData(data) {
