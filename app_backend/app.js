@@ -40,10 +40,42 @@ app.get('/', function(req, res) {
 });
 
 
-// 채팅 내역 최근 10개 가져오기
+// 채팅 내역 최근 30개 가져오기
 app.get('/api/getChatLog', function(req, res) {
 
   var sql = 'select y.username, x.content, x.regist_date from tbl_chat x join tbl_user y on x.user_id = y.id order by regist_date desc limit 30;';
+  connection.query(sql, function(err, rows, fields) {
+    if (err == null) {
+      console.log('DEBUG -> rows : ', rows);
+      res.json({"result": rows})
+    }
+    else {
+      console.log('ERROR -> ', err);
+    }
+  });
+});
+
+
+// 정답 이력 최근 10개 가져오기
+app.get('/api/getHistoryLog', function(req, res) {
+
+  var sql = 'select y.username, x.content, x.regist_date from tbl_chat x join tbl_user y on x.user_id = y.id order by regist_date desc limit 30;';
+  connection.query(sql, function(err, rows, fields) {
+    if (err == null) {
+      console.log('DEBUG -> rows : ', rows);
+      res.json({"result": rows})
+    }
+    else {
+      console.log('ERROR -> ', err);
+    }
+  });
+});
+
+
+// 현재 진행중인 한자 가져오기
+app.get('/api/getCurrentKanji', function(req, res) {
+
+  var sql = "select ifnull(y.username, 'PC') as username, ifnull(x.modify_date, '정답 미제출로 인한 pass') as modify_date, z.kanji, z.hiragana, z.hangul from tbl_japan_problem x left join tbl_user y on x.user_id = y.id join tbl_japan_store z on x.store_id = z.id where x.regist_date > DATE_FORMAT(now(),'%Y-%m-%d') order by x.regist_date desc limit 10;";
   connection.query(sql, function(err, rows, fields) {
     if (err == null) {
       console.log('DEBUG -> rows : ', rows);
