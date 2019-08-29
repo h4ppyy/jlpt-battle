@@ -15,11 +15,7 @@ class Main extends React.Component {
       endpoint: "127.0.0.1:4000",
       kanji: '愛想',
       inputChat: '',
-      chat: [
-        {"id":"1", "username":"hackx", "content":"안녕하세요 이거 어떻게 하는건가요...?"},
-        {"id":"2", "username":"hackx", "content":"정답 제출 누르면 되는건가요?"},
-        {"id":"3", "username":"93immm", "content":"남들 보다 빨리 제출하면 포인트 획득하는거에요!"},
-      ],
+      chat: [],
       history: [
         {"id":"1", "username":"hackx", "content":"こいする", "time":"2019-01-01 00:00:00"},
         {"id":"2", "username":"93immm", "content":"げんてん", "time":"2019-01-01 00:00:00"},
@@ -41,26 +37,38 @@ class Main extends React.Component {
   }
 
   componentDidMount = () => {
-    var url = 'http://127.0.0.1:4000/api/getChatLog'
-    axios.get(url).then(response => {
-      console.log(response.data);
-      this.setState({chat: response.data.result.reverse()});
-    });
+      var url = 'http://127.0.0.1:4000/api/getChatLog'
+      axios.get(url).then(response => {
+        console.log(response.data);
+        this.setState({chat: response.data.result.reverse()});
+      });
 
-     const socket = socketIOClient(this.state.endpoint);
+      var url = 'http://127.0.0.1:4000/api/getHistoryLog'
+      axios.get(url).then(response => {
+        console.log(response.data);
+        response.data.result.shift();
+        this.setState({history: response.data.result});
+      });
 
-     socket.on('chat', (chat) => {
-       //console.log('chat -> ', chat);
-       var tmp = this.state.chat;
-       tmp.push({"id":"0", "username":"운영자", "content":chat})
-       this.setState(tmp);
-       this.scrollToBottom();
-     })
+      var url = 'http://127.0.0.1:4000/api/getCurrentKanji'
+      axios.get(url).then(response => {
+        console.log(response.data);
+        this.setState({kanji: response.data.result[0]['kanji'] });
+      });
 
-     socket.on('kanji', (kanji) => {
-       //console.log('kanji -> ', kanji);
-       this.setState({kanji: kanji});
-     })
+      const socket = socketIOClient(this.state.endpoint);
+      socket.on('chat', (chat) => {
+          //console.log('chat -> ', chat);
+          var tmp = this.state.chat;
+          tmp.push({"id":"0", "username":"운영자", "content":chat})
+          this.setState(tmp);
+          this.scrollToBottom();
+      })
+
+      socket.on('kanji', (kanji) => {
+          //console.log('kanji -> ', kanji);
+          this.setState({kanji: kanji});
+      })
   }
 
   onChange = (event) =>{
@@ -131,11 +139,14 @@ class Main extends React.Component {
                       {item.username}
                     </div>
                     <div className='flex-default'>
-                      {item.content}
+                      {item.kanji}
+                    </div>
+                    <div className='flex-default'>
+                      {item.hiragana}
                     </div>
                   </div>
                   <div className='history-time'>
-                    {item.time}
+                    {item.modify_date}
                   </div>
                 </div>
               )}
