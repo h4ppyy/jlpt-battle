@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
+import Websocket from 'react-websocket';
 
 import BigText from '../util/BigText';
 
@@ -8,16 +9,26 @@ import '../../static/page/Main.css';
 class Main extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      kanji: '愛想'
+    };
+  }
+
+  handleData(data) {
+    let result = JSON.parse(data);
+    this.setState({kanji: result.movement});
   }
 
   render() {
     return (
       <div>
+        <Websocket url='ws://localhost:8888/live/product/12345/' onMessage={this.handleData.bind(this)}/>
+
         <div className='main-container'>
           <div className='main-content'>
             <div className='hanja-container'>
               <div className='hanja-box'>
-              愛想
+                {this.state.kanji}
               </div>
             </div>
             <div className='sendbox-container'>
