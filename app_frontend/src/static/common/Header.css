@@ -1,5 +1,5 @@
 .header-container {
-  background-color: #20232a;
+  background-color: #000000;
   -webkit-display:flex;
   display: flex;
   width:100%;
@@ -50,10 +50,10 @@
 .header-subinfo-github > a:active { text-decoration: none; color: #ffffff; }
 .header-subinfo-github > a:hover { text-decoration: none; color: #ffffff; }
 
-.header-flex-logo > a:link { text-decoration: none; color: #ff5b2c; }
-.header-flex-logo > a:visited { text-decoration: none; color: #ff5b2c; }
-.header-flex-logo > a:active { text-decoration: none; color: #ff5b2c; }
-.header-flex-logo > a:hover { text-decoration: none; color: #ff5b2c; }
+.header-flex-logo > a:link { text-decoration: none; color: red; }
+.header-flex-logo > a:visited { text-decoration: none; color: red; }
+.header-flex-logo > a:active { text-decoration: none; color: red; }
+.header-flex-logo > a:hover { text-decoration: none; color: red; }
 
 .study {
   margin-left: 5px;

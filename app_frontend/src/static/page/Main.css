@@ -48,6 +48,8 @@
   padding-top: 15px;
   padding-bottom: 15px;
   height: 380px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .history-title {
   text-align: center;
@@ -95,4 +97,10 @@
   margin-left: 5px;
   margin-top: 15px;
   color: #ff8900;
+}
+.support-text{
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 15px;
+  color: #e5d7ff;
 }
