@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { Button, Form } from 'react-bootstrap';
 import socketIOClient from "socket.io-client";
 import ScrollableFeed from 'react-scrollable-feed'
@@ -40,12 +41,18 @@ class Main extends React.Component {
   }
 
   componentDidMount = () => {
+    var url = 'http://127.0.0.1:4000/api/getChatLog'
+    axios.get(url).then(response => {
+      console.log(response.data);
+      this.setState({chat: response.data.result.reverse()});
+    });
+
      const socket = socketIOClient(this.state.endpoint);
 
      socket.on('chat', (chat) => {
        //console.log('chat -> ', chat);
        var tmp = this.state.chat;
-       tmp.push({"id":"4", "username":"anonymous", "content":chat})
+       tmp.push({"id":"0", "username":"운영자", "content":chat})
        this.setState(tmp);
        this.scrollToBottom();
      })

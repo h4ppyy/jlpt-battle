@@ -3,8 +3,20 @@ create database test DEFAULT CHARACTER SET utf8 collate utf8_general_ci;
 
 use test;
 
+-- 샘플 데이터
 insert into tbl_user(username, password, jlpt_level)
-value('운영자', 'a1350666', 3);
+value('admin', 'password', 3);
+
+insert into tbl_japan_store(kanji, hiragana, hangul, type, level)
+values('敢えて', 'あえて', '감히', '부사', 1);
+insert into tbl_japan_store(kanji, hiragana, hangul, type, level)
+values('愛想', 'あいそう', '애상', '명사', 1);
+insert into tbl_japan_store(kanji, hiragana, hangul, type, level)
+values('合間', 'あいま', '틈', '명사', 1);
+insert into tbl_japan_store(kanji, hiragana, hangul, type, level)
+values('赤らむ', 'あからむ', '붉어지다', '부사', 1);
+insert into tbl_japan_store(kanji, hiragana, hangul, type, level)
+values('悪', 'あく', '악', '명사동사', 1);
 
 -- 회원 테이블
 create table tbl_user(
@@ -21,7 +33,6 @@ create table tbl_user(
 	delete_date datetime default null
 ) default character set utf8 collate utf8_general_ci;
 
--- 한자 테이블
 create table tbl_japan_store(
 	id int primary key auto_increment,
     kanji varchar(255) comment '한자',
@@ -29,7 +40,7 @@ create table tbl_japan_store(
     hangul varchar(255) comment '한글',
     type varchar(255) comment '명사, 동사, 부사, 형용사',
     level int not null comment 'jlpt 1, 2, 3, 4, 5',
-    exam_yn varchar(255) comment '출제 Y, 미출제 N',
+    exam_yn varchar(255) default 'N' comment '출제 Y, 미출제 N',
     delete_yn varchar(1) default 'N',
 	regist_date datetime default now(),
 	modify_date datetime default null,

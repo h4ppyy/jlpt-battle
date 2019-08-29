@@ -8,44 +8,82 @@ const port = process.env.PORT || 4000;
 const server = http.createServer(app);
 const io = socketIO(server);
 
-var dbconfig   = require('./config/database.js');
-var connection = mysql.createConnection(dbconfig);
+const ioc = require("socket.io-client");
+const ioClient = ioc.connect("http://localhost:4000");
 
-sample = [
-  '愛想', '合間', '仰ぐ',
-  '敢えて', '間柄', '諦め',
-  '欺く', 'あざ笑う', '痣',
-  '悪しからず', '褪せる'
-]
+const dbconfig   = require('./config/database.js');
+const connection = mysql.createConnection(dbconfig);
 
+
+// cors all allow
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
+
+// 테스트 로직
 app.get('/', function(req, res) {
 
   connection.query('select * from tbl_user', function(err, rows, fields) {
-    if (!err)
+    if (err == null) {
       console.log('The solution is: ', rows);
-    else
+      ioClient.emit("chat", 'hello world');
+    }
+    else {
       console.log('Error while performing Query.', err);
+    }
   });
 
   res.json({"result":200})
 });
 
+
+// 채팅 내역 최근 10개 가져오기
+app.get('/api/getChatLog', function(req, res) {
+
+  var sql = 'select y.username, x.content, x.regist_date from tbl_chat x join tbl_user y on x.user_id = y.id order by regist_date desc limit 30;';
+  connection.query(sql, function(err, rows, fields) {
+    if (err == null) {
+      console.log('DEBUG -> rows : ', rows);
+      res.json({"result": rows})
+    }
+    else {
+      console.log('ERROR -> ', err);
+    }
+  });
+});
+
+
+// 웹소켓 로직
 io.on('connection', socket => {
   console.log('INFO -> connected');
 
   socket.on('chat', (content) => {
-    console.log('chat -> ', content);
-    io.sockets.emit('chat', content);
+    user_id = '1';
+    console.log('DEBUG -> content : ', content);
+    console.log('DEBUG -> user_id : ', user_id);
+
+    sql = "insert into tbl_chat (content, user_id) values('"+content+"', '"+user_id+"');"
+    connection.query(sql, function(err, rows, fields) {
+      if (err == null){
+        io.sockets.emit('chat', content);
+      } else {
+        console.log('Error : ', err);
+      }
+    });
   })
 
   socket.on('kanji', (kanji) => {
-    console.log('kanji -> ', sample[kanji]);
-    io.sockets.emit('kanji', sample[kanji]);
+    console.log('kanji -> ', kanji);
+    io.sockets.emit('kanji', kanji);
   })
 
   socket.on('disconnect', () => {
     console.log('INFO -> disconnected');
   })
 })
+
 
 server.listen(port, () => console.log(`Listening on port ${port}`))
