@@ -5,7 +5,7 @@ const ioClient = io.connect("http://localhost:4000");
 const dbconfig   = require('./config/database.js');
 const connection = mysql.createConnection(dbconfig);
 const MIL_SEC = 1000;
-const RESATRT_SEC = 30;
+const RESATRT_SEC = 3;
 
 
 // 1 <= target <= max
@@ -21,6 +21,40 @@ function sleep(ms) {
 
 let main = () => new Promise((resolve) => {
     async.waterfall([
+      function(callback) {
+          var sql = "select x.id, y.hiragana from tbl_japan_problem x join tbl_japan_store y on x.store_id = y.id where x.delete_yn = 'N' AND DATE_ADD(x.regist_date, interval "+String(100-1)+" second) < now() and user_id is null order by x.regist_date desc limit 1";
+          console.log(sql);
+          connection.query(sql, function(err, rows, fields) {
+            if (err == null) {
+              console.log('DEBUG -> rows.length : ', rows.length);
+              if(rows.length == 0){
+                  resolve('end');
+              } else {
+                var id = rows[0]['id'];
+                var hiragana = rows[0]['hiragana'];
+                callback(null, id, hiragana);
+              }
+            }
+            else {
+              console.log('ERROR -> ', err);
+            }
+          });
+      },
+      function(id, hiragana, callback) {
+          console.log('DEBUG -> id : ', id);
+          console.log('DEBUG -> hiragana : ', hiragana);
+
+          var sql = "update tbl_japan_problem set user_id = '0', modify_date = now() where id='"+id+"'"
+          console.log(sql);
+          connection.query(sql, function(err, rows, fields) {
+            if (err == null) {
+              callback(null);
+            }
+            else {
+              console.log('ERROR -> ', err);
+            }
+          });
+      },
       function(callback) {
         sql = 'select count(*) as cnt from tbl_japan_store'
         connection.query(sql, function(err, rows, fields) {
@@ -85,6 +119,7 @@ let main = () => new Promise((resolve) => {
       function(kanji, callback) {
           console.log('kanji : ', kanji);
           ioClient.emit("kanji", kanji);
+          ioClient.emit("history");
           callback(null, 'done');
       }
   ], function (err, result) {

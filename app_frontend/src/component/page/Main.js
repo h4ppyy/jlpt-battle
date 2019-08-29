@@ -13,52 +13,59 @@ class Main extends React.Component {
     super(props);
     this.state = {
       endpoint: "127.0.0.1:4000",
-      kanji: '愛想',
+      kanji: '',
       inputChat: '',
+      inputHiragana: '',
       chat: [],
-      history: [
-        {"id":"1", "username":"hackx", "content":"こいする", "time":"2019-01-01 00:00:00"},
-        {"id":"2", "username":"93immm", "content":"げんてん", "time":"2019-01-01 00:00:00"},
-        {"id":"3", "username":"ququ3434", "content":"けんりょく", "time":"2019-01-01 00:00:00"},
-        {"id":"4", "username":"back02", "content":"カテゴリー", "time":"2019-01-01 00:00:00"},
-        {"id":"5", "username":"Damnald", "content":"こうげん", "time":"2019-01-01 00:00:00"},
-        {"id":"6", "username":"Eallaun", "content":"かなわない", "time":"2019-01-01 00:00:00"},
-        {"id":"7", "username":"Iseticus", "content":"おさえる", "time":"2019-01-01 00:00:00"},
-        {"id":"8", "username":"Jennia", "content":"いなびかり", "time":"2019-01-01 00:00:00"},
-        {"id":"9", "username":"Wilbehrt", "content":"インフォメーション", "time":"2019-01-01 00:00:00"},
-        {"id":"10", "username":"Xippille", "content":"こうしゅう", "time":"2019-01-01 00:00:00"},
-      ]
+      history: [],
+      progress: 100,
     };
   }
 
   scrollToBottom() {
     const {thing} = this.refs;
-    thing.scrollTop = thing.scrollHeight - thing.clientHeight;
+    try {
+      thing.scrollTop = thing.scrollHeight - thing.clientHeight;
+    } catch (e){
+      console.log('e -> ', e);
+    }
   }
 
   componentDidMount = () => {
+      var self = this;
+
+      var countup = function(){
+        console.log('progress -> ', self.state.progress);
+        self.setState({progress: self.state.progress - 1});
+      }
+      setInterval(countup, 1000);
+
+      this.setState({progress: 0});
+      /*
+      var url = 'http://127.0.0.1:4000/api/getProgress'
+      axios.post(url).then(response => {
+        console.log('progress -> ', response.data.result);
+      });
+      */
+
       var url = 'http://127.0.0.1:4000/api/getChatLog'
-      axios.get(url).then(response => {
-        console.log(response.data);
+      axios.post(url).then(response => {
         this.setState({chat: response.data.result.reverse()});
       });
 
       var url = 'http://127.0.0.1:4000/api/getHistoryLog'
-      axios.get(url).then(response => {
-        console.log(response.data);
+      axios.post(url).then(response => {
         response.data.result.shift();
         this.setState({history: response.data.result});
       });
 
       var url = 'http://127.0.0.1:4000/api/getCurrentKanji'
-      axios.get(url).then(response => {
-        console.log(response.data);
+      axios.post(url).then(response => {
         this.setState({kanji: response.data.result[0]['kanji'] });
       });
 
       const socket = socketIOClient(this.state.endpoint);
       socket.on('chat', (chat) => {
-          //console.log('chat -> ', chat);
           var tmp = this.state.chat;
           tmp.push({"id":"0", "username":"운영자", "content":chat})
           this.setState(tmp);
@@ -66,35 +73,58 @@ class Main extends React.Component {
       })
 
       socket.on('kanji', (kanji) => {
-          //console.log('kanji -> ', kanji);
           this.setState({kanji: kanji});
+      })
+
+      socket.on('history', (history) => {
+          console.log('INFO -> history : ', history);
+          history.shift();
+          this.setState({history: history});
+          this.setState({progress: 100});
       })
   }
 
-  onChange = (event) =>{
-    //console.log('event.target.value -> ', event.target.value);
+  onChangeChat = (event) =>{
     this.setState({inputChat: event.target.value});
   }
 
+  onChangeHiragana = (event) =>{
+    this.setState({inputHiragana: event.target.value});
+  }
+
   sendChat = () => {
-    //console.log('sendChat');
     const socket = socketIOClient(this.state.endpoint);
     var content = this.state.inputChat;
     socket.emit('chat', content);
     this.setState({inputChat: ''});
   }
 
-  handleKeyDown = (e) => {
+  sendHiragana = () => {
+    var content = this.state.inputHiragana;
+    var url = 'http://127.0.0.1:4000/api/sendHiragana'
+    this.setState({inputHiragana: ''});
+    axios.post(url, {content: content}).then(response => {
+      console.log(response.data);
+    });
+  }
+
+  handleKeyDownChat = (e) => {
     if (e.key === 'Enter') {
-      //console.log('enter event');
       this.sendChat();
     }
   }
 
+  handleKeyDownHiragana = (e) => {
+    if (e.key === 'Enter') {
+      this.sendHiragana();
+    }
+  }
   render() {
+    const progress = {
+      width: String(this.state.progress) + '%'
+    };
     return (
       <div>
-
         <div className='main-container'>
           <div className='main-content'>
             <div className='hanja-container'>
@@ -102,9 +132,14 @@ class Main extends React.Component {
                 {this.state.kanji}
               </div>
             </div>
+            <div className="progress-container">
+              <div className="progress">
+                <div style={progress} className="progress-bar progress-bar-striped bg-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
             <div className='sendbox-container'>
-              <Form.Control className='x' type="text" placeholder="" />
-              <Button className='y' variant="success">정답 제출</Button>
+              <Form.Control tabIndex="0" value={this.state.inputHiragana} onKeyDown={this.handleKeyDownHiragana} onChange={this.onChangeHiragana.bind(this)} className='x' type="text" placeholder="" />
+              <Button onClick={() => this.sendHiragana() } className='y' variant="success">정답 제출</Button>
             </div>
             <div className='chat-title'>
               <i class="far fa-comment-dots dotdot"></i>
@@ -116,7 +151,7 @@ class Main extends React.Component {
               )}
             </div>
             <div className='sendbox-container'>
-              <Form.Control tabIndex="0" value={this.state.inputChat} onKeyDown={this.handleKeyDown} onChange={this.onChange.bind(this)} className='x' type="text" placeholder="" />
+              <Form.Control tabIndex="0" value={this.state.inputChat} onKeyDown={this.handleKeyDownChat} onChange={this.onChangeChat.bind(this)} className='x' type="text" placeholder="" />
               <Button onClick={() => this.sendChat() } className='y' variant="warning">전송</Button>
             </div>
           </div>

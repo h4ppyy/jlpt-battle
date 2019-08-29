@@ -1,3 +1,4 @@
+
 # JLPT Battle
 
 ## お知らせ
@@ -7,9 +8,10 @@
 
 ### Development Environment
 ```
-ubuntu 16.04
+ubuntu 16.04 / windows 10 / macOS
 node.js 10.16.3
 yarn 1.17.3
+mysql 5.7.27
 ```
 
 ### Configuring a project
@@ -20,12 +22,31 @@ $ cd jlpt-battle
 ```
 
 ### Getting Started with Project
-frontend  
+frontend
 ```bash
 $ cd app_frontend
-$ PORT=3000 yarn start
+$ yarn install
+$ yarn start
 ```
 backend  
 ```bash
-There's no writing yet
+$ cd app_backend
+$ cp config/database.template config/database.js
+
+Create your database by referring to 'table.sql'
+above the directory 'database'
+And change the database connection information
+
+$ yarn install
+$ yarn start
 ```
+daemon
+```
+We don't do it anymore
+because I've already done 'yarn install'
+
+$ cd app_backend
+$ node daemon.js
+```
+Let's go !
+[http://127.0.0.1:3000/](http://127.0.0.1:3000/)
