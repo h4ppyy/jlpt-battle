@@ -46,7 +46,7 @@ class Main extends React.Component {
         this.setState({progress: response.data.result});
       });
 
-      var url = 'http://127.0.0.1:4000/api/getChatLog'
+      var url = 'http://127.0.0.1:4000/api/getChaheader-containertLog'
       axios.post(url).then(response => {
         this.setState({chat: response.data.result.reverse()});
       });
@@ -132,7 +132,7 @@ class Main extends React.Component {
             </div>
             <div className="progress-container">
               <div className="progress">
-                <div style={progress} className="progress-bar progress-bar-striped bg-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                <div style={progress} className="progress-bar progress-bar-striped bg-danger progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
             <div className='sendbox-container'>

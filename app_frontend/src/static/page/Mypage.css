@@ -1,3 +1,24 @@
-.mypage-box{
-  border: solid 3px red;
+.mypage-box {
+  color: #ffffff;
+  margin-top: 70px;
+}
+.mypage-con{
+  text-align: center;
+}
+.mypage-img {
+  width: 200px;
+}
+.mypage-table {
+  margin-left: auto;
+  margin-right: auto;
+  width: 600px;
+}
+.progress-left{
+  width: 60%;
+  float: left;
+}
+.progress-txt {
+  float: left;
+  margin-left: 15px;
+  margin-top: -4px;
 }

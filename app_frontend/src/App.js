@@ -19,7 +19,6 @@ function App() {
         <Route path="/mypage/" component={Mypage} />
         <Route path="/ranking/" component={Ranking} />
         <Route path="/login/" component={Login} />
-        <Route path='/github' component={() => { window.location = 'https://github.com/h4ppyy/jlpt-battle'; return null;} }/>
         <Footer/>
       </Router>
     </div>

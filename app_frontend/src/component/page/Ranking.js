@@ -10,16 +10,16 @@ class Ranking extends React.Component {
     this.state = {
       endpoint: "127.0.0.1:4000",
       rankList: [
-        {"rank":"1", "username":"h4ppyy", "jlpt":"N1", "point":"460000000", "registDate":"2019-01-01 00:00:00"},
-        {"rank":"2", "username":"david", "jlpt":"N1", "point":"32000", "registDate":"2019-01-01 00:00:00"},
-        {"rank":"3", "username":"hackx", "jlpt":"N2", "point":"24000", "registDate":"2019-01-01 00:00:00"},
-        {"rank":"4", "username":"gmail123", "jlpt":"N2", "point":"12000", "registDate":"2019-01-01 00:00:00"},
-        {"rank":"5", "username":"naver34", "jlpt":"N2", "point":"6000", "registDate":"2019-01-01 00:00:00"},
-        {"rank":"6", "username":"lafaf", "jlpt":"N3", "point":"3000", "registDate":"2019-01-01 00:00:00"},
-        {"rank":"7", "username":"coolguy", "jlpt":"N5", "point":"2000", "registDate":"2019-01-01 00:00:00"},
-        {"rank":"8", "username":"naver34", "jlpt":"N2", "point":"6000", "registDate":"2019-01-01 00:00:00"},
-        {"rank":"9", "username":"lafaf", "jlpt":"N3", "point":"3000", "registDate":"2019-01-01 00:00:00"},
-        {"rank":"10", "username":"coolguy", "jlpt":"N5", "point":"2000", "registDate":"2019-01-01 00:00:00"},
+        {"rank":"1", "username":"h4ppyy", "jlpt":"N1", "point":"460,000,000", "registDate":"2019-01-01 00:00:00"},
+        {"rank":"2", "username":"david", "jlpt":"N1", "point":"32,000", "registDate":"2019-01-01 00:00:00"},
+        {"rank":"3", "username":"hackx", "jlpt":"N2", "point":"24,000", "registDate":"2019-01-01 00:00:00"},
+        {"rank":"4", "username":"gmail123", "jlpt":"N2", "point":"12,000", "registDate":"2019-01-01 00:00:00"},
+        {"rank":"5", "username":"naver34", "jlpt":"N2", "point":"6,000", "registDate":"2019-01-01 00:00:00"},
+        {"rank":"6", "username":"lafaf", "jlpt":"N3", "point":"3,000", "registDate":"2019-01-01 00:00:00"},
+        {"rank":"7", "username":"coolguy", "jlpt":"N5", "point":"2,000", "registDate":"2019-01-01 00:00:00"},
+        {"rank":"8", "username":"naver34", "jlpt":"N2", "point":"6,000", "registDate":"2019-01-01 00:00:00"},
+        {"rank":"9", "username":"lafaf", "jlpt":"N3", "point":"3,000", "registDate":"2019-01-01 00:00:00"},
+        {"rank":"10", "username":"coolguy", "jlpt":"N5", "point":"2,000", "registDate":"2019-01-01 00:00:00"},
 
       ],
     };
