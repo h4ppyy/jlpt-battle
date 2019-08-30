@@ -40,13 +40,11 @@ class Main extends React.Component {
       }
       setInterval(countup, 1000);
 
-      this.setState({progress: 0});
-      /*
       var url = 'http://127.0.0.1:4000/api/getProgress'
       axios.post(url).then(response => {
         console.log('progress -> ', response.data.result);
+        this.setState({progress: response.data.result});
       });
-      */
 
       var url = 'http://127.0.0.1:4000/api/getChatLog'
       axios.post(url).then(response => {

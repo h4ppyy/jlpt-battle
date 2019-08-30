@@ -28,6 +28,24 @@ function getRandom(max) {
 }
 
 
+function getDateTime() {
+    var date = new Date();
+    console.log('date -> ', date);
+    var hour = date.getHours();
+    hour = (hour < 10 ? "0" : "") + hour;
+    var min  = date.getMinutes();
+    min = (min < 10 ? "0" : "") + min;
+    var sec  = date.getSeconds();
+    sec = (sec < 10 ? "0" : "") + sec;
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    month = (month < 10 ? "0" : "") + month;
+    var day  = date.getDate();
+    day = (day < 10 ? "0" : "") + day;
+    return year + "-" + month + "-" + day + "-" + hour + ":" + min + ":" + sec;
+}
+
+
 // 테스트 로직
 app.get('/', function(req, res) {
 
@@ -56,7 +74,7 @@ app.post('/api/sendHiragana', cors(), function(req, res) {
   // あいそう
   async.waterfall([
       function(callback) {
-          var sql = "select x.id, y.hiragana from tbl_japan_problem x join tbl_japan_store y on x.store_id = y.id where x.delete_yn = 'N' and x.regist_date > DATE_FORMAT(now(),'%Y-%m-%d') and user_id is null order by x.regist_date desc limit 1";
+          var sql = "select x.id, y.hiragana from tbl_japan_problem x join tbl_japan_store y on x.store_id = y.id where x.delete_yn = 'N' and x.regist_date > DATE_FORMAT(date_sub(now(), interval 1 day),'%Y-%m-%d') and user_id is null order by x.regist_date desc limit 1";
           console.log(sql);
           connection.query(sql, function(err, rows, fields) {
             if (err == null) {
@@ -78,111 +96,88 @@ app.post('/api/sendHiragana', cors(), function(req, res) {
             console.log(sql);
             connection.query(sql, function(err, rows, fields) {
               if (err == null) {
-                callback(null, 'correct');
+                callback(null);
               }
               else {
                 console.log('ERROR -> ', err);
               }
             });
           } else {
-            callback(null, 'incorrect');
+              return false
           }
       },
 
-      function(status, callback) {
-        console.log('DEBUG -> status : ', status);
-        if(status == 'correct') {
+      function(callback) {
           sql = 'select count(*) as cnt from tbl_japan_store'
           console.log(sql);
           connection.query(sql, function(err, rows, fields) {
             if (!err){
               len_rows = rows[0]['cnt'];
-              callback(null, status, len_rows);
+              callback(null, len_rows);
             } else {
               console.log('Error : ', err);
             }
           });
-        } else {
-          callback(null, 'incorrect');
-        }
-
       },
-      function(status, len_rows, callback) {
-          console.log('DEBUG -> status : ', status);
-          if(status == 'correct') {
-              console.log('rows : ', len_rows);
-              var searchId = getRandom(len_rows);
-              var sql = 'select * from tbl_japan_store where id = '+searchId+''
-              console.log(sql);
-              console.log('searchId : ', searchId);
-              connection.query(sql, function(err, rows, fields) {
-                if (!err){
-                  rows = rows[0];
-                  callback(null, status, rows);
-                } else {
-                  console.log('Error : ', err);
-                }
-              });
-          } else {
-              callback(null, 'incorrect');
-          }
+      function(len_rows, callback) {
+          console.log('rows : ', len_rows);
+          var searchId = getRandom(len_rows);
+          var sql = 'select * from tbl_japan_store where id = '+searchId+''
+          console.log(sql);
+          console.log('searchId : ', searchId);
+          connection.query(sql, function(err, rows, fields) {
+            if (!err){
+              rows = rows[0];
+              callback(null, rows);
+            } else {
+              console.log('Error : ', err);
+            }
+          });
       },
-      function(status, rows, callback) {
-          console.log('DEBUG -> status : ', status);
-          if(status == 'correct') {
-              var id = rows['id'];
-              var kanji = rows['kanji'];
-              var hiragana = rows['hiragana'];
-              var hangul = rows['hangul'];
-              var type = rows['type'];
-              var level = rows['level'];
-              var exam_yn = rows['exam_yn'];
-              var delete_yn = rows['delete_yn'];
-              var regist_date = rows['regist_date'];
-              var modify_date = rows['modify_date'];
-              var delete_date = rows['delete_date'];
+      function(rows, callback) {
+          var id = rows['id'];
+          var kanji = rows['kanji'];
+          var hiragana = rows['hiragana'];
+          var hangul = rows['hangul'];
+          var type = rows['type'];
+          var level = rows['level'];
+          var exam_yn = rows['exam_yn'];
+          var delete_yn = rows['delete_yn'];
+          var regist_date = rows['regist_date'];
+          var modify_date = rows['modify_date'];
+          var delete_date = rows['delete_date'];
 
-              console.log('id -> ', id);
-              console.log('kanji -> ', kanji);
-              console.log('hiragana -> ', hiragana);
-              console.log('hangul -> ', hangul);
-              console.log('type -> ', type);
-              console.log('level -> ', level);
-              console.log('exam_yn -> ', exam_yn);
-              console.log('delete_yn -> ', delete_yn);
-              console.log('regist_date -> ', regist_date);
-              console.log('modify_date -> ', modify_date);
-              console.log('delete_date -> ', delete_date);
+          console.log('id -> ', id);
+          console.log('kanji -> ', kanji);
+          console.log('hiragana -> ', hiragana);
+          console.log('hangul -> ', hangul);
+          console.log('type -> ', type);
+          console.log('level -> ', level);
+          console.log('exam_yn -> ', exam_yn);
+          console.log('delete_yn -> ', delete_yn);
+          console.log('regist_date -> ', regist_date);
+          console.log('modify_date -> ', modify_date);
+          console.log('delete_date -> ', delete_date);
 
-              var sql = 'insert into tbl_japan_problem(store_id, user_id) values('+id+', null);'
-              console.log(sql);
-              connection.query(sql, function(err, rows, fields) {
-                if (!err){
-                  //console.log('rows -> ', rows);
-                  callback(null, status, kanji);
-                } else {
-                  console.log('Error : ', err);
-                }
-              });
-          } else {
-              callback(null, 'incorrect');
-          }
-
+          var sql = 'insert into tbl_japan_problem(store_id, user_id) values('+id+', null);'
+          console.log(sql);
+          connection.query(sql, function(err, rows, fields) {
+            if (!err){
+              //console.log('rows -> ', rows);
+              callback(null, kanji);
+            } else {
+              console.log('Error : ', err);
+            }
+          });
       },
-
-      function(status, kanji, callback) {
-        console.log('DEBUG -> status : ', status);
-        if(status == 'correct') {
-            ioClient.emit("kanji", kanji);
-            ioClient.emit("history");
-            callback(null, 'done');
-        } else {
-            callback(null, 'done');
-        }
+      function(kanji, callback) {
+          ioClient.emit("kanji", kanji);
+          ioClient.emit("history");
+          callback(null, 'done');
       }
   ], function (err, result) {
-      console.log('err -> ', err);
-      console.log('result -> ', result);
+        console.log('err -> ', err);
+        console.log('result -> ', result);
   });
 
   res.json({"result": "1"})
@@ -192,11 +187,26 @@ app.post('/api/sendHiragana', cors(), function(req, res) {
 // 퍼센트 가져오기
 app.post('/api/getProgress', cors(), function(req, res) {
 
-  var sql = "select DATE_ADD(regist_date, INTERVAL 100 SECOND) - now() as time from tbl_japan_problem where delete_yn = 'N' AND user_id IS NULL  ORDER BY regist_date DESC limit 1"
+  var sql = "select DATE_ADD(regist_date, INTERVAL 100 SECOND) as time from tbl_japan_problem where delete_yn = 'N' AND user_id IS NULL  ORDER BY regist_date DESC limit 1"
   connection.query(sql, function(err, rows, fields) {
     if (err == null) {
-      console.log('DEBUG -> rows : ', rows[0]['time']);
-      res.json({"result": rows[0]['time']})
+      var time = rows[0]['time']; // UTC
+      var now = new Date();       // KST
+
+      console.log('DEBUG -> time : ', time);
+      console.log('DEBUG -> time : ', typeof time);
+
+      console.log('DEBUG -> now : ', now);
+      console.log('DEBUG -> now : ', typeof now);
+
+      var diff = Math.round((time - now) / 1000);
+      console.log('DEBUG -> diff : ', diff);
+
+      if(diff < 0){
+        diff = 0
+      }
+
+      res.json({"result": diff})
     }
     else {
       console.log('ERROR -> ', err);
@@ -224,7 +234,7 @@ app.post('/api/getChatLog', cors(), function(req, res) {
 // 정답 이력 최근 10개 가져오기
 app.post('/api/getHistoryLog', cors(), function(req, res) {
 
-  var sql = "select ifnull(y.username, 'PC') as username, ifnull(x.modify_date, '정답 미제출로 인한 pass') as modify_date, z.kanji, z.hiragana, z.hangul from tbl_japan_problem x left join tbl_user y on x.user_id = y.id join tbl_japan_store z on x.store_id = z.id where x.regist_date > DATE_FORMAT(now(),'%Y-%m-%d') order by x.regist_date desc limit 11";
+  var sql = "select ifnull(y.username, 'PC') as username, ifnull(x.modify_date, '정답 미제출로 인한 pass') as modify_date, z.kanji, z.hiragana, z.hangul from tbl_japan_problem x left join tbl_user y on x.user_id = y.id join tbl_japan_store z on x.store_id = z.id where x.regist_date > DATE_FORMAT(date_sub(now(), interval 1 day),'%Y-%m-%d') order by x.regist_date desc limit 11";
   connection.query(sql, function(err, rows, fields) {
     if (err == null) {
       // console.log('DEBUG -> rows : ', rows);
@@ -240,7 +250,7 @@ app.post('/api/getHistoryLog', cors(), function(req, res) {
 // 현재 진행중인 한자 가져오기
 app.post('/api/getCurrentKanji', cors(), function(req, res) {
 
-  var sql = "select kanji from tbl_japan_problem x join tbl_japan_store y on x.store_id = y.id where x.regist_date > DATE_FORMAT(now(),'%Y-%m-%d') order by x.regist_date desc limit 1"
+  var sql = "select kanji from tbl_japan_problem x join tbl_japan_store y on x.store_id = y.id where x.regist_date > DATE_FORMAT(date_sub(now(), interval 1 day),'%Y-%m-%d') order by x.regist_date desc limit 1"
   connection.query(sql, function(err, rows, fields) {
     if (err == null) {
       // console.log('DEBUG -> rows : ', rows);
