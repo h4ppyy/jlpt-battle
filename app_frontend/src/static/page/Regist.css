@@ -1,0 +1,15 @@
+.regist-level{
+  border-radius: .25rem;
+  width: 100%;
+  border: 1px solid #ced4da;
+  color: #6C757D;
+  height: calc(1.5em + .75rem + 2px);
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.btn-danger{
+  background-color: #EB2119;
+  border-color: #EB2119;
+}
