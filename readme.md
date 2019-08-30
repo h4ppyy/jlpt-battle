@@ -4,6 +4,10 @@
 
 <img src="https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/www.gif?raw=true" width="100%"></img>
 
+<img src="https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/p4.png?raw=true" width="100%"></img>
+
+<img src="https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/p5.png?raw=true" width="100%"></img>
+
 ## お知らせ
 ```
 2019.08.28 プロジェクトの立ち上げ
@@ -42,6 +46,10 @@ And change the database connection information
 
 $ yarn install
 $ yarn start
+
+If you're building a development environment
+$ yarn global add nodemon
+$ nodemon app.js
 ```
 daemon
 ```
@@ -50,6 +58,9 @@ because I've already done 'yarn install'
 
 $ cd app_backend
 $ node daemon.js
+
+If you're building a development environment
+$ nodemon daemon.js
 ```
 Let's go !
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
