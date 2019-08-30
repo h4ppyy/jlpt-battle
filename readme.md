@@ -2,9 +2,7 @@
 
 # JLPT Battle
 
-![main]('https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/www.png?raw=true')
-
-![main]('https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/p1.png?raw=true')
+<img src="https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/www.gif?raw=true" width="100%"></img>
 
 ## お知らせ
 ```
