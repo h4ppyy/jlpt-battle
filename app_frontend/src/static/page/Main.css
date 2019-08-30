@@ -1,11 +1,13 @@
 .main-container{
   width: 100%;
   display: flex;
+  height: 860px;
 }
 .main-content {
   flex: 0.7 1;
   background: #000000;
   color: #ffffff;
+  padding-right: 15px;
 }
 .main-history {
   height: -webkit-fill-available;
@@ -50,6 +52,7 @@
   height: 380px;
   overflow-x: hidden;
   overflow-y: auto;
+  margin-bottom: 10px;
 }
 .history-title {
   text-align: center;
@@ -101,7 +104,7 @@
 .support-text{
   text-align: center;
   font-size: 14px;
-  margin-bottom: 15px;
+  margin-bottom: 35px;
   color: #e5d7ff;
 }
 .progress-container{
@@ -109,5 +112,5 @@
   margin-bottom: 10px;
 }
 .progress-bar{
-  
+
 }
