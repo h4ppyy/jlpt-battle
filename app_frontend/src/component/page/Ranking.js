@@ -1,4 +1,5 @@
 import React from 'react';
+import {Animated} from "react-animated-css";
 
 import BigText from '../util/BigText';
 
@@ -27,6 +28,7 @@ class Ranking extends React.Component {
 
   render() {
     return (
+      <Animated animationIn="fadeIn" animationOut="fadeInUpBig" isVisible={true}>
       <div>
         <div className='ranking-box'>
           <div className='rank-top'>
@@ -74,6 +76,7 @@ class Ranking extends React.Component {
 
         </div>
       </div>
+      </Animated>
     )
   }
 }

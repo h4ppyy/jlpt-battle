@@ -19,3 +19,10 @@ code {
 .App {
   background: #000000;
 }
+
+.mr5 {
+  margin-right: 5px;
+}
+.mr8 {
+  margin-right: 8px;
+}

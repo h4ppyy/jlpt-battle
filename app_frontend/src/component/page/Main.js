@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Button, Form } from 'react-bootstrap';
+import {Animated} from "react-animated-css";
 import socketIOClient from "socket.io-client";
 import ScrollableFeed from 'react-scrollable-feed'
 
@@ -122,6 +123,7 @@ class Main extends React.Component {
       width: String(this.state.progress) + '%'
     };
     return (
+      <Animated animationIn="fadeIn" animationOut="fadeInUpBig" isVisible={true}>
       <div>
         <div className='main-container'>
           <div className='main-content'>
@@ -188,6 +190,7 @@ class Main extends React.Component {
           </div>
         </div>
       </div>
+      </Animated>
     )
   }
 }

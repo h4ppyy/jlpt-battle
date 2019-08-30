@@ -1,4 +1,5 @@
 import React from 'react';
+import {Animated} from "react-animated-css";
 
 import BigText from '../util/BigText';
 
@@ -34,6 +35,7 @@ class Mypage extends React.Component {
       width: String(this.state.progress_n5) + '%'
     };
     return (
+      <Animated animationIn="fadeIn" animationOut="fadeInUpBig" isVisible={true}>
       <div>
         <div className='mypage-box'>
           <div className='mypage-con'>
@@ -134,6 +136,7 @@ class Mypage extends React.Component {
           </div>
         </div>
       </div>
+      </Animated>
     )
   }
 }
