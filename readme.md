@@ -1,5 +1,10 @@
 
+
 # JLPT Battle
+
+![main]('https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/www.png?raw=true')
+
+![main]('https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/p1.png?raw=true')
 
 ## お知らせ
 ```
