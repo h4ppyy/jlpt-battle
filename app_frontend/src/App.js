@@ -8,6 +8,7 @@ import Main from './component/page/Main'
 import Mypage from './component/page/Mypage'
 import Ranking from './component/page/Ranking'
 import Login from './component/page/Login';
+import Regist from './component/page/Regist';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/mypage/" component={Mypage} />
         <Route path="/ranking/" component={Ranking} />
         <Route path="/login/" component={Login} />
+        <Route path="/Regist/" component={Regist} />
         <Footer/>
       </Router>
     </div>
