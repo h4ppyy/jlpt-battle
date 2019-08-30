@@ -1,0 +1,57 @@
+.ranking-box {
+  height: 800px;
+  margin-top: 70px;
+}
+.ranking-box {
+  color: #ffffff;
+}
+.ranking-table{
+  margin-left: auto;
+  margin-right: auto;
+  width: 800px;
+}
+table {
+  border-collapse: collapse;
+  margin-bottom: 50px;
+}
+table, th, td {
+  border: 2px solid #363636;
+}
+td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  text-align: center
+}
+thead > tr {
+  background: #ac2b2b;
+  font-weight: bold;
+}
+tbody > tr{
+  transition: 0.5s;
+  cursor: pointer;
+}
+tbody > tr:hover{
+  background: #3a171d;
+}
+.rank-top-img {
+  width: 50px;
+}
+.rank-top-title {
+  font-size: 25px;
+  margin-left: 10px;
+}
+.rank-top {
+  text-align: center;
+  margin-bottom: 35px;
+}
+.rank1{
+  color: red;
+}
+.rank2{
+  color: blue;
+}
+.rank3{
+  color: green;
+}

@@ -2,6 +2,7 @@ import React from 'react';
 
 import BigText from '../util/BigText';
 
+import '../../static/page/Mypage.css';
 
 class Mypage extends React.Component {
   constructor(props) {
@@ -11,7 +12,9 @@ class Mypage extends React.Component {
   render() {
     return (
       <div>
-        <BigText>Mypage</BigText>
+        <div className='mypage-box'>
+        aaa
+        </div>
       </div>
     )
   }
