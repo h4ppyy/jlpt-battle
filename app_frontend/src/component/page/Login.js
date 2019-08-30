@@ -22,7 +22,7 @@ class Login extends React.Component {
             <div className="form-button">
               <button type="submit" className="btn btn-danger">로그인</button>
             </div>
-            <div className='go-regist'><Link to="/regist/">아직 회원이 아니신가요...?</Link></div>
+            <div className='go-regist'><Link to="/regist/">아직 회원이 아니신가요...? 회원가입</Link></div>
           </form>
       </div>
     )

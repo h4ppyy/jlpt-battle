@@ -35,7 +35,7 @@ class Regist extends React.Component {
           <div className="form-button">
             <button type="submit" className="btn btn-danger">회원가입</button>
           </div>
-          <div className='go-regist'><Link to="/Login/">회원가입이 되어있으시군요...?</Link></div>
+          <div className='go-regist'><Link to="/Login/">로그인 하시겠습니까...?</Link></div>
       </div>
     )
   }

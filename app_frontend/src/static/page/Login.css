@@ -1,5 +1,5 @@
 .form-container{
-  border: 1px solid white;
+  border: 1px solid #2f2f2f;
   width: 500px;
   margin: 0 auto;
   margin-top: 200px;
@@ -15,7 +15,13 @@
 .go-regist {
   font-size: 14px;
   text-align: right;
+  margin-top: -10px;
 }
+.go-regist > a:link { text-decoration: none; color: #5a84ff; }
+.go-regist > a:visited { text-decoration: none; color: #5a84ff; }
+.go-regist > a:active { text-decoration: none; color: #5a84ff; }
+.go-regist > a:hover { text-decoration: none; color: #5a84ff; }
+
 .form-button > button{
   margin-top: 10px;
   width: 100%;
