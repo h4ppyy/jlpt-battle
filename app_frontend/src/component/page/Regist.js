@@ -42,6 +42,45 @@ class Regist extends React.Component {
     var passwordRe = this.state.passwordRe;
     var jlptLevel = this.state.jlptLevel;
 
+    if(username == ''){
+        alert('ID를 입력해주세요');
+        document.getElementById('regist_id').focus();
+        return 0;
+    }
+    else if(username.length < 2 || username.length > 10){
+        alert('ID는 4자이상 10자 이하로 만들어주세요.');
+        document.getElementById('regist_id').focus();
+        return 0;
+    }
+
+    if(password == ''){
+        alert('비밀번호를 입력해주세요');
+        document.getElementById('regist_password').focus();
+        return 0;
+    }
+    else if(username.length < 4 || username.length > 16){
+        alert('비밀번호는는 4자이상 10자 이하로 만들어주세요.');
+        document.getElementById('regist_password').focus();
+        return 0;
+    }
+
+    if(passwordRe == ''){
+        alert('두번째 비밀번호를 입력해주세요');
+        document.getElementById('regist_repassword').focus();
+        return 0;
+    }
+    else if(passwordRe != password){
+        document.getElementById('regist_repassword').focus();
+        alert('패스워드가 다릅니다 다시 입력해주세요')
+    }
+
+    if(jlptLevel == ''){
+        alert('JLPT레벨을 선택해주세요');
+        document.getElementById('regist_level').focus();
+        return 0;
+    }
+
+
     console.log('username -> ', username);
     console.log('password -> ', password);
     console.log('passwordRe -> ', passwordRe);
@@ -85,7 +124,7 @@ class Regist extends React.Component {
                 <i class="fas fa-star mr8"></i>
                 레벨 선택
               </label>
-              <select onChange={this.changeJlptLevel.bind(this)} className="regist-level">
+              <select onChange={this.changeJlptLevel.bind(this)} className="regist-level" id="regist_level">
                   <option value='0' selected>본인의 JLPT 레벨을 선택하세요</option>
                   <option value='1'>N1</option>
                   <option value='2'>N2</option>
