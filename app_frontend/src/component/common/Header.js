@@ -35,7 +35,7 @@ class Header extends React.Component {
               </span>
               <span className='header-subinfo-github'>
                 <a href="https://ja.dict.naver.com/jlpt/level-5/parts-0/p1.nhn" target="_blank">
-                  <img className='naver-img' src={process.env.PUBLIC_URL + '/naver.png'}/>
+                  <img className='naver-img' src={process.env.PUBLIC_URL + '/header/naver.png'}/>
                   <span className='study'>학습하기</span>
                 </a>
               </span>

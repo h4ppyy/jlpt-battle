@@ -32,7 +32,7 @@ class Ranking extends React.Component {
       <div>
         <div className='ranking-box'>
           <div className='rank-top'>
-            <img className='rank-top-img' src={process.env.PUBLIC_URL + '/top-rated.png'}/>
+            <img className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/top-rated.png'}/>
             <span className='rank-top-title'>순위표 TOP 100</span>
           </div>
 
@@ -52,15 +52,15 @@ class Ranking extends React.Component {
                   <td>
                   {
                     item.rank == '1' ?
-                        <img className='rank-top-img' src={process.env.PUBLIC_URL + '/winner.png'}/>
+                        <img className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/winner.png'}/>
                         :
                         item.rank &&
                     item.rank == '2' ?
-                        <img className='rank-top-img' src={process.env.PUBLIC_URL + '/second.png'}/>
+                        <img className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/second.png'}/>
                         :
                         item.rank &&
                     item.rank == '3' ?
-                        <img className='rank-top-img' src={process.env.PUBLIC_URL + '/third.png'}/>
+                        <img className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/third.png'}/>
                         :
                         item.rank
                   }

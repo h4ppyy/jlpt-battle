@@ -39,7 +39,7 @@ class Mypage extends React.Component {
       <div>
         <div className='mypage-box'>
           <div className='mypage-con'>
-            <img className='mypage-img' src={process.env.PUBLIC_URL + '/teacher.png'}/>
+            <img className='mypage-img' src={process.env.PUBLIC_URL + '/mypage/teacher.png'}/>
           </div>
           <div>
             <table className='mypage-table'>
