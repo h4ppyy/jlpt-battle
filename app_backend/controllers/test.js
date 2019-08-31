@@ -6,10 +6,9 @@ const dbconfig   = require('../config/database.js');
 const ioconfig   = require('../config/ioClient.js');
 const common = require('./common.js');
 
-const connection = mysql.createConnection(dbconfig);
-
 
 exports.test = function(req, res) {
+    const connection = mysql.createConnection(dbconfig);
     const ioClient = ioc.connect(ioconfig);
 
     connection.query('select * from tbl_user', function(err, rows, fields) {

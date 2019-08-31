@@ -6,10 +6,9 @@ const dbconfig   = require('../config/database.js');
 const ioconfig   = require('../config/ioClient.js');
 const common = require('./common.js');
 
-const connection = mysql.createConnection(dbconfig);
-
 
 exports.sendHiragana = function(req, res) {
+    const connection = mysql.createConnection(dbconfig);
     const ioClient = ioc.connect(ioconfig);
 
     var content = req.body.content;

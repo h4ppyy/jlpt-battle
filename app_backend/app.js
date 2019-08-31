@@ -21,7 +21,7 @@ const dbconfig   = require('./config/database.js');
 const connection = mysql.createConnection(dbconfig);
 
 
-// 미들웨어 관린
+// 미들웨어 관리
 app.use(bodyParser.json())
 app.use(cors())
 app.options('*', cors())

@@ -8,6 +8,8 @@ const common = require('./common.js');
 
 
 exports.createUser = function(req, res) {
+    const connection = mysql.createConnection(dbconfig);
+    
     var username = req.body.username;
     var password = req.body.password;
     var passwordRe = req.body.passwordRe;
