@@ -18,8 +18,7 @@ class Main extends React.Component {
       inputChat: '',
       inputHiragana: '',
       chat: [],
-      history: [],
-      progress: 100,
+      history: []
     };
   }
 
@@ -34,18 +33,6 @@ class Main extends React.Component {
 
   componentDidMount = () => {
       var self = this;
-
-      var countup = function(){
-        console.log('progress -> ', self.state.progress);
-        self.setState({progress: self.state.progress - 1});
-      }
-      // setInterval(countup, 1000);
-
-      var url = 'http://127.0.0.1:4000/api/getProgress'
-      axios.post(url).then(response => {
-        console.log('progress -> ', response.data.result);
-        this.setState({progress: response.data.result});
-      });
 
       var url = 'http://127.0.0.1:4000/api/getChatLog'
       axios.post(url).then(response => {
@@ -119,9 +106,6 @@ class Main extends React.Component {
     }
   }
   render() {
-    const progress = {
-      width: String(this.state.progress) + '%'
-    };
     return (
       <Animated animationIn="fadeIn" animationOut="fadeInUpBig" isVisible={true}>
       <div>
@@ -130,11 +114,6 @@ class Main extends React.Component {
             <div className='hanja-container'>
               <div className='hanja-box'>
                 {this.state.kanji}
-              </div>
-            </div>
-            <div className="progress-container">
-              <div className="progress">
-                <div style={progress} className="progress-bar progress-bar-striped bg-danger progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
             <div className='sendbox-container'>

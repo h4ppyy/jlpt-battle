@@ -22,7 +22,7 @@
   font-size: 15px;
 }
 .h-sub {
-  flex: 0.6;
+  flex: 0.4;
   text-align: center;
 }
 .header-subinfo-version {
@@ -58,4 +58,8 @@
 
 .study {
   margin-left: 5px;
+}
+.naver-img {
+  width: 20px;
+  padding-bottom: 8px;
 }

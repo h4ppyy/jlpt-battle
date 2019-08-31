@@ -44,13 +44,14 @@
   margin-top: 10px;
   font-size: 20px;
   margin-left: 15px;
+  margin-bottom: 15px;
 }
 .chat-content {
   padding-left: 30px;
   padding-right: 30px;
   padding-top: 15px;
   padding-bottom: 15px;
-  height: 380px;
+  height: 290px;
   overflow-x: hidden;
   overflow-y: auto;
   margin-bottom: 10px;
@@ -67,7 +68,7 @@
 }
 .history-box {
   border: solid 1px #ffffff;
-  padding: 8px;
+  padding: 3px;
   border-radius: 5px;
   margin-bottom: 15px;
 }

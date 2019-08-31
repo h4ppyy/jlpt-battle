@@ -17,12 +17,6 @@ class Header extends React.Component {
             <Link to="/">JLPT BATTLE</Link>
           </div>
           <div className='header-flex-item h-menu mt15'>
-            <a href="https://ja.dict.naver.com/jlpt/level-5/parts-0/p1.nhn" target="_blank">
-              <i class="fas fa-external-link-alt"></i>
-              <span className='study'>학습하기</span>
-            </a>
-          </div>
-          <div className='header-flex-item h-menu mt15'>
             <Link to="/ranking/">랭킹</Link>
           </div>
           <div className='header-flex-item h-menu mt15'>
@@ -38,6 +32,12 @@ class Header extends React.Component {
               <span className='header-subinfo-github'>
                 <i className="fab fa-github"></i>
                 <a href="https://github.com/h4ppyy/jlpt-battle" target="_blank">GitHub</a>
+              </span>
+              <span className='header-subinfo-github'>
+                <a href="https://ja.dict.naver.com/jlpt/level-5/parts-0/p1.nhn" target="_blank">
+                  <img className='naver-img' src={process.env.PUBLIC_URL + '/naver.png'}/>
+                  <span className='study'>학습하기</span>
+                </a>
               </span>
           </div>
 
