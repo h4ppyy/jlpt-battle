@@ -216,6 +216,22 @@ app.post('/api/getProgress', cors(), function(req, res) {
 
 
 // 채팅 내역 최근 30개 가져오기
+app.post('/api/createUser', cors(), function(req, res) {
+  var username = req.body.username;
+  var password = req.body.password;
+  var passwordRe = req.body.passwordRe;
+  var jlptLevel = req.body.jlptLevel;
+
+  console.log('username -> ', username);
+  console.log('password -> ', password);
+  console.log('passwordRe -> ', passwordRe);
+  console.log('jlptLevel -> ', jlptLevel);
+
+  res.json({"result": 200})
+});
+
+
+// 채팅 내역 최근 30개 가져오기
 app.post('/api/getChatLog', cors(), function(req, res) {
 
   var sql = 'select y.username, x.content, x.regist_date from tbl_chat x join tbl_user y on x.user_id = y.id order by regist_date desc limit 30';
