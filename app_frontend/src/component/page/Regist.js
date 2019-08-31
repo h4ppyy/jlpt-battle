@@ -43,39 +43,40 @@ class Regist extends React.Component {
     var jlptLevel = this.state.jlptLevel;
 
     if(username == ''){
-        alert('ID를 입력해주세요');
+        this.setState({alertText: 'ID를 입력해주세요'});
         document.getElementById('regist_id').focus();
         return 0;
     }
     else if(username.length < 2 || username.length > 10){
-        alert('ID는 4자이상 10자 이하로 만들어주세요.');
+        this.setState({alertText: 'ID는 4자이상 10자 이하로 만들어주세요.'});
         document.getElementById('regist_id').focus();
         return 0;
     }
 
     if(password == ''){
-        alert('비밀번호를 입력해주세요');
+        this.setState({alertText: '비밀번호를 입력해주세요.'});
         document.getElementById('regist_password').focus();
         return 0;
     }
     else if(username.length < 4 || username.length > 16){
-        alert('비밀번호는는 4자이상 10자 이하로 만들어주세요.');
+        this.setState({alertText: '비밀번호는는 4자이상 10자 이하로 만들어주세요.'});
         document.getElementById('regist_password').focus();
         return 0;
     }
 
     if(passwordRe == ''){
-        alert('두번째 비밀번호를 입력해주세요');
+        this.setState({alertText: '두번째 비밀번호를 입력해주세요.'});
         document.getElementById('regist_repassword').focus();
         return 0;
     }
     else if(passwordRe != password){
+        this.setState({alertText: '패스워드가 다릅니다 다시 입력해주세요.'});
         document.getElementById('regist_repassword').focus();
-        alert('패스워드가 다릅니다 다시 입력해주세요')
+        return 0;
     }
 
     if(jlptLevel == ''){
-        alert('JLPT레벨을 선택해주세요');
+        this.setState({alertText: 'JLPT레벨을 선택해주세요.'});
         document.getElementById('regist_level').focus();
         return 0;
     }
@@ -95,7 +96,7 @@ class Regist extends React.Component {
     };
     axios.post(url, param).then(response => {
       console.log(response.data);
-      this.setState({alertText: '333'});
+      this.setState({alertText: ''});
     });
   }
 

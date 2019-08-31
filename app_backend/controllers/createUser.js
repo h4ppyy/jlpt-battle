@@ -9,7 +9,7 @@ const common = require('./common.js');
 
 exports.createUser = function(req, res) {
     const connection = mysql.createConnection(dbconfig);
-    
+
     var username = req.body.username;
     var password = req.body.password;
     var passwordRe = req.body.passwordRe;
@@ -20,5 +20,13 @@ exports.createUser = function(req, res) {
     console.log('passwordRe -> ', passwordRe);
     console.log('jlptLevel -> ', jlptLevel);
 
+    var sql = 'insert into tbl_user(username, password, jlpt_level) value('+username+', '+password+', '+passwordRe+');';
+    connection.query(sql, function(err, rows, fields) {
+        if (!err){
+            callback(null, rows);
+        } else {
+            console.log('Error : ', err);
+        }
+    });
     res.json({"result": 200})
 }
