@@ -118,7 +118,7 @@ class Main extends React.Component {
             </div>
             <div className='sendbox-container'>
               <Form.Control tabIndex="0" value={this.state.inputHiragana} onKeyDown={this.handleKeyDownHiragana} onChange={this.onChangeHiragana.bind(this)} className='x' type="text" placeholder="" />
-              <Button onClick={() => this.sendHiragana() } className='y' variant="success">정답 제출</Button>
+              <Button onClick={() => this.sendHiragana()} className='y' variant="success">정답 제출</Button>
             </div>
             <div className='chat-title'>
               <i class="far fa-comment-dots dotdot"></i>

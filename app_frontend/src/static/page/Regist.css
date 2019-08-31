@@ -1,4 +1,4 @@
-.regist-level{
+.regist-level {
   border-radius: .25rem;
   width: 100%;
   border: 1px solid #ced4da;
@@ -9,7 +9,13 @@
   font-weight: 400;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
-.btn-danger{
+.btn-danger {
   background-color: #EB2119;
   border-color: #EB2119;
+}
+.regist-info {
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
 }
