@@ -39,7 +39,7 @@ class Main extends React.Component {
         console.log('progress -> ', self.state.progress);
         self.setState({progress: self.state.progress - 1});
       }
-      setInterval(countup, 1000);
+      // setInterval(countup, 1000);
 
       var url = 'http://127.0.0.1:4000/api/getProgress'
       axios.post(url).then(response => {
@@ -47,7 +47,7 @@ class Main extends React.Component {
         this.setState({progress: response.data.result});
       });
 
-      var url = 'http://127.0.0.1:4000/api/getChaheader-containertLog'
+      var url = 'http://127.0.0.1:4000/api/getChatLog'
       axios.post(url).then(response => {
         this.setState({chat: response.data.result.reverse()});
       });
