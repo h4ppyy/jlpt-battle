@@ -23,6 +23,8 @@ module.exports = {
   CODE_ID_NOT_ALLOW: 308,       // 회원가입 - 아이디 허용 문자 외 입력
   CODE_PW_NOT_ALLOW: 309,       // 회원가입 - 비밀번호 허용 문자 외 입력
 
+  CODE_ID_OR_PW_INCORRECT: 400,       // 로그인 - 아이디 또는 비밀번호 틀림
+
 
   // 공통 함수
   getRandom: function (max) {
