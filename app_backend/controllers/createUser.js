@@ -20,13 +20,42 @@ exports.createUser = function(req, res) {
     console.log('passwordRe -> ', passwordRe);
     console.log('jlptLevel -> ', jlptLevel);
 
-    var sql = 'insert into tbl_user(username, password, jlpt_level) value('+username+', '+password+', '+passwordRe+');';
-    connection.query(sql, function(err, rows, fields) {
-        if (!err){
-            callback(null, rows);
-        } else {
-            console.log('Error : ', err);
+    async.waterfall([
+        // 1. 회원 중복 체크
+        function(callback) {
+            var sql = "select count(*) as cnt from tbl_user where username = '"+username+"';";
+            console.log('sql -> ', sql);
+            connection.query(sql, function(err, rows, fields) {
+                if (!err){
+                    var user_cnt = rows[0].cnt;
+                    if(user_cnt == 0) {
+                      callback(null);
+                    } else {
+                      res.json({"result": 300})
+                      return false;
+                    }
+                } else {
+                    console.log('err : ', err);
+                }
+            });
+        },
+        // 2. 회원 가입
+        function(callback) {
+            var sql = "insert into tbl_user(username, password, jlpt_level) value('"+username+"', '"+password+"', '"+passwordRe+"');";
+            console.log('sql -> ', sql);
+            connection.query(sql, function(err, rows, fields) {
+                if (!err){
+                    res.json({"result": 200})
+                    return false;
+                } else {
+                    console.log('err : ', err);
+                }
+            });
         }
+    ], function (err, result) {
+        console.log('err -> ', err);
+        console.log('result -> ', result);
     });
-    res.json({"result": 200})
+
+
 }

@@ -43,29 +43,28 @@ class Regist extends React.Component {
     var jlptLevel = this.state.jlptLevel;
 
     if(username == ''){
-        this.setState({alertText: 'ID를 입력해주세요'});
-        document.getElementById('regist_id').focus();
-        return 0;
-    }
-    else if(username.length < 2 || username.length > 10){
-        this.setState({alertText: 'ID는 4자이상 10자 이하로 만들어주세요.'});
+        this.setState({alertText: '아이디를 입력해주세요'});
         document.getElementById('regist_id').focus();
         return 0;
     }
 
+    else if( !(username.length > 3 && username.length < 11) ){
+        this.setState({alertText: '아이디는 4자 이상 10자 이하로 만들어주세요'});
+        document.getElementById('regist_id').focus();
+        return 0;
+    }
     if(password == ''){
-        this.setState({alertText: '비밀번호를 입력해주세요.'});
+        this.setState({alertText: '비밀번호를 입력해주세요'});
         document.getElementById('regist_password').focus();
         return 0;
     }
-    else if(username.length < 4 || username.length > 16){
-        this.setState({alertText: '비밀번호는는 4자이상 10자 이하로 만들어주세요.'});
+    else if( !(password.length > 3 && password.length < 11) ){
+        this.setState({alertText: '비밀번호는 4자 이상 10자 이하로 만들어주세요'});
         document.getElementById('regist_password').focus();
         return 0;
     }
-
     if(passwordRe == ''){
-        this.setState({alertText: '두번째 비밀번호를 입력해주세요.'});
+        this.setState({alertText: '비밀번호 확인을 입력해주세요'});
         document.getElementById('regist_repassword').focus();
         return 0;
     }
@@ -74,7 +73,6 @@ class Regist extends React.Component {
         document.getElementById('regist_repassword').focus();
         return 0;
     }
-
     if(jlptLevel == ''){
         this.setState({alertText: 'JLPT레벨을 선택해주세요.'});
         document.getElementById('regist_level').focus();
@@ -95,8 +93,15 @@ class Regist extends React.Component {
       jlptLevel: jlptLevel,
     };
     axios.post(url, param).then(response => {
-      console.log(response.data);
-      this.setState({alertText: ''});
+      if(response.data.result == 200) {
+        console.log('success');
+        this.props.history.push('/login');
+      } else if (response.data.result == 300) {
+        this.setState({alertText: '이미 존재하는 아이디입니다. 다른 아이디로 가입해주세요!'});
+      }
+      else {
+        this.setState({alertText: '회원가입 실패 : 서버에 오류가 발생했습니다'});
+      }
     });
   }
 
@@ -144,7 +149,9 @@ class Regist extends React.Component {
       {
         this.state.alertText == '' ?
         <div></div> :
-        <div className="alert alert-danger regist-info" role="alert">{this.state.alertText}</div>
+        <Animated animationIn="fadeIn" animationOut="fadeInUpBig" isVisible={true}>
+          <div className="alert alert-danger regist-info" role="alert">{this.state.alertText}</div>
+        </Animated>
       }
       </Animated>
     )
