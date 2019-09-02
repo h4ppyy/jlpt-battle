@@ -1,4 +1,5 @@
 const logging   = require('../config/config.js').logging;
+const jwt = require('jsonwebtoken');
 /*
 공통 모듈 사용 방법
 
@@ -6,10 +7,8 @@ const common = require('./common.js');
 
 var x = common.getRandom(5);
 */
-
+var secret = 'secret';          // JWT 비밀 키
 module.exports = {
-
-
   CODE_SUCCESS: 200,            // 공통 - 로직 성공
 
   CODE_ID_DUPLICATE: 300,       // 회원가입 - 아이디 중복
@@ -47,6 +46,14 @@ module.exports = {
       day = (day < 10 ? "0" : "") + day;
       return year + "-" + month + "-" + day + "-" + hour + ":" + min + ":" + sec;
   },
+
+  getToken: function(id, staff) {
+    var token = jwt.sign({
+        'id': id,
+        'staff': staff,
+    }, secret);
+    return token;
+},
 
   logging_debug: function(key, val) {
     if(logging.debug == true) {

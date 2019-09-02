@@ -29,7 +29,6 @@ class Login extends React.Component {
   }
 
   sendLogin = () => {
-      console.log("1234", Config);
     var username = this.state.username;
     var password = this.state.password;
 
@@ -51,6 +50,11 @@ class Login extends React.Component {
       password: password,
     };
     axios.post(url, param).then(response => {
+        if(response.data.result == Config.CODE_SUCCESS) {
+            var jwt = response.data.token;
+            console.log(response.data);
+            localStorage.setItem('jwt', jwt);
+        }
     });
   }
 
