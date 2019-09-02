@@ -1,11 +1,11 @@
 const async = require('async');
 const mysql = require('mysql');
+const SQL = require('sql-template-strings')
 const ioc = require("socket.io-client");
 
 const dbconfig   = require('../config/config.js').database;
 const ioconfig   = require('../config/config.js').socketio;
 const common = require('./common.js');
-
 
 exports.createUser = function(req, res) {
     const connection = mysql.createConnection(dbconfig);
@@ -71,11 +71,18 @@ exports.createUser = function(req, res) {
     async.waterfall([
         // 1. 회원 중복 체크
         function(callback) {
-            var sql = "select count(*) as cnt from tbl_user where username = '"+username+"';";
+            var sql = (SQL
+                      `
+                      select count(*) as cnt
+                      from tbl_user
+                      where username = ${username}
+                      `
+                      )
             common.logging_debug('sql', sql);
             connection.query(sql, function(err, rows, fields) {
                 if (!err){
                     var user_cnt = rows[0].cnt;
+                    common.logging_debug('user_cnt', user_cnt);
                     if(user_cnt == 0) {
                       callback(null);
                     } else {
@@ -90,7 +97,12 @@ exports.createUser = function(req, res) {
         },
         // 2. 회원 가입
         function(callback) {
-            var sql = "insert into tbl_user(username, password, jlpt_level) value('"+username+"', '"+password+"', '"+jlptLevel+"');";
+            var sql = (SQL
+                      `
+                      insert into tbl_user(username, password, jlpt_level)
+                      value(${username}, ${password}, ${jlptLevel})
+                      `
+                      )
             common.logging_debug('sql', sql);
             connection.query(sql, function(err, rows, fields) {
                 if (!err){
