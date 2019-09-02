@@ -4,9 +4,11 @@ import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom
 import { Animated } from "react-animated-css";
 
 import BigText from '../util/BigText';
-import { Config } from '../config/config.js';
+
 
 import '../../static/page/Regist.css';
+
+const Config = require('../config/config.js');
 
 
 class Regist extends React.Component {
@@ -99,7 +101,6 @@ class Regist extends React.Component {
     return (
       <Animated animationIn="fadeIn" animationOut="fadeInUpBig" isVisible={true}>
       <div className='form-container'>
-          <form>
             <div className="form-group">
               <label for="form-label">
                 <i class="fas fa-user-shield mr8"></i>
@@ -129,7 +130,6 @@ class Regist extends React.Component {
                   <option value='5'>N5</option>
               </select>
             </div>
-          </form>
 
           <div className="form-button">
             <button onClick={() => this.sendRegist()} type="submit" className="btn btn-danger">회원가입</button>

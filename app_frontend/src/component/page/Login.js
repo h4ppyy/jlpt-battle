@@ -5,9 +5,10 @@ import {Animated} from "react-animated-css";
 import BigText from '../util/BigText';
 
 import '../../static/page/Login.css';
-import { Config } from '../config/config.js';
+
 import axios from "axios";
 
+const Config = require('../config/config.js');
 
 class Login extends React.Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class Login extends React.Component {
   }
 
   sendLogin = () => {
+      console.log("1234", Config);
     var username = this.state.username;
     var password = this.state.password;
 
@@ -57,7 +59,6 @@ class Login extends React.Component {
     return (
       <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}>
       <div className='form-container'>
-          <form>
             <div className="form-group">
               <label for="form-label">
                 <i class="fas fa-user-shield mr8"></i>
@@ -70,11 +71,11 @@ class Login extends React.Component {
               </label>
               <input onChange={this.changePassword.bind(this)} type="password" className="form-control input-control" id="login_password" placeholder=""/>
             </div>
-            <div className='go-regist'><Link to="/regist/">아직 회원이 아니신가요...? 회원가입</Link></div>
-          </form>
           <div className="form-button">
           <button onClick={() => this.sendLogin()} type="submit" className="btn btn-danger">로그인</button>
           </div>
+            <div className='go-regist'><Link to="/regist/">아직 회원이 아니신가요...? 회원가입</Link></div>
+
       </div>
 
       {

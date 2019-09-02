@@ -1,5 +1,5 @@
 module.exports = {
-  backendUrl : 'http://127.0.0.1:4000',
+  backendUrl: 'http://127.0.0.1:4000',
 
   CODE_SUCCESS: 200,            // 공통 - 로직 성공
 
