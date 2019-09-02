@@ -7,5 +7,10 @@ module.exports = {
     port     : 3306,
     database : 'xxx'
   },
-  socketio: 'http://localhost:4000'
+  socketio: 'http://localhost:4000',
+  logging: {
+    debug: true,
+    info: true,
+    error: true,
+  }
 };

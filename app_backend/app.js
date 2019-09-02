@@ -6,6 +6,11 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
+
+// 사용자 모듈 관리
+const common = require('./controllers/common.js');
+
+
 // express 서버 구성
 const app = express();
 const port = process.env.PORT || 4000;
@@ -34,7 +39,7 @@ app.use('', urlsRouter);
 
 // 웹소켓 로직
 io.on('connection', socket => {
-  console.log('INFO -> connected');
+  common.logging_info('socketio', 'connection');
 
   socket.on('chat', (content) => {
     user_id = '1';
@@ -71,7 +76,7 @@ io.on('connection', socket => {
   })
 
   socket.on('disconnect', () => {
-    console.log('INFO -> disconnected');
+    common.logging_info('socketio', 'disconnected');
   })
 })
 
