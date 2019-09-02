@@ -17,7 +17,7 @@ const io = socketIO(server);
 
 
 // mysql connect 구성
-const dbconfig   = require('./config/database.js');
+const dbconfig   = require('./config/config.js').database;
 const connection = mysql.createConnection(dbconfig);
 
 

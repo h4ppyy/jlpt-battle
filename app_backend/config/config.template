@@ -1,0 +1,11 @@
+// config/config.js
+module.exports = {
+  database: {
+    host     : 'xxx',
+    user     : 'xxx',
+    password : 'xxx',
+    port     : 3306,
+    database : 'xxx'
+  },
+  socketio: 'http://localhost:4000'
+};
