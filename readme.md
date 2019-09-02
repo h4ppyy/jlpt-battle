@@ -38,7 +38,7 @@ $ yarn start
 backend  
 ```bash
 $ cd app_backend
-$ cp config/database.template config/config.js
+$ cp config/config.template config/config.js
 
 Create your database by referring to 'table.sql'
 above the directory 'database'
