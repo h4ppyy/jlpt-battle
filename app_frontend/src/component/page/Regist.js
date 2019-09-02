@@ -130,8 +130,8 @@ class Regist extends React.Component {
                 <i class="fas fa-star mr8"></i>
                 레벨 선택
               </label>
-              <select onChange={this.changeJlptLevel.bind(this)} className="regist-level" id="regist_level">
-                  <option value='0' selected>본인의 JLPT 레벨을 선택하세요</option>
+              <select defaultValue={'0'} onChange={this.changeJlptLevel.bind(this)} className="regist-level" id="regist_level">
+                  <option value='0'>본인의 JLPT 레벨을 선택하세요</option>
                   <option value='1'>N1</option>
                   <option value='2'>N2</option>
                   <option value='3'>N3</option>
