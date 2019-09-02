@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
-import {Animated} from "react-animated-css";
+import { Animated } from "react-animated-css";
 
 import BigText from '../util/BigText';
+import { Config } from '../config/config.js';
 
 import '../../static/page/Regist.css';
 
@@ -12,11 +13,11 @@ class Regist extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
-      passwordRe: "",
-      jlptLevel: "",
-      alertText: "",
+      username    : "",
+      password    : "",
+      passwordRe  : "",
+      jlptLevel   : "",
+      alertText   : "",
     };
   }
 
@@ -46,46 +47,33 @@ class Regist extends React.Component {
         this.setState({alertText: '아이디를 입력해주세요'});
         document.getElementById('regist_id').focus();
         return 0;
-    }
-
-    else if( !(username.length > 3 && username.length < 11) ){
+    } else if( !(username.length > 3 && username.length < 11) ){
         this.setState({alertText: '아이디는 4자 이상 10자 이하로 만들어주세요'});
         document.getElementById('regist_id').focus();
         return 0;
-    }
-    if(password == ''){
+    } else if(password == ''){
         this.setState({alertText: '비밀번호를 입력해주세요'});
         document.getElementById('regist_password').focus();
         return 0;
-    }
-    else if( !(password.length > 3 && password.length < 11) ){
+    } else if( !(password.length > 3 && password.length < 11) ){
         this.setState({alertText: '비밀번호는 4자 이상 10자 이하로 만들어주세요'});
         document.getElementById('regist_password').focus();
         return 0;
-    }
-    if(passwordRe == ''){
+    } else if(passwordRe == ''){
         this.setState({alertText: '비밀번호 확인을 입력해주세요'});
         document.getElementById('regist_repassword').focus();
         return 0;
-    }
-    else if(passwordRe != password){
-        this.setState({alertText: '패스워드가 다릅니다 다시 입력해주세요.'});
+    } else if(passwordRe != password){
+        this.setState({alertText: '패스워드가 다릅니다 다시 입력해주세요'});
         document.getElementById('regist_repassword').focus();
         return 0;
-    }
-    if(jlptLevel == ''){
-        this.setState({alertText: 'JLPT레벨을 선택해주세요.'});
+    } else if(jlptLevel == ''){
+        this.setState({alertText: 'JLPT레벨을 선택해주세요'});
         document.getElementById('regist_level').focus();
         return 0;
     }
 
-
-    console.log('username -> ', username);
-    console.log('password -> ', password);
-    console.log('passwordRe -> ', passwordRe);
-    console.log('jlptLevel -> ', jlptLevel);
-
-    var url = 'http://127.0.0.1:4000/api/createUser';
+    var url = Config.backendUrl + '/api/createUser';
     var param = {
       username: username,
       password: password,
@@ -93,13 +81,15 @@ class Regist extends React.Component {
       jlptLevel: jlptLevel,
     };
     axios.post(url, param).then(response => {
-      if(response.data.result == 200) {
-        console.log('success');
+      if(response.data.result == Config.CODE_SUCCESS) {
         this.props.history.push('/login');
-      } else if (response.data.result == 300) {
+      } else if (response.data.result == Config.CODE_ID_DUPLICATE) {
         this.setState({alertText: '이미 존재하는 아이디입니다. 다른 아이디로 가입해주세요!'});
-      }
-      else {
+      } else if (response.data.result == Config.CODE_ID_NOT_ALLOW) {
+        this.setState({alertText: '아이디는 한글, 영어, 숫자 외 불가능합니다'});
+      } else if (response.data.result == Config.CODE_PW_NOT_ALLOW) {
+        this.setState({alertText: '비밀번호는 영어, 숫자, 특수문자(!@#$%^&*()-=~) 외 불가능합니다'});
+      } else {
         this.setState({alertText: '회원가입 실패 : 서버에 오류가 발생했습니다'});
       }
     });
@@ -130,7 +120,7 @@ class Regist extends React.Component {
                 <i class="fas fa-star mr8"></i>
                 레벨 선택
               </label>
-              <select defaultValue={'0'} onChange={this.changeJlptLevel.bind(this)} className="regist-level" id="regist_level">
+              <select onChange={this.changeJlptLevel.bind(this)} defaultValue={'0'} className="regist-level" id="regist_level">
                   <option value='0'>본인의 JLPT 레벨을 선택하세요</option>
                   <option value='1'>N1</option>
                   <option value='2'>N2</option>
