@@ -1,5 +1,14 @@
 
-## Development Environment
+## 개발환경 세팅의 시행착오
+
+```
+개발환경은 항상 ubuntu16.04 가상환경에서 세팅하였으나
+react.js + express.js의 개발환경 세팅을 가상환경에 하니깐
+아래와 같은 문제가 발생하였다
+
+react-scripts
+```
+
 ```
 ubuntu16.04
 ```
@@ -84,5 +93,5 @@ $ yarn global add express-generator
 $ express --no-view app_backend
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM2OTkyNzU5MV19
+eyJoaXN0b3J5IjpbLTE5NDc0NDA1NzFdfQ==
 -->
