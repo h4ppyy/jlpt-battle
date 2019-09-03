@@ -59,6 +59,21 @@ this.props 에 대한 정확한 이해가 필요했음
 ```
 
 ---------
+
+#### 이슈 #4
+```
+react-redux 연동
+action / reduce / store 에 대한 구성이 정확히 이해가 되지 않았음
+특히나 mapStateToProps, mapDispatchToProps 는 한번 
+```
+
+#### 해결 #3
+```
+
+
+```
+
+---------
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk1NTMxNjMzNywxNTUwNTEzNjIyXX0=
+eyJoaXN0b3J5IjpbNDg4MTA4MjgsMTU1MDUxMzYyMl19
 -->
