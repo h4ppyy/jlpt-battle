@@ -1,7 +1,6 @@
 import React from 'react';
 import {Animated} from "react-animated-css";
 
-import BigText from '../util/BigText';
 
 import '../../static/page/Mypage.css';
 
@@ -39,7 +38,7 @@ class Mypage extends React.Component {
       <div>
         <div className='mypage-box'>
           <div className='mypage-con'>
-            <img className='mypage-img' src={process.env.PUBLIC_URL + '/mypage/teacher.png'}/>
+            <img alt='teacher' className='mypage-img' src={process.env.PUBLIC_URL + '/mypage/teacher.png'}/>
           </div>
           <div>
             <table className='mypage-table'>

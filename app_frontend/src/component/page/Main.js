@@ -3,9 +3,7 @@ import axios from 'axios';
 import { Button, Form } from 'react-bootstrap';
 import {Animated} from "react-animated-css";
 import socketIOClient from "socket.io-client";
-import ScrollableFeed from 'react-scrollable-feed'
 
-import BigText from '../util/BigText';
 
 import '../../static/page/Main.css';
 
@@ -39,13 +37,13 @@ class Main extends React.Component {
         this.setState({chat: response.data.result.reverse()});
       });
 
-      var url = 'http://127.0.0.1:4000/api/getHistoryLog'
+      url = 'http://127.0.0.1:4000/api/getHistoryLog'
       axios.post(url).then(response => {
         response.data.result.shift();
         this.setState({history: response.data.result});
       });
 
-      var url = 'http://127.0.0.1:4000/api/getCurrentKanji'
+      url = 'http://127.0.0.1:4000/api/getCurrentKanji'
       axios.post(url).then(response => {
         this.setState({kanji: response.data.result[0]['kanji'] });
       });

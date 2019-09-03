@@ -1,6 +1,5 @@
 import React from 'react';
 
-import BigText from '../util/BigText';
 
 import '../../static/page/Ranking.css';
 
@@ -29,7 +28,7 @@ class Ranking extends React.Component {
       <div>
         <div className='ranking-box'>
           <div className='rank-top'>
-            <img className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/top-rated.png'}/>
+            <img alt='rated' className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/top-rated.png'}/>
             <span className='rank-top-title'>순위표 TOP 100</span>
           </div>
 
@@ -48,16 +47,16 @@ class Ranking extends React.Component {
                 <tr key={key}>
                   <td>
                   {
-                    item.rank == '1' ?
-                        <img className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/winner.png'}/>
+                    item.rank === '1' ?
+                        <img alt='winner' className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/winner.png'}/>
                         :
                         item.rank &&
-                    item.rank == '2' ?
-                        <img className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/second.png'}/>
+                    item.rank === '2' ?
+                        <img alt='second' className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/second.png'}/>
                         :
                         item.rank &&
-                    item.rank == '3' ?
-                        <img className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/third.png'}/>
+                    item.rank === '3' ?
+                        <img alt='third' className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/third.png'}/>
                         :
                         item.rank
                   }

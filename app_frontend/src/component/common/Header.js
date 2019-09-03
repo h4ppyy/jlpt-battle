@@ -31,7 +31,7 @@ class Header extends React.Component {
             <Link to="/mypage/">내 정보</Link>
           </div>
           {
-            this.state.loginStatus == 0
+            this.state.loginStatus === 0
             ?
             <div className='header-flex-item h-menu mt15'>
               <Link to="/login/">로그인</Link>
