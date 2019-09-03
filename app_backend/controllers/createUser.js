@@ -7,6 +7,7 @@ const dbconfig   = require('../config/config.js').database;
 const ioconfig   = require('../config/config.js').socketio;
 const common = require('./common.js');
 
+
 exports.createUser = function(req, res) {
     const connection = mysql.createConnection(dbconfig);
 
@@ -25,9 +26,9 @@ exports.createUser = function(req, res) {
     username = username.replace(/[^(ㄱ-힣a-zA-Z0-9)]/gi, '')
     common.logging_debug('username (filter)', username);
 
-    // 패스워드 (영어 / 숫자 / 특수문자(!@#$%^&*()-=~) 허용)
+    // 패스워드 (영어 / 숫자 / 특수문자(!@$%^&*()-=~) 허용)
     before_password = password;
-    password = password.replace(/[^(a-zA-Z0-9!@#$%^&*()-=~)]/gi, '')
+    password = password.replace(/[^(a-zA-Z0-9!@$%^&*()-=~)]/gi, '')
     common.logging_debug('password (filter)', password);
 
     // 유효성 로직 (프론트 엔드와 동기화)

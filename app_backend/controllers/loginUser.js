@@ -1,12 +1,11 @@
 const async = require('async');
 const mysql = require('mysql');
 const ioc = require("socket.io-client");
+const SQL = require('sql-template-strings')
 
 const dbconfig   = require('../config/config.js').database;
 const ioconfig   = require('../config/config.js').socketio;
-const SQL = require('sql-template-strings')
 const common = require('./common.js');
-
 
 
 exports.loginUser = function(req, res) {
@@ -18,38 +17,55 @@ exports.loginUser = function(req, res) {
     common.logging_debug('username', username);
     common.logging_debug('password', password);
 
+    // 사용자명 (한글 / 영어 / 숫자 허용)
+    before_username = username;
+    username = username.replace(/[^(ㄱ-힣a-zA-Z0-9)]/gi, '')
+    common.logging_debug('username (filter)', username);
+
+    // 패스워드 (영어 / 숫자 / 특수문자(!@$%^&*()-=~) 허용)
+    before_password = password;
+    password = password.replace(/[^(a-zA-Z0-9!@$%^&*()-=~)]/gi, '')
+    common.logging_debug('password (filter)', password);
+
+    // 유효성 로직 (프론트 엔드와 동기화)
+    if(before_username != username){
+        res.json({"result": common.CODE_ID_NOT_ALLOW})
+        return false;
+    }
+    else if(before_password != password){
+        res.json({"result": common.CODE_PW_NOT_ALLOW})
+        return false;
+    }
+
     var sql = (SQL
               `
-              select (select count(*) from tbl_user where username = ${username} and password = ${password}) as cnt, username, is_staff
+              select username, is_staff, count(*) as cnt
               from tbl_user
-              where username = ${username} and password = ${password};
+              where username = ${username}
+              and password = ${password}
+              group by username, is_staff;
               `
               )
     common.logging_debug('sql', sql);
 
     connection.query(sql, function(err, rows, fields) {
-                if (!err){
-                    var user_cnt = rows[0].cnt;
-                    var user_name = rows[0].username;
-                    var user_staff = rows[0].is_staff;
-                    common.logging_debug('user_cnt', user_cnt);
-                    if(user_cnt == 1) {
-                      var jwttoken = common.getToken(user_name, user_staff);
-                      common.logging_debug('jwttoken', jwttoken);
-                      res.json({"token": jwttoken,"result": common.CODE_SUCCESS})
-                      return false;
-                    }
-                    else if(user_cnt == 0){
-                      res.json({"result": common.CODE_ID_OR_PW_INCORRECT})
-                      return false;
-                    }
-                    else{
-                        common.logging_error('err', err);
-                        return false;
-                    }
-                } else {
-                    common.logging_error('err', err);
-                    return false;
-                }
+        if (!err){
+            if(rows.length != 0){
+                console.log('rows -> ', rows[0]);
+                var username = rows[0].username;
+                var is_staff = rows[0].is_staff;
+                var cnt = rows[0].cnt;
+                var jwttoken = common.getToken(username, is_staff);
+                common.logging_debug('jwttoken', jwttoken);
+                res.json({"token": jwttoken,"result": common.CODE_SUCCESS})
+                return false;
+            } else {
+                res.json({"result": common.CODE_ID_OR_PW_INCORRECT})
+                return false;
+            }
+        } else {
+            common.logging_error('err', err);
+            return false;
+        }
     });
 }

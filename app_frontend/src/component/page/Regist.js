@@ -4,10 +4,7 @@ import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom
 import { Animated } from "react-animated-css";
 
 import BigText from '../util/BigText';
-
-
 import '../../static/page/Regist.css';
-
 const Config = require('../config/config.js');
 
 
@@ -48,31 +45,31 @@ class Regist extends React.Component {
     if(username == ''){
         this.setState({alertText: '아이디를 입력해주세요'});
         document.getElementById('regist_id').focus();
-        return 0;
+        return false;
     } else if( !(username.length > 3 && username.length < 11) ){
         this.setState({alertText: '아이디는 4자 이상 10자 이하로 만들어주세요'});
         document.getElementById('regist_id').focus();
-        return 0;
+        return false;
     } else if(password == ''){
         this.setState({alertText: '비밀번호를 입력해주세요'});
         document.getElementById('regist_password').focus();
-        return 0;
+        return false;
     } else if( !(password.length > 3 && password.length < 11) ){
         this.setState({alertText: '비밀번호는 4자 이상 10자 이하로 만들어주세요'});
         document.getElementById('regist_password').focus();
-        return 0;
+        return false;
     } else if(passwordRe == ''){
         this.setState({alertText: '비밀번호 확인을 입력해주세요'});
         document.getElementById('regist_repassword').focus();
-        return 0;
+        return false;
     } else if(passwordRe != password){
         this.setState({alertText: '패스워드가 다릅니다 다시 입력해주세요'});
         document.getElementById('regist_repassword').focus();
-        return 0;
+        return false;
     } else if(jlptLevel == ''){
         this.setState({alertText: 'JLPT레벨을 선택해주세요'});
         document.getElementById('regist_level').focus();
-        return 0;
+        return false;
     }
 
     var url = Config.backendUrl + '/api/createUser';
@@ -90,12 +87,13 @@ class Regist extends React.Component {
       } else if (response.data.result == Config.CODE_ID_NOT_ALLOW) {
         this.setState({alertText: '아이디는 한글, 영어, 숫자 외 불가능합니다'});
       } else if (response.data.result == Config.CODE_PW_NOT_ALLOW) {
-        this.setState({alertText: '비밀번호는 영어, 숫자, 특수문자(!@#$%^&*()-=~) 외 불가능합니다'});
+        this.setState({alertText: '비밀번호는 영어, 숫자, 특수문자(!@$%^&*()-=~) 외 불가능합니다'});
       } else {
         this.setState({alertText: '회원가입 실패 : 서버에 오류가 발생했습니다'});
       }
     });
   }
+
 
   render() {
     return (
