@@ -1,9 +1,16 @@
 import { Login } from '../reduxAction/Login.js'
 import { Logout } from '../reduxAction/Logout.js'
 
-var initialState = {
-  loginStatus: 0
-};
+if (localStorage.getItem("jwt") === null) {
+    var initialState = {
+      loginStatus: 0
+    };
+} else {
+    var initialState = {
+      loginStatus: 1
+    };
+}
+
 
 function LoginReduce(state = initialState, action) {
     switch (action.type) {
