@@ -106,18 +106,20 @@ componentDidMount 라이프 사이클 상 렌더 이후에 실행되기 때문�
 ```
 코어로직에 대한 결함
 
+tbl_japan_problem 테이블에 user_id가 null 인 데이터가 1건이 항상 유지되야 오류가 안남
+그러나 user_id가 null 인 데이터가 0건 일 가능성 혹은 2건 이상일 가능성이 존재함
+위 케이스에 대한 처리가 필요함
+
 
 ```
 
 #### 해결 #5
 ```
-tbl_japan_problem 테이블에 user_id가 null 인 데이터가 1건이 항상 유지되야 오류가 안남
-그러나 user_id가 null 인 데이터가 0건 일 가능성 혹은 2건 이상일 가능성이 존재함
-위 케이스에 대한 처리가 필요함
+...
 ```
 
 ---------
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTEyMDgyMjUwMywyNDg2MzUzMDQsMTU1MD
+eyJoaXN0b3J5IjpbMTk3ODk4NTgyMSwyNDg2MzUzMDQsMTU1MD
 UxMzYyMl19
 -->
