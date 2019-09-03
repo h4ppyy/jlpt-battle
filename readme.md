@@ -5,7 +5,7 @@
 ## お知らせ
 ```
 2019.08.28 プロジェクトの立ち上げ
-2019.09.03 redux.jsを使用して作った
+2019.09.03 redux.jsを導入した
 ```
 
 <img src="https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/www.gif?raw=true" width="100%"></img>
@@ -67,5 +67,5 @@ $ nodemon daemon.js
 Let's go !
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI1MDIxNTE5N119
+eyJoaXN0b3J5IjpbLTU0OTk1NDIwXX0=
 -->
