@@ -67,12 +67,12 @@ class Login extends React.Component {
       <div className='form-container'>
           <form>
             <div className="form-group">
-              <label for="form-label">
-                <i class="fas fa-user-shield mr8"></i>
+              <label>
+                <i className="fas fa-user-shield mr8"></i>
                 아이디
               </label>
               <input onChange={this.changeUsername.bind(this)} type="email" className="form-control input-control" id="login_id" placeholder=""/>
-              <label for="form-label">
+              <label>
                 <i className="fas fa-unlock-alt mr8"></i>
                 비밀번호
               </label>

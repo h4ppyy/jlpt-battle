@@ -15,11 +15,11 @@ import TestReduxClass1 from './sample/TestReduxClass1';
 import TestReduxClass2 from './sample/TestReduxClass2';
 
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <Router>
-        <Header/>
+        <Route component={Header} />
         <Route path="/" exact component={Main} />
         <Route path="/mypage/" component={Mypage} />
         <Route path="/ranking/" component={Ranking} />
@@ -29,7 +29,7 @@ function App() {
         <Route path="/test/" component={TestRedux2} />
         <Route path="/testclass/" component={TestReduxClass1} />
         <Route path="/testclass/" component={TestReduxClass2} />
-        <Footer/>
+        <Route component={Footer} />
       </Router>
     </div>
   );

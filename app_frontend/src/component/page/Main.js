@@ -121,8 +121,8 @@ class Main extends React.Component {
               <Button onClick={() => this.sendHiragana()} className='y' variant="success">정답 제출</Button>
             </div>
             <div className='chat-title'>
-              <i class="far fa-comment-dots dotdot"></i>
-              <span class='chat-title-font'>채팅방</span>
+              <i className="far fa-comment-dots dotdot"></i>
+              <span className='chat-title-font'>채팅방</span>
             </div>
             <div className='chat-content' ref={'thing'}>
               {this.state.chat.map((item, key) =>
@@ -147,7 +147,7 @@ class Main extends React.Component {
             <div className='history-content'>
 
               {this.state.history.map((item, key) =>
-                <div className='history-box'>
+                <div className='history-box' key={key}>
                   <div className='flex'>
                     <div className='flex-default'>
                       {item.username}

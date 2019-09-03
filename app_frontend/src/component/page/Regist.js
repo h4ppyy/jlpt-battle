@@ -100,23 +100,23 @@ class Regist extends React.Component {
       <Animated animationIn="fadeIn" animationOut="fadeInUpBig" isVisible={true}>
       <div className='form-container'>
             <div className="form-group">
-              <label for="form-label">
-                <i class="fas fa-user-shield mr8"></i>
+              <label>
+                <i className="fas fa-user-shield mr8"></i>
                 아이디
               </label>
               <input onChange={this.changeUsername.bind(this)} type="text" className="form-control input-control" id="regist_id" placeholder=""/>
-              <label for="form-label">
+              <label>
                 <i className="fas fa-unlock-alt mr8"></i>
                 비밀번호
               </label>
               <input onChange={this.changePassword.bind(this)} type="password" className="form-control input-control" id="regist_password" placeholder=""/>
-              <label for="form-label">
+              <label>
                 <i className="fas fa-unlock-alt mr8"></i>
                 비밀번호 확인
               </label>
               <input onChange={this.changePasswordRe.bind(this)} type="password" className="form-control input-control" id="regist_repassword" placeholder=""/>
-              <label for="form-label">
-                <i class="fas fa-star mr8"></i>
+              <label>
+                <i className="fas fa-star mr8"></i>
                 레벨 선택
               </label>
               <select onChange={this.changeJlptLevel.bind(this)} defaultValue={'0'} className="regist-level" id="regist_level">

@@ -7,6 +7,13 @@ import '../../static/common/Header.css';
 class Header extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+        loginStatus: 1,
+    };
+  }
+
+  logout = () => {
+    this.props.history.push('/login');
   }
 
   render() {
@@ -22,9 +29,17 @@ class Header extends React.Component {
           <div className='header-flex-item h-menu mt15'>
             <Link to="/mypage/">내 정보</Link>
           </div>
-          <div className='header-flex-item h-menu mt15'>
-            <Link to="/login/">로그인</Link>
-          </div>
+          {
+            this.state.loginStatus == 0
+            ?
+            <div className='header-flex-item h-menu mt15'>
+              <Link to="/login/">로그인</Link>
+            </div>
+            :
+            <div className='header-flex-item h-menu mt15'>
+              <a href="#" onClick={() => this.logout()}>로그아웃</a>
+            </div>
+          }
           <div className='header-flex-item h-sub mt15'>
               <span className='header-subinfo-version'>
                 v0.0.0
