@@ -2,16 +2,16 @@
 
 # JLPT Battle
 
+## お知らせ
+```
+2019.08.28 プロジェクトの立ち上げ
+```
+
 <img src="https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/www.gif?raw=true" width="100%"></img>
 
 <img src="https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/p4.png?raw=true" width="100%"></img>
 
 <img src="https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/p5.png?raw=true" width="100%"></img>
-
-## お知らせ
-```
-2019.08.28 プロジェクトの立ち上げ
-```
 
 ### Development Environment
 ```
@@ -64,3 +64,6 @@ $ nodemon daemon.js
 ```
 Let's go !
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbNzE0NzU5NjczXX0=
+-->
