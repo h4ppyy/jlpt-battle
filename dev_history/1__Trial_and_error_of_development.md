@@ -87,24 +87,20 @@ action/increment.js
 ```
 componentDidMount 함수에 setState 함수를 사용하면 안된다는 이야기
 
+componentDidMount = () => {
+	this.setState({hello: 'world'});
+}
 
+componentDidMount 라이프 사이클 상 렌더 이후에 실행되기 때문에
+두번 렌더되는 자원낭비 현상이 일어남
 ```
 
-#### 해결 #4
+#### 해결 #5
 ```
-sample/TestRedux1.js
-sample/TestRedux2.js
-sample/TestReduxClass1.js
-sample/TestReduxClass2.js
-store/counter.js
-reducers/counter.js
-action/decrement.js
-action/increment.js
-
-여러 샘플을 참조하여 적당히 샘플을 구성한 후 도입
+...
 ```
 
 ---------
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTIxMjM4NDM0MywxNTUwNTEzNjIyXX0=
+eyJoaXN0b3J5IjpbMjQ4NjM1MzA0LDE1NTA1MTM2MjJdfQ==
 -->
