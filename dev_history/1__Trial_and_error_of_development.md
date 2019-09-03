@@ -48,11 +48,17 @@ Header 컴포넌트와 Footer 컴포넌트를 Route 안에 구성함
 
 #### 해결 #3
 ```
-<Footer/>
+변경전 -> <Header/>
+변경후 -> <Route component={Header} />
 
+변경전 -> <Footer/>
+변경후 -> <Route component={Footer} />
+
+this.props 에 대한 정확한 이해가 필요했음
+앞으로 더 공부할 예정
 ```
 
 ---------
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTM4MDEzODgwMywxNTUwNTEzNjIyXX0=
+eyJoaXN0b3J5IjpbLTk1NTMxNjMzNywxNTUwNTEzNjIyXX0=
 -->
