@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import {Animated} from "react-animated-css";
 import { connect } from "react-redux";
 
@@ -9,12 +10,20 @@ class Mypage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      endpoint: "127.0.0.1:4000",
+      username: '',
+      jlpt_level: '',
+      point: '',
+      regist_date: '',
       progress_n1: 70,
       progress_n2: 20,
       progress_n3: 30,
       progress_n4: 60,
       progress_n5: 80,
+      solve_n1: '1,002,300',
+      solve_n2: '6,002,300',
+      solve_n3: '502,300',
+      solve_n4: '22,300',
+      solve_n5: '2,300',
     };
   }
 
@@ -23,6 +32,50 @@ class Mypage extends React.Component {
     if(loginStatus == 0) {
       this.props.history.push('/login');
     }
+
+    var jwt = localStorage.getItem("jwt");
+    var url = 'http://127.0.0.1:4000/api/getMypageInfo'
+    axios.defaults.headers.common['authorization'] = jwt
+    axios.post(url).then(response => {
+      if(response.data.result == 200){
+        var userInfo = response.data.userInfo
+        var problemSolve = response.data.problemSolve
+
+        var username = userInfo.username;
+        var jlpt_level = userInfo.jlpt_level;
+        var point = userInfo.point;
+        var regist_date = userInfo.regist_date;
+
+        var solve_n1 = problemSolve.n1;
+        var solve_n2 = problemSolve.n2;
+        var solve_n3 = problemSolve.n3;
+        var solve_n4 = problemSolve.n4;
+        var solve_n5 = problemSolve.n5;
+
+        var progress_n1 = problemSolve.progress_n1;
+        var progress_n2 = problemSolve.progress_n2;
+        var progress_n3 = problemSolve.progress_n3;
+        var progress_n4 = problemSolve.progress_n4;
+        var progress_n5 = problemSolve.progress_n5;
+
+        this.setState({username: username});
+        this.setState({jlpt_level: 'N' + jlpt_level});
+        this.setState({point: point});
+        this.setState({regist_date: regist_date});
+
+        this.setState({solve_n1: solve_n1});
+        this.setState({solve_n2: solve_n2});
+        this.setState({solve_n3: solve_n3});
+        this.setState({solve_n4: solve_n4});
+        this.setState({solve_n5: solve_n5});
+
+        this.setState({progress_n1: progress_n1});
+        this.setState({progress_n2: progress_n2});
+        this.setState({progress_n3: progress_n3});
+        this.setState({progress_n4: progress_n4});
+        this.setState({progress_n5: progress_n5});
+      }
+    });
   }
 
   render() {
@@ -55,22 +108,22 @@ class Mypage extends React.Component {
               <tbody>
                   <tr>
                     <td>아이디</td>
-                    <td>운영자</td>
+                    <td>{this.state.username}</td>
                   </tr>
 
                   <tr>
                     <td>JLPT 수준</td>
-                    <td>N3</td>
+                    <td>{this.state.jlpt_level}</td>
                   </tr>
 
                   <tr>
                     <td>보유 포인트</td>
-                    <td>42,000</td>
+                    <td>{this.state.point}</td>
                   </tr>
 
                   <tr>
                     <td>가입일</td>
-                    <td>2019-01-01 00:00:00</td>
+                    <td>{this.state.regist_date}</td>
                   </tr>
 
                   <tr>
@@ -81,7 +134,7 @@ class Mypage extends React.Component {
                           <div style={progress_n1} className="progress-bar progress-bar-striped bg-danger progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <div className='progress-txt'>
-                          <span>1,002,300</span> 회
+                          <span>{this.state.solve_n1}</span> 회
                         </div>
                       </div>
                     </td>
@@ -95,7 +148,7 @@ class Mypage extends React.Component {
                         <div style={progress_n2} className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
                       <div className='progress-txt'>
-                        <span>6,002,300</span> 회
+                        <span>{this.state.solve_n2}</span> 회
                       </div>
                     </div>
                     </td>
@@ -109,7 +162,7 @@ class Mypage extends React.Component {
                         <div style={progress_n3} className="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
                       <div className='progress-txt'>
-                        <span>502,300</span> 회
+                        <span>{this.state.solve_n3}</span> 회
                       </div>
                     </div>
                     </td>
@@ -123,7 +176,7 @@ class Mypage extends React.Component {
                         <div style={progress_n4} className="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
                       <div className='progress-txt'>
-                        <span>22,300</span> 회
+                        <span>{this.state.solve_n4}</span> 회
                       </div>
                     </div>
                     </td>
@@ -137,7 +190,7 @@ class Mypage extends React.Component {
                         <div style={progress_n5} className="progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
                       <div className='progress-txt'>
-                        <span>2,300</span> 회
+                        <span>{this.state.solve_n5}</span> 회
                       </div>
                     </div>
                     </td>
