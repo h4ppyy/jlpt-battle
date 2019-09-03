@@ -82,6 +82,29 @@ action/increment.js
 ```
 
 ---------
+
+#### 이슈 #5
+```
+componentDidMount 함수에 setState 함수를 사용하면 안된다는 이야기
+
+
+```
+
+#### 해결 #4
+```
+sample/TestRedux1.js
+sample/TestRedux2.js
+sample/TestReduxClass1.js
+sample/TestReduxClass2.js
+store/counter.js
+reducers/counter.js
+action/decrement.js
+action/increment.js
+
+여러 샘플을 참조하여 적당히 샘플을 구성한 후 도입
+```
+
+---------
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1ODg2ODk1NTAsMTU1MDUxMzYyMl19
+eyJoaXN0b3J5IjpbMTIxMjM4NDM0MywxNTUwNTEzNjIyXX0=
 -->
