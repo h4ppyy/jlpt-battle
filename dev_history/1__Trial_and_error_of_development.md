@@ -23,14 +23,8 @@ local에 개발환경을 구성하여 개발함
 
 #### 이슈 #2
 ```
-개발환경은 항상 ubuntu16.04 가상환경에서 세팅하였으나
-react.js + express.js의 개발환경 세팅을 가상환경에 하니깐 아래와 같은 문제가 발생하였다
-
-- react-scripts 의 자동 리로딩 불가
-- nodemon 의 자동 리로딩 불가
-
-소스가 변경되면 자동으로 서버가 재기동되면서 반영된 결과를 출력해야되나
-ubuntu16.04 가상환경과 local 환경의 싱크 간에 이벤트 리슨을 못하는 현상이 있었다
+초기에 express-generator를 이용해서 백엔드를 구축하였으나 socket.io 연동에 어려움을 겪음
+express-generator를 포기하고 app.js 파일 하나로 구성된 샘플 소스를 이용하여 하나하나 확장하여 프로젝트를 구성함
 ```
 
 #### 해결 #2
@@ -41,5 +35,5 @@ local에 개발환경을 구성하여 개발함
 
 ---------
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDc5Njg5NTg4XX0=
+eyJoaXN0b3J5IjpbNTc2NzQ1MjYzXX0=
 -->
