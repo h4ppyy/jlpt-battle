@@ -63,7 +63,7 @@ io.on('connection', socket => {
 
   socket.on('history', () => {
     console.log('INFO -> WS : called history');
-    var sql = "select ifnull(y.username, 'PC') as username, ifnull(x.modify_date, '정답 미제출로 인한 pass') as modify_date, z.kanji, z.hiragana, z.hangul from tbl_japan_problem x left join tbl_user y on x.user_id = y.id join tbl_japan_store z on x.store_id = z.id where x.regist_date > DATE_FORMAT(now(),'%Y-%m-%d') order by x.regist_date desc limit 11";
+    var sql = "select ifnull(y.username, 'PC') as username, ifnull(x.modify_date, '정답 미제출로 인한 pass') as modify_date, z.kanji, z.hiragana, z.hangul from tbl_japan_problem x left join tbl_user y on x.user_id = y.id join tbl_japan_store z on x.store_id = z.id where x.regist_date > DATE_FORMAT(date_sub(now(), interval 10 day),'%Y-%m-%d') order by x.regist_date desc limit 11";
     connection.query(sql, function(err, rows, fields) {
       if (err == null) {
         // console.log('DEBUG -> rows : ', rows);

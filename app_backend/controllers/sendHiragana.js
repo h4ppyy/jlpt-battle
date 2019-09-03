@@ -20,7 +20,7 @@ exports.sendHiragana = function(req, res) {
     // あいそう
     async.waterfall([
         function(callback) {
-            var sql = "select x.id, y.hiragana from tbl_japan_problem x join tbl_japan_store y on x.store_id = y.id where x.delete_yn = 'N' and x.regist_date > DATE_FORMAT(date_sub(now(), interval 1 day),'%Y-%m-%d') and user_id is null order by x.regist_date desc limit 1";
+            var sql = "select x.id, y.hiragana from tbl_japan_problem x join tbl_japan_store y on x.store_id = y.id where x.delete_yn = 'N' and x.regist_date > DATE_FORMAT(date_sub(now(), interval 10 day),'%Y-%m-%d') and user_id is null order by x.regist_date desc limit 1";
             console.log(sql);
             connection.query(sql, function(err, rows, fields) {
               if (err == null) {
