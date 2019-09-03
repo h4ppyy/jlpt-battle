@@ -69,10 +69,19 @@ action / reduce / store 에 대한 구성이 정확히 이해가 되지 않았�
 
 #### 해결 #3
 ```
-여러 샘플을 확인하여 적당히 구성
+sample/TestRedux1.js
+sample/TestRedux2.js
+sample/TestReduxClass1.js
+sample/TestReduxClass2.js
+store/counter.js
+reducers/counter.js
+action/decrement.js
+action/increment.js
+
+여러 샘플을 참조하여 적당히 샘플을 구성한 후 도입
 ```
 
 ---------
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTY1NDg5MzUyNSwxNTUwNTEzNjIyXX0=
+eyJoaXN0b3J5IjpbLTEwMjE3Nzc1MTcsMTU1MDUxMzYyMl19
 -->
