@@ -46,13 +46,13 @@ this.props.history.push('/login');
 Header 컴포넌트와 Footer 컴포넌트를 Route 안에 구성함
 ```
 
-#### 해결 #2
+#### 해결 #3
 ```
-express-generator로 구성되는 전체적인 프로젝트 구성을 모른다면
-바닥부터 구현하는 것도 좋은 방안으로 보여짐
+<Footer/>
+
 ```
 
 ---------
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTU1MDUxMzYyMl19
+eyJoaXN0b3J5IjpbMTM4MDEzODgwMywxNTUwNTEzNjIyXX0=
 -->
