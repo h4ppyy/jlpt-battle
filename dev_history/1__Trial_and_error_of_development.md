@@ -67,7 +67,7 @@ action / reduce / store 에 대한 구성이 정확히 이해가 되지 않았�
 특히나 mapStateToProps, mapDispatchToProps 는 한번 정확히 다시 공부해야할 것 같음
 ```
 
-#### 해결 #3
+#### 해결 #4
 ```
 sample/TestRedux1.js
 sample/TestRedux2.js
@@ -83,5 +83,5 @@ action/increment.js
 
 ---------
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwMjE3Nzc1MTcsMTU1MDUxMzYyMl19
+eyJoaXN0b3J5IjpbLTE1ODg2ODk1NTAsMTU1MDUxMzYyMl19
 -->
