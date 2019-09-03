@@ -6,7 +6,11 @@
 react.js + express.js의 개발환경 세팅을 가상환경에 하니깐
 아래와 같은 문제가 발생하였다
 
-react-scripts
+- react-scripts 의 자동 리로딩 불가
+- nodemon 의 자동 리로딩 불가
+
+소스가 변경되면 자동으로 서버가 재기동되면서 반영된 결과를 출력해야되나
+ubuntu16.04 가상환경과 local 환경의 싱크 간에 이벤트 리슨을 못하는 현상이 있었다
 ```
 
 ```
@@ -93,5 +97,5 @@ $ yarn global add express-generator
 $ express --no-view app_backend
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5NDc0NDA1NzFdfQ==
+eyJoaXN0b3J5IjpbMTExNzM5OTE0OV19
 -->
