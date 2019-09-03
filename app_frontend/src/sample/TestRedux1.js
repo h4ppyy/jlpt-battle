@@ -18,9 +18,6 @@ const TestRedux1 = ({count, text, increment, decrement}) => {
 
 
 const mapStateToProps = (state) => {
-  console.log('state -> ', state);
-  console.log('state.counter -> ', state.counter);
-  console.log('state.text -> ', state.text);
   return {
     count: state.counter,
     text: state.text

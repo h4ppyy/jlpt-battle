@@ -11,6 +11,8 @@ import Login from './component/page/Login';
 import Regist from './component/page/Regist';
 import TestRedux1 from './sample/TestRedux1';
 import TestRedux2 from './sample/TestRedux2';
+import TestReduxClass1 from './sample/TestReduxClass1';
+import TestReduxClass2 from './sample/TestReduxClass2';
 
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
         <Route path="/Regist/" component={Regist} />
         <Route path="/test/" component={TestRedux1} />
         <Route path="/test/" component={TestRedux2} />
+        <Route path="/testclass/" component={TestReduxClass1} />
+        <Route path="/testclass/" component={TestReduxClass2} />
         <Footer/>
       </Router>
     </div>
