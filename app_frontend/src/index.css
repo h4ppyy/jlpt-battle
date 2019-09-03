@@ -10,7 +10,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -26,6 +25,26 @@ code {
 .mr8 {
   margin-right: 8px;
 }
+.mrl5 {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 .debug {
   color: #ffffff;
+}
+.debug-count {
+  text-align: center;
+  font-size: 100px;
+  margin-top: 10px;
+  color: #ffffff;
+}
+.debug-box {
+  text-align: center;
+}
+.debug-text {
+  margin-top: 100px;
+  text-align: center;
+  color: #ffffff;
+  font-size: 50px;
 }

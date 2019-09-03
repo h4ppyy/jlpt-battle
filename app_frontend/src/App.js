@@ -9,6 +9,8 @@ import Mypage from './component/page/Mypage'
 import Ranking from './component/page/Ranking'
 import Login from './component/page/Login';
 import Regist from './component/page/Regist';
+import TestRedux1 from './sample/TestRedux1';
+import TestRedux2 from './sample/TestRedux2';
 
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
         <Route path="/ranking/" component={Ranking} />
         <Route path="/login/" component={Login} />
         <Route path="/Regist/" component={Regist} />
+        <Route path="/test/" component={TestRedux1} />
+        <Route path="/test/" component={TestRedux2} />
         <Footer/>
       </Router>
     </div>
