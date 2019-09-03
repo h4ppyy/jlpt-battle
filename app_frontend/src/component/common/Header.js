@@ -8,7 +8,7 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        loginStatus: 1,
+        loginStatus: 0,
     };
   }
 
