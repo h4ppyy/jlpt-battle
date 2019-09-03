@@ -13,6 +13,7 @@ class Header extends React.Component {
   }
 
   logout = () => {
+    localStorage.removeItem('jwt');
     this.props.history.push('/login');
   }
 
