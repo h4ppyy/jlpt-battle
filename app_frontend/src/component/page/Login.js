@@ -46,11 +46,11 @@ class Login extends React.Component {
       password: password,
     };
     axios.post(url, param).then(response => {
-      console.log('response.data.result -> ', response.data.result);
       var reponseCode = response.data.result;
       if(reponseCode == Config.CODE_SUCCESS) {
           var token = response.data.token;
           localStorage.setItem('jwt', token);
+          this.props.history.push('/');
       } else if(reponseCode == Config.CODE_ID_NOT_ALLOW || reponseCode == Config.CODE_PW_NOT_ALLOW) {
           this.setState({alertText: '허용하지 않는 문자가 입력되었습니다'});
       }
@@ -82,6 +82,7 @@ class Login extends React.Component {
           <div className="form-button">
           <button onClick={() => this.sendLogin()} type="submit" className="btn btn-danger">로그인</button>
           </div>
+          <div className='go-regist'><Link to="/regist/">아직 회원이 아니신가요...? 회원가입</Link></div>
       </div>
       {
         this.state.alertText == '' ?
