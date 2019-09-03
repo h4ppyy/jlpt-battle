@@ -101,6 +101,21 @@ componentDidMount 라이프 사이클 상 렌더 이후에 실행되기 때문�
 ```
 
 ---------
+
+#### 이슈 #6
+```
+코어로직에 대한 결함
+
+
+```
+
+#### 해결 #5
+```
+...
+```
+
+---------
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjQ4NjM1MzA0LDE1NTA1MTM2MjJdfQ==
+eyJoaXN0b3J5IjpbMzA5ODkxNjEsMjQ4NjM1MzA0LDE1NTA1MT
+M2MjJdfQ==
 -->
