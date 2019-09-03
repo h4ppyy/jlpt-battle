@@ -52,7 +52,7 @@ $ yarn global add nodemon
 $ nodemon app.js
 ```
 ~~daemon~~ 
-(The daemon is no longer used)
+(The daemon is no longer used ... 2019.09.03)
 ```
 We don't do it anymore
 because I've already done 'yarn install'
@@ -66,5 +66,5 @@ $ nodemon daemon.js
 Let's go !
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTc2NTQ1NjI0OF19
+eyJoaXN0b3J5IjpbMTk0Mzc0OTgyOF19
 -->
