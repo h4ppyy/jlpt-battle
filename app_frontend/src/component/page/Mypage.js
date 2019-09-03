@@ -1,8 +1,9 @@
 import React from 'react';
 import {Animated} from "react-animated-css";
-
+import { connect } from "react-redux";
 
 import '../../static/page/Mypage.css';
+
 
 class Mypage extends React.Component {
   constructor(props) {
@@ -15,6 +16,13 @@ class Mypage extends React.Component {
       progress_n4: 60,
       progress_n5: 80,
     };
+  }
+
+  componentDidMount = () => {
+    var loginStatus = this.props.loginStatus;
+    if(loginStatus == 0) {
+      this.props.history.push('/login');
+    }
   }
 
   render() {
@@ -145,4 +153,19 @@ class Mypage extends React.Component {
 }
 
 
-export default Mypage;
+const mapStateToProps = (state) => {
+  return {
+    loginStatus: state.loginStatus
+  };
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: () => dispatch({ type: 'LOGIN' }),
+    logout: () => dispatch({ type: 'LOGOUT' }),
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Mypage);

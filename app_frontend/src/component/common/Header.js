@@ -26,9 +26,15 @@ class Header extends React.Component {
           <div className='header-flex-item h-menu mt15'>
             <Link to="/ranking/">랭킹</Link>
           </div>
-          <div className='header-flex-item h-menu mt15'>
-            <Link to="/mypage/">내 정보</Link>
-          </div>
+          {
+            this.props.loginStatus === 1
+            ?
+            <div className='header-flex-item h-menu mt15'>
+              <Link to="/mypage/">내 정보</Link>
+            </div>
+            :
+            <div></div>
+          }
           {
             this.props.loginStatus === 0
             ?
