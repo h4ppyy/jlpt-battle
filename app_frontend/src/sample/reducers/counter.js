@@ -1,4 +1,5 @@
 import { increment } from '../action/increment.js'
+import { decrement } from '../action/decrement.js'
 
 var initialState = {
   counter: 5,
@@ -10,7 +11,7 @@ function counter(state = initialState, action) {
         case 'INCREMENT':
             return increment(state);
         case 'DECREMENT':
-            return increment(state);
+            return decrement(state);
         default:
             return state;
     }
