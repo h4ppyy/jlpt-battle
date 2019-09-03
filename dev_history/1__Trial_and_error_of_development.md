@@ -29,11 +29,11 @@ express-generator를 포기하고 app.js 파일 하나로 구성된 샘플 소�
 
 #### 해결 #2
 ```
-local에 개발환경을 구성하여 개발함
-결과적으로 개발 생산성이 눈에 보이도록 증가함
+express-generator로 구성되는 전체적인 프로젝트 구성을 모른다면
+바닥부터 구현하는 것도 좋은 방안으로 보여짐
 ```
 
 ---------
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTc2NzQ1MjYzXX0=
+eyJoaXN0b3J5IjpbMTI0NDA3NzYwNV19
 -->
