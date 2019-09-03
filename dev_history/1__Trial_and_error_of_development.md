@@ -34,6 +34,20 @@ express-generator로 구성되는 전체적인 프로젝트 구성을 모른다�
 ```
 
 ---------
+
+#### 이슈 #3
+```
+Header 컴포넌트와 Fotter 컴포넌트를 공통으로 사용하기 위해 Router 안에 넣었으나
+Header에서 
+```
+
+#### 해결 #2
+```
+express-generator로 구성되는 전체적인 프로젝트 구성을 모른다면
+바닥부터 구현하는 것도 좋은 방안으로 보여짐
+```
+
+---------
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI0NDA3NzYwNV19
+eyJoaXN0b3J5IjpbLTc2MDA2NDAxMl19
 -->
