@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from "axios";
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 import {Animated} from "react-animated-css";
 
 import BigText from '../util/BigText';
@@ -50,6 +51,7 @@ class Login extends React.Component {
       if(reponseCode == Config.CODE_SUCCESS) {
           var token = response.data.token;
           localStorage.setItem('jwt', token);
+          this.props.login();
           this.props.history.push('/');
       } else if(reponseCode == Config.CODE_ID_NOT_ALLOW || reponseCode == Config.CODE_PW_NOT_ALLOW) {
           this.setState({alertText: '허용하지 않는 문자가 입력되었습니다'});
@@ -97,4 +99,19 @@ class Login extends React.Component {
 }
 
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    loginStatus: state.loginStatus
+  };
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: () => dispatch({ type: 'LOGIN' }),
+    logout: () => dispatch({ type: 'LOGOUT' }),
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

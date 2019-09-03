@@ -9,6 +9,7 @@ import Mypage from './component/page/Mypage'
 import Ranking from './component/page/Ranking'
 import Login from './component/page/Login';
 import Regist from './component/page/Regist';
+
 import TestRedux1 from './sample/TestRedux1';
 import TestRedux2 from './sample/TestRedux2';
 import TestReduxClass1 from './sample/TestReduxClass1';
