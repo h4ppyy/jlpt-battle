@@ -64,16 +64,15 @@ this.props 에 대한 정확한 이해가 필요했음
 ```
 react-redux 연동
 action / reduce / store 에 대한 구성이 정확히 이해가 되지 않았음
-특히나 mapStateToProps, mapDispatchToProps 는 한번 
+특히나 mapStateToProps, mapDispatchToProps 는 한번 정확히 다시 공부해야할 것 같음
 ```
 
 #### 해결 #3
 ```
-
-
+여러 샘플을 확인하여 적당히 구성
 ```
 
 ---------
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDg4MTA4MjgsMTU1MDUxMzYyMl19
+eyJoaXN0b3J5IjpbLTY1NDg5MzUyNSwxNTUwNTEzNjIyXX0=
 -->
