@@ -26,14 +26,14 @@ mysql 5.7.27
 python 3.7.4
 ```
 
-### Configuring a project
+## Configuring a project
 
 ```bash
 $ git clone https://github.com/h4ppyy/jlpt-battle
 $ cd jlpt-battle
 ```
 
-### Getting Started with Project
+## Getting Started with Project
 
 #### migrate  
 Modify the database information in `migrate.py` before you work
@@ -74,6 +74,6 @@ $ python daemon.py
 Let's go !
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjQyMjY5ODc4LDIxMDYyNjIyMTIsLTU0OT
-k1NDIwXX0=
+eyJoaXN0b3J5IjpbLTEyOTEyNDAxMTIsMjEwNjI2MjIxMiwtNT
+Q5OTU0MjBdfQ==
 -->
