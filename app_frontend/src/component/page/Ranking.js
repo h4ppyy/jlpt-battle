@@ -40,7 +40,7 @@ class Ranking extends React.Component {
         <div className='ranking-box'>
           <div className='rank-top'>
             <img alt='rated' className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/top-rated.png'}/>
-            <span className='rank-top-title'>순위표 TOP 100</span>
+            <span className='rank-top-title'>명예의 전당 TOP 100</span>
           </div>
 
           <table className='ranking-table'>
@@ -55,28 +55,37 @@ class Ranking extends React.Component {
             </thead>
             <tbody>
               {this.state.rankList.map((item, key) =>
-                <tr key={key}>
-                  <td>
                   {
-                    item.rank === 1 ?
-                        <img alt='winner' className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/winner.png'}/>
-                        :
-                        item.rank &&
-                    item.rank === 2 ?
-                        <img alt='second' className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/second.png'}/>
-                        :
-                        item.rank &&
-                    item.rank === 3 ?
-                        <img alt='third' className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/third.png'}/>
-                        :
-                        item.rank
-                  }
-                  </td>
-                  <td>{item.username}</td>
-                  <td>{item.jlpt_level}</td>
-                  <td>{item.point}</td>
-                  <td>{item.regist_date}</td>
+                    item.length === 0
+                    ?
+                    <tr key={key}>
+                      asdsadsadsadsad
+                    </tr>
+                    :
+                    <tr key={key}>
+                      <td>
+                      {
+                        item.rank === 1 ?
+                            <img alt='winner' className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/winner.png'}/>
+                            :
+                            item.rank &&
+                        item.rank === 2 ?
+                            <img alt='second' className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/second.png'}/>
+                            :
+                            item.rank &&
+                        item.rank === 3 ?
+                            <img alt='third' className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/third.png'}/>
+                            :
+                            item.rank
+                      }
+                      </td>
+                      <td>{item.username}</td>
+                      <td>{item.jlpt_level}</td>
+                      <td>{item.point}</td>
+                      <td>{item.regist_date}</td>
                 </tr>
+                    }
+
               )}
             </tbody>
           </table>
