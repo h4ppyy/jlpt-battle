@@ -50,14 +50,10 @@ $ yarn install
 $ yarn start
 ```
 #### backend  
+Create `config.js` and modify the database information in `config.js` before you work
 ```bash
 $ cd app_backend
 $ cp config/config.template config/config.js
-
-Create your database by referring to 'table.sql'
-above the directory 'database'
-And change the database connection information
-
 $ yarn install
 $ yarn start
 
@@ -73,5 +69,5 @@ $ python daemon.py
 Let's go !
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTczNTE4ODExOCwtNTQ5OTU0MjBdfQ==
+eyJoaXN0b3J5IjpbMjkyMDk5NjA4LC01NDk5NTQyMF19
 -->
