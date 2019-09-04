@@ -4,9 +4,9 @@
 
 ## Notification
 
-1.2019.08.28 Start Project
-- 2019.09.03 Start 'redux.js'
-- 2019.09.04 completed 'database migrate shell'
+- 2019.08.28 Start `Project`
+- 2019.09.03 Start `redux.js`
+- 2019.09.04 completed `database migrate shell`
 
 
 <img src="https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/www.gif?raw=true" width="100%"></img>
@@ -72,6 +72,6 @@ $ python daemon.py
 Let's go !
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTg1MTc0NDUyNywyMTA2MjYyMjEyLC01ND
+eyJoaXN0b3J5IjpbMTIzNDA1MzU4OSwyMTA2MjYyMjEyLC01ND
 k5NTQyMF19
 -->
