@@ -51,7 +51,8 @@ $ yarn install
 $ yarn start
 ```
 #### backend  
-Create `config.js` and modify the database information in `config.js` before you work
+Create `config.js` and modify the database information in `config.js` before you work  
+This server opens on port `4000`
 ```bash
 $ cd app_backend
 $ cp config/config.template config/config.js
@@ -71,6 +72,6 @@ $ python daemon.py
 Let's go !
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTg4NjU2ODM0MywyMTA2MjYyMjEyLC01ND
+eyJoaXN0b3J5IjpbMTA4Mzg4Nzg4OSwyMTA2MjYyMjEyLC01ND
 k5NTQyMF19
 -->
