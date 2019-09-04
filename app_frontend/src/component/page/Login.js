@@ -2,7 +2,7 @@ import React from 'react';
 import axios from "axios";
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import {Animated} from "react-animated-css";
+import { Animated } from "react-animated-css";
 
 import BigText from '../util/BigText';
 import '../../static/page/Login.css';

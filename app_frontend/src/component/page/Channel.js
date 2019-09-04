@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {Animated} from "react-animated-css";
+import { Animated } from "react-animated-css";
 import { connect } from "react-redux";
 
 import '../../static/page/Channel.css';

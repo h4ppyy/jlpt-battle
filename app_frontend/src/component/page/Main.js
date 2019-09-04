@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { Button, Form } from 'react-bootstrap';
-import {Animated} from "react-animated-css";
+import { Animated } from "react-animated-css";
+import { connect } from "react-redux";
 import socketIOClient from "socket.io-client";
 
 
@@ -112,12 +113,27 @@ class Main extends React.Component {
             <div className='hanja-container'>
               <div className='hanja-box'>
                 <p>{this.state.kanji}</p>
-                {this.props.match.params.id}
+                <p>{this.props.match.params.id}</p>
+                <p>{this.props.loginStatus}</p>
               </div>
             </div>
             <div className='sendbox-container'>
-              <Form.Control tabIndex="0" value={this.state.inputHiragana} onKeyDown={this.handleKeyDownHiragana} onChange={this.onChangeHiragana.bind(this)} className='x' type="text" placeholder="" />
-              <Button onClick={() => this.sendHiragana()} className='y' variant="success">정답 제출</Button>
+              {
+                this.props.loginStatus === 0
+                ?
+                <input type="text" disabled className="form-control x nologin" placeholder="로그인 후 이용할 수 있습니다" value={this.state.inputHiragana} onKeyDown={this.handleKeyDownHiragana} onChange={this.onChangeHiragana.bind(this)}/>
+                :
+                <input type="text" className="form-control x" placeholder="" value={this.state.inputHiragana} onKeyDown={this.handleKeyDownHiragana} onChange={this.onChangeHiragana.bind(this)}/>
+
+              }
+              {
+                this.props.loginStatus === 0
+                ?
+                <button disabled onClick={() => this.sendHiragana()} type="button" className="btn btn-success y">정답 제출</button>
+                :
+                <button onClick={() => this.sendHiragana()} type="button" className="btn btn-success y">정답 제출</button>
+
+              }
             </div>
             <div className='chat-title'>
               <i className="far fa-comment-dots dotdot"></i>
@@ -174,4 +190,20 @@ class Main extends React.Component {
 }
 
 
-export default Main;
+const mapStateToProps = (state) => {
+  return {
+    loginStatus: state.loginStatus
+  };
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: () => dispatch({ type: 'LOGIN' }),
+    logout: () => dispatch({ type: 'LOGOUT' }),
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
+// export default Main;
