@@ -2,7 +2,7 @@
 
 # JLPT Battle
 
-## お知らせ
+## Notification
 ```
 2019.08.28 プロジェクトの立ち上げ
 2019.09.03 'redux.js' を導入した
@@ -72,6 +72,6 @@ $ python daemon.py
 Let's go !
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTA4Mzg4Nzg4OSwyMTA2MjYyMjEyLC01ND
+eyJoaXN0b3J5IjpbLTE5ODI2NDQ5MywyMTA2MjYyMjEyLC01ND
 k5NTQyMF19
 -->
