@@ -27,7 +27,7 @@ class Mypage extends React.Component {
     };
   }
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     var loginStatus = this.props.loginStatus;
     if(loginStatus == 0) {
       this.props.history.push('/login');

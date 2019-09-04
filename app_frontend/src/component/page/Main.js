@@ -29,7 +29,7 @@ class Main extends React.Component {
     }
   }
 
-  componentDidMount = () => {
+  componentWillMount = () => {
       var self = this;
 
       var url = 'http://127.0.0.1:4000/api/getChatLog'
