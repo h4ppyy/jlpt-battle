@@ -55,13 +55,6 @@ class Ranking extends React.Component {
             </thead>
             <tbody>
               {this.state.rankList.map((item, key) =>
-                  {
-                    item.length === 0
-                    ?
-                    <tr key={key}>
-                      asdsadsadsadsad
-                    </tr>
-                    :
                     <tr key={key}>
                       <td>
                       {
@@ -84,11 +77,19 @@ class Ranking extends React.Component {
                       <td>{item.point}</td>
                       <td>{item.regist_date}</td>
                 </tr>
-                    }
-
               )}
             </tbody>
           </table>
+          {
+              this.state.rankList.length === 0
+              ?
+              <div className='ranking-null'>
+                <img alt='lurker' className='rank-null-img' src={process.env.PUBLIC_URL + '/ranking/lurker.png'}/>
+                <div>현재 명예의 전당에 등록된 사용자가 없습니다</div>
+              </div>
+              :
+              <div></div>
+          }
 
         </div>
       </div>

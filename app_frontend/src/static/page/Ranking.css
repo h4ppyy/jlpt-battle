@@ -55,3 +55,12 @@ tbody > tr:hover{
 .rank3{
   color: green;
 }
+.ranking-null{
+  text-align: center;
+  font-size: 16px;
+  margin-top: 150px;
+  color: #ceceff;
+}
+.rank-null-img{
+  width: 100px;
+}
