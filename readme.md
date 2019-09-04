@@ -62,6 +62,7 @@ $ yarn global add nodemon
 $ nodemon app.js
 ```
 #### daemon
+`daemon.py` is a great background daemon that presents the problem from the Japanese language repository.
 ```bash
 $ cd app_daemon
 $ python daemon.py
@@ -69,5 +70,6 @@ $ python daemon.py
 Let's go !
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjEwNjI2MjIxMiwtNTQ5OTU0MjBdfQ==
+eyJoaXN0b3J5IjpbLTQxOTI1NTY4NCwyMTA2MjYyMjEyLC01ND
+k5NTQyMF19
 -->
