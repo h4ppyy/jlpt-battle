@@ -44,6 +44,7 @@ $ python migrate.py
 ```
 
 #### frontend
+This server opens on port `3000`
 ```bash
 $ cd app_frontend
 $ yarn install
@@ -70,6 +71,6 @@ $ python daemon.py
 Let's go !
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQxOTI1NTY4NCwyMTA2MjYyMjEyLC01ND
+eyJoaXN0b3J5IjpbMTg4NjU2ODM0MywyMTA2MjYyMjEyLC01ND
 k5NTQyMF19
 -->
