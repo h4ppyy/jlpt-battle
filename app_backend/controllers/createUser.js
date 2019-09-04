@@ -88,10 +88,12 @@ exports.createUser = function(req, res) {
                       callback(null);
                     } else {
                       res.json({"result": common.CODE_ID_DUPLICATE})
+                      connection.end()
                       return false;
                     }
                 } else {
                     common.logging_error('err', err);
+                    connection.end()
                     return false;
                 }
             });
@@ -108,9 +110,11 @@ exports.createUser = function(req, res) {
             connection.query(sql, function(err, rows, fields) {
                 if (!err){
                     res.json({"result": common.CODE_SUCCESS})
+                    connection.end()
                     return false;
                 } else {
                   common.logging_error('err', err);
+                  connection.end()
                   return false;
                 }
             });

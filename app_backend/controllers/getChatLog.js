@@ -24,7 +24,6 @@ exports.getChatLog = function(req, res) {
     common.logging_debug('sql', sql);
     connection.query(sql, function(err, rows, fields) {
       if (err == null) {
-        console.log('DEBUG -> rows : ', rows);
         res.json({"result": rows})
       }
       else {

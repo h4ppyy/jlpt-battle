@@ -5,14 +5,14 @@ import { Animated } from "react-animated-css";
 import { connect } from "react-redux";
 import socketIOClient from "socket.io-client";
 
-
 import '../../static/page/Main.css';
+const Config = require('../config/config.js');
+
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      endpoint: "127.0.0.1:4000",
       kanji: '',
       inputChat: '',
       inputHiragana: '',
@@ -38,6 +38,7 @@ class Main extends React.Component {
         this.setState({chat: response.data.result.reverse()});
       });
 
+      /*
       url = 'http://127.0.0.1:4000/api/getHistoryLog'
       axios.post(url).then(response => {
         response.data.result.shift();
@@ -48,11 +49,24 @@ class Main extends React.Component {
       axios.post(url).then(response => {
         this.setState({kanji: response.data.result[0]['kanji'] });
       });
+      */
 
-      const socket = socketIOClient(this.state.endpoint);
-      socket.on('chat', (chat) => {
+      // 채팅 리스너
+      const socket = socketIOClient(Config.backendUrl);
+      socket.on('chat', (data) => {
+          const username = data.username;
+          const content = data.content;
+          const regist_date = data.regist_date;
+
+          console.log('username -> ', username);
+          console.log('content -> ', content);
+          console.log('regist_date -> ', regist_date);
+
           var tmp = this.state.chat;
-          tmp.push({"id":"0", "username":"운영자", "content":chat})
+          console.log('tmp -> ', tmp);
+          console.log('data -> ', data);
+          tmp.push(data)
+          console.log('after -> ', tmp);
           this.setState(tmp);
           this.scrollToBottom();
       })
@@ -77,11 +91,18 @@ class Main extends React.Component {
     this.setState({inputHiragana: event.target.value});
   }
 
+  // 채팅 전송 이벤트
   sendChat = () => {
-    const socket = socketIOClient(this.state.endpoint);
-    var content = this.state.inputChat;
-    socket.emit('chat', content);
+    const socket = socketIOClient(Config.backendUrl);
+    const jwt = localStorage.getItem("jwt");
+    const content = this.state.inputChat;
+    const payload = {
+      'chat': content,
+      'jwt': jwt
+    }
+    socket.emit('chat', payload);
     this.setState({inputChat: ''});
+    socket.emit('end');
   }
 
   sendHiragana = () => {
@@ -145,8 +166,20 @@ class Main extends React.Component {
               )}
             </div>
             <div className='sendbox-container'>
-              <Form.Control tabIndex="0" value={this.state.inputChat} onKeyDown={this.handleKeyDownChat} onChange={this.onChangeChat.bind(this)} className='x' type="text" placeholder="" />
-              <Button onClick={() => this.sendChat() } className='y' variant="warning">전송</Button>
+              {
+                this.props.loginStatus === 0
+                ?
+                <input disabled value={this.state.inputChat} onKeyDown={this.handleKeyDownChat} onChange={this.onChangeChat.bind(this)} className='x' type="text" class="form-control nologin" placeholder="로그인 후 이용할 수 있습니다"></input>
+                :
+                <input value={this.state.inputChat} onKeyDown={this.handleKeyDownChat} onChange={this.onChangeChat.bind(this)} className='x' type="text" class="form-control" placeholder=""></input>
+              }
+              {
+                this.props.loginStatus === 0
+                ?
+                <Button disabled onClick={() => this.sendChat() } className='y' variant="warning">전송</Button>
+                :
+                <Button onClick={() => this.sendChat() } className='y' variant="warning">전송</Button>
+              }
             </div>
           </div>
           <div className='main-history'>
