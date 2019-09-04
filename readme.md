@@ -32,6 +32,17 @@ $ cd jlpt-battle
 ```
 
 ### Getting Started with Project
+
+migrate
+Modify the database information in 'migrate.py before you work on it
+```bash
+$ cd app_daemon
+$ python3 -m venv venv
+$ . venv/bin/activate
+$ pip install -r requirements.txt
+$ python migrate.py
+```
+
 frontend
 ```bash
 $ cd app_frontend
@@ -55,15 +66,12 @@ $ yarn global add nodemon
 $ nodemon app.js
 ```
 daemon
-```
+```bash
 $ cd app_daemon
-$ python3 -m venv venv
-$ . venv/bin/activate
-$ pip install -r requirements.txt
 $ python daemon.py
 ```
 Let's go !
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjkyMzQ2OTA2LC01NDk5NTQyMF19
+eyJoaXN0b3J5IjpbLTIxNDI4OTE2OTUsLTU0OTk1NDIwXX0=
 -->
