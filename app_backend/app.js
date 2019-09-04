@@ -51,11 +51,11 @@ io.on('connection', socket => {
     const token = payload.jwt
     const chat = payload.chat
     const now = Math.floor(Date.now() / 1000);
-
     common.logging_debug('token', token);
     common.logging_debug('chat', chat);
 
     async.waterfall([
+        // 1. jwt 복호화
         function(callback) {
             jwt.verify(token, secret, function(err, decoded) {
                 if(err == null){
@@ -69,6 +69,7 @@ io.on('connection', socket => {
                 }
             });
         },
+        // 2. 채팅 디비에 기록
         function(decoded, callback) {
             const id = decoded.id;
             const username = decoded.username;
@@ -91,6 +92,7 @@ io.on('connection', socket => {
               }
             });
         },
+        // 3. 채팅 디비에 기록한 PK 획득
         function(id, username, callback) {
             var sql = (SQL
                       `
@@ -108,6 +110,7 @@ io.on('connection', socket => {
               }
             });
         },
+        // 4. 채팅 등록일 획득
         function(id, username, chat_id, callback) {
             var sql = (SQL
                       `
@@ -127,6 +130,7 @@ io.on('connection', socket => {
               }
             });
         },
+        // 5. 채팅 소켓 전송
         function(id, username, regist_date, callback) {
             const data = {
               'username': username,
@@ -136,9 +140,7 @@ io.on('connection', socket => {
             io.sockets.emit('chat', data);
             return false;
         }
-    ], function (err, result) {
-        // pass
-    });
+    ], function (err, result) {});
   })
 
 
