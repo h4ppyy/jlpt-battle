@@ -10,7 +10,7 @@
 
 ------
 
-### Demo
+## Demo
 <img src="https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/www.gif?raw=true" width="100%"></img>
 
 <img src="https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/p4.png?raw=true" width="100%"></img>
@@ -74,6 +74,6 @@ $ python daemon.py
 Let's go !
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTUyMjMzNDY4MSwyMTA2MjYyMjEyLC01ND
-k5NTQyMF19
+eyJoaXN0b3J5IjpbMjQyMjY5ODc4LDIxMDYyNjIyMTIsLTU0OT
+k1NDIwXX0=
 -->
