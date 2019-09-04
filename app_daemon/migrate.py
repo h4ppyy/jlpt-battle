@@ -1,12 +1,20 @@
 import pymysql
 import time
+import json
+
+
+# change the information in database.json
+f = open("database.json", 'r')
+line = f.readline()
+databaseInfo = json.loads(line)
+f.close()
 
 
 # database config
-DB_HOST = 'xxx'
-DB_USER = 'xxx'
-DB_PASSWORD = 'xxx'
-DB_NAME = 'xxx'
+DB_HOST     = databaseInfo['DB_HOST']
+DB_USER     = databaseInfo['DB_USER']
+DB_PASSWORD = databaseInfo['DB_PASSWORD']
+DB_NAME     = databaseInfo['DB_NAME']
 
 
 # admin account setting
@@ -167,7 +175,9 @@ def createTable(conn):
 
 
 def readData(JLPT_LEVEL):
-    f = open("./word_store/jlpt"+str(JLPT_LEVEL)+".txt", 'r')
+    file_path = "./word_store/jlpt"+str(JLPT_LEVEL)+".txt"
+    print('file_path -> ', file_path)
+    f = open(file_path, 'r', encoding="utf-8-sig")
     dataSet = []
     while True:
         line = f.readline()
@@ -269,8 +279,8 @@ def endPoint(startTime):
 
 if __name__ == "__main__":
     conn = databaseConnect()
-    dropTable(conn)
-    createTable(conn)
+    # dropTable(conn)
+    # createTable(conn)
     for JLPT_LEVEL in range(1,6):
         startTime = startPoint()
         dataSet = readData(JLPT_LEVEL)
@@ -283,5 +293,5 @@ if __name__ == "__main__":
             print('Migration has already been completed : level N{JLPT_LEVEL}'.format(JLPT_LEVEL=JLPT_LEVEL))
 
         endPoint(startTime)
-    insertSampleDate(conn)
+    #insertSampleDate(conn)
     databaseClose(conn)
