@@ -2,6 +2,8 @@ import React from 'react';
 
 
 import '../../static/page/Ranking.css';
+import axios from "axios";
+import socketIOClient from "socket.io-client";
 
 class Ranking extends React.Component {
   constructor(props) {
@@ -21,6 +23,15 @@ class Ranking extends React.Component {
         {"rank":"10", "username":"coolguy", "jlpt":"N5", "point":"2000", "registDate":"2019-01-01 00:00:00"},
       ],
     };
+  }
+
+    componentWillMount = () => {
+      console.log('componentwillmount good')
+      var url = 'http://127.0.0.1:4000/api/getUserRank';
+      axios.post(url).then(response => {
+          console.log('asdasd==>', response.data.result);
+        this.setState({rankList: response.data.result});
+      });
   }
 
   render() {
@@ -47,24 +58,24 @@ class Ranking extends React.Component {
                 <tr key={key}>
                   <td>
                   {
-                    item.rank === '1' ?
+                    item.rank === 1 ?
                         <img alt='winner' className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/winner.png'}/>
                         :
                         item.rank &&
-                    item.rank === '2' ?
+                    item.rank === 2 ?
                         <img alt='second' className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/second.png'}/>
                         :
                         item.rank &&
-                    item.rank === '3' ?
+                    item.rank === 3 ?
                         <img alt='third' className='rank-top-img' src={process.env.PUBLIC_URL + '/ranking/third.png'}/>
                         :
                         item.rank
                   }
                   </td>
                   <td>{item.username}</td>
-                  <td>{item.jlpt}</td>
+                  <td>{item.jlpt_level}</td>
                   <td>{item.point}</td>
-                  <td>{item.registDate}</td>
+                  <td>{item.regist_date}</td>
                 </tr>
               )}
             </tbody>
