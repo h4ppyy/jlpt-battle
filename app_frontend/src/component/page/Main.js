@@ -13,68 +13,56 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      kanji: '',
-      inputChat: '',
-      inputHiragana: '',
-      chat: [],
-      history: []
+      kanji         : '',
+      inputChat     : '',
+      inputHiragana : '',
+      chat          : [],
+      history       : []
     };
   }
 
-  scrollToBottom() {
-    const {thing} = this.refs;
-    try {
-      thing.scrollTop = thing.scrollHeight - thing.clientHeight;
-    } catch (e){
-      console.log('e -> ', e);
-    }
-  }
-
   componentWillMount = () => {
-      var self = this;
 
-      var url = 'http://127.0.0.1:4000/api/getChatLog'
+      // 채팅 기록 초기 로딩
+      const url = Config.backendUrl + '/api/getChatLog';
       axios.post(url).then(response => {
         this.setState({chat: response.data.result.reverse()});
+        this.scrollToBottom();
       });
 
       /*
+      // 이력 기록 초기 로딩
       url = 'http://127.0.0.1:4000/api/getHistoryLog'
       axios.post(url).then(response => {
         response.data.result.shift();
         this.setState({history: response.data.result});
       });
 
+      // 현재 한자 초기 로딩
       url = 'http://127.0.0.1:4000/api/getCurrentKanji'
       axios.post(url).then(response => {
         this.setState({kanji: response.data.result[0]['kanji'] });
       });
       */
 
-      // 채팅 리스너
+      // 웹소켓 -> 채팅 리스너
       const socket = socketIOClient(Config.backendUrl);
       socket.on('chat', (data) => {
           const username = data.username;
           const content = data.content;
           const regist_date = data.regist_date;
-
-          console.log('username -> ', username);
-          console.log('content -> ', content);
-          console.log('regist_date -> ', regist_date);
-
           var tmp = this.state.chat;
-          console.log('tmp -> ', tmp);
-          console.log('data -> ', data);
           tmp.push(data)
-          console.log('after -> ', tmp);
           this.setState(tmp);
           this.scrollToBottom();
       })
 
+      // 웹소켓 -> 한자 리스너
       socket.on('kanji', (kanji) => {
           this.setState({kanji: kanji});
       })
 
+      // 웹소켓 -> 이력 리스너
       socket.on('history', (history) => {
           console.log('INFO -> history : ', history);
           history.shift();
@@ -83,10 +71,12 @@ class Main extends React.Component {
       })
   }
 
+  // 채팅 입력 이벤트
   onChangeChat = (event) =>{
     this.setState({inputChat: event.target.value});
   }
 
+  // 답안 입력 이벤트
   onChangeHiragana = (event) =>{
     this.setState({inputHiragana: event.target.value});
   }
@@ -105,6 +95,7 @@ class Main extends React.Component {
     socket.emit('end');
   }
 
+  // 답안 전송 이벤트
   sendHiragana = () => {
     var content = this.state.inputHiragana;
     var url = 'http://127.0.0.1:4000/api/sendHiragana'
@@ -114,17 +105,30 @@ class Main extends React.Component {
     });
   }
 
+  // 채팅 엔터키 이벤트
   handleKeyDownChat = (e) => {
     if (e.key === 'Enter') {
       this.sendChat();
     }
   }
 
+  // 답안 엔터키 이벤트
   handleKeyDownHiragana = (e) => {
     if (e.key === 'Enter') {
       this.sendHiragana();
     }
   }
+
+  // 채팅 스크롤 하단 이동
+  scrollToBottom = () => {
+    const {thing} = this.refs;
+    try {
+      thing.scrollTop = thing.scrollHeight - thing.clientHeight;
+    } catch (e){
+      console.log('e -> ', e);
+    }
+  }
+
   render() {
     return (
       <Animated animationIn="fadeIn" animationOut="fadeInUpBig" isVisible={true}>
@@ -169,9 +173,9 @@ class Main extends React.Component {
               {
                 this.props.loginStatus === 0
                 ?
-                <input disabled value={this.state.inputChat} onKeyDown={this.handleKeyDownChat} onChange={this.onChangeChat.bind(this)} className='x' type="text" class="form-control nologin" placeholder="로그인 후 이용할 수 있습니다"></input>
+                <input disabled value={this.state.inputChat} onKeyDown={this.handleKeyDownChat} onChange={this.onChangeChat.bind(this)} className='x' type="text" className="form-control nologin" placeholder="로그인 후 이용할 수 있습니다"></input>
                 :
-                <input value={this.state.inputChat} onKeyDown={this.handleKeyDownChat} onChange={this.onChangeChat.bind(this)} className='x' type="text" class="form-control" placeholder=""></input>
+                <input value={this.state.inputChat} onKeyDown={this.handleKeyDownChat} onChange={this.onChangeChat.bind(this)} className='x' type="text" className="form-control" placeholder=""></input>
               }
               {
                 this.props.loginStatus === 0
