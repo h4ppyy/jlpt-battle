@@ -20,6 +20,7 @@ ubuntu 16.04 / windows 10 / macOS
 node.js 10.16.3
 yarn 1.17.3
 mysql 5.7.27
+python 3.7.4
 ```
 
 ### Configuring a project
@@ -52,17 +53,13 @@ If you're building a development environment
 $ yarn global add nodemon
 $ nodemon app.js
 ```
-~~daemon~~ 
-(The daemon is no longer used ... 2019.09.03)
+daemon
 ```
-We don't do it anymore
-because I've already done 'yarn install'
-
-$ cd app_backend
-$ node daemon.js
-
-If you're building a development environment
-$ nodemon daemon.js
+$ cd app_daemon
+$ python3 -m venv venv
+$ . venv/bin/activate
+$ pip install -r requirements.txt
+$ python daemon.py
 ```
 Let's go !
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
