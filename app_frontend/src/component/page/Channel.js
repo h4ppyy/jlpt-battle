@@ -18,6 +18,10 @@ class Channel extends React.Component {
 
   }
 
+  moveChannel = (level) =>{
+    this.props.history.push('/' + level);
+  }
+
   render() {
     return (
       <Animated animationIn="fadeIn" animationOut="fadeInUpBig" isVisible={true}>
@@ -28,7 +32,7 @@ class Channel extends React.Component {
         </div>
         <div className='card-box'>
 
-          <div className='channel-card hvr-grow'>
+          <div className='channel-card hvr-grow' onClick={() => this.moveChannel('n1')}>
             <div className='channel-card-img'>
               <img alt='rated' className='rank-top-img' src={process.env.PUBLIC_URL + '/channel/ghost.png'}/>
             </div>
@@ -37,7 +41,7 @@ class Channel extends React.Component {
             </div>
           </div>
 
-          <div className='channel-card hvr-grow'>
+          <div className='channel-card hvr-grow' onClick={() => this.moveChannel('n2')}>
             <div className='channel-card-img'>
               <img alt='rated' className='rank-top-img' src={process.env.PUBLIC_URL + '/channel/daruma.png'}/>
             </div>
@@ -46,7 +50,7 @@ class Channel extends React.Component {
             </div>
           </div>
 
-          <div className='channel-card hvr-grow'>
+          <div className='channel-card hvr-grow' onClick={() => this.moveChannel('n3')}>
             <div className='channel-card-img'>
               <img alt='rated' className='rank-top-img' src={process.env.PUBLIC_URL + '/channel/geisha.png'}/>
             </div>
@@ -58,7 +62,7 @@ class Channel extends React.Component {
         </div>
         <div className='card-box'>
 
-          <div className='channel-card hvr-grow'>
+          <div className='channel-card hvr-grow' onClick={() => this.moveChannel('n4')}>
             <div className='channel-card-img'>
               <img alt='rated' className='rank-top-img' src={process.env.PUBLIC_URL + '/channel/maneki-neko.png'}/>
             </div>
@@ -67,7 +71,7 @@ class Channel extends React.Component {
             </div>
           </div>
 
-          <div className='channel-card hvr-grow'>
+          <div className='channel-card hvr-grow' onClick={() => this.moveChannel('n5')}>
             <div className='channel-card-img'>
               <img alt='rated' className='rank-top-img' src={process.env.PUBLIC_URL + '/channel/noodles.png'}/>
             </div>
@@ -76,7 +80,7 @@ class Channel extends React.Component {
             </div>
           </div>
 
-          <div className='channel-card hvr-grow'>
+          <div className='channel-card hvr-grow' onClick={() => this.moveChannel('free')}>
             <div className='channel-card-img'>
               <img alt='rated' className='rank-top-img' src={process.env.PUBLIC_URL + '/channel/fan.png'}/>
             </div>

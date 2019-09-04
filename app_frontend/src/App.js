@@ -23,7 +23,7 @@ const App = () => {
       <Router>
         <Route component={Header} />
         <Route path="/" exact component={Channel} />
-        <Route path="/main" exact component={Main} />
+        <Route path="/:id(n1|n2|n3|n4|n5|free)" component={Main} />
         <Route path="/mypage/" component={Mypage} />
         <Route path="/ranking/" component={Ranking} />
         <Route path="/login/" component={Login} />

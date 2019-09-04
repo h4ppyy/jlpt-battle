@@ -111,7 +111,8 @@ class Main extends React.Component {
           <div className='main-content'>
             <div className='hanja-container'>
               <div className='hanja-box'>
-                {this.state.kanji}
+                <p>{this.state.kanji}</p>
+                {this.props.match.params.id}
               </div>
             </div>
             <div className='sendbox-container'>
