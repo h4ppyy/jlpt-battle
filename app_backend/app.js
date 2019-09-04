@@ -48,129 +48,144 @@ io.on('connection', socket => {
 
   // 웹소켓 (채팅)
   socket.on('chat', (payload) => {
-    const token = payload.jwt
-    const chat = payload.chat
-    const now = Math.floor(Date.now() / 1000);
-    common.logging_debug('token', token);
-    common.logging_debug('chat', chat);
+      const token = payload.jwt
+      const chat = payload.chat
+      const now = Math.floor(Date.now() / 1000);
+      common.logging_debug('token', token);
+      common.logging_debug('chat', chat);
 
-    async.waterfall([
-        // 1. jwt 복호화
-        function(callback) {
-            jwt.verify(token, secret, function(err, decoded) {
-                if(err == null){
-                    if(decoded.exp > now){
-                        callback(null, decoded);
-                    } else {
-                        return false;
-                    }
+      async.waterfall([
+          // 1. jwt 복호화
+          function(callback) {
+              jwt.verify(token, secret, function(err, decoded) {
+                  if(err == null){
+                      if(decoded.exp > now){
+                          callback(null, decoded);
+                      } else {
+                          return false;
+                      }
+                  } else {
+                      return false;
+                  }
+              });
+          },
+          // 2. 채팅 디비에 기록
+          function(decoded, callback) {
+              const id = decoded.id;
+              const username = decoded.username;
+              common.logging_debug('id', id);
+              common.logging_debug('username', username);
+
+              var sql = (SQL
+                        `
+                        insert into tbl_chat (content, user_id)
+                        values(${chat}, ${id});
+                        `
+                        )
+              common.logging_debug('sql', sql);
+              connection.query(sql, function(err, rows, fields) {
+                if (err == null){
+                    callback(null, id, username)
                 } else {
+                    console.log('Error : ', err);
                     return false;
                 }
-            });
-        },
-        // 2. 채팅 디비에 기록
-        function(decoded, callback) {
-            const id = decoded.id;
-            const username = decoded.username;
-            common.logging_debug('id', id);
-            common.logging_debug('username', username);
-
-            var sql = (SQL
-                      `
-                      insert into tbl_chat (content, user_id)
-                      values(${chat}, ${id});
-                      `
-                      )
-            common.logging_debug('sql', sql);
-            connection.query(sql, function(err, rows, fields) {
-              if (err == null){
-                  callback(null, id, username)
-              } else {
-                  console.log('Error : ', err);
-                  return false;
+              });
+          },
+          // 3. 채팅 디비에 기록한 PK 획득
+          function(id, username, callback) {
+              var sql = (SQL
+                        `
+                        select LAST_INSERT_ID() as chat_id
+                        `
+                        )
+              common.logging_debug('sql', sql);
+              connection.query(sql, function(err, rows, fields) {
+                if (err == null){
+                    const chat_id = rows[0].chat_id;
+                    callback(null, id, username, chat_id)
+                } else {
+                    console.log('Error : ', err);
+                    return false;
+                }
+              });
+          },
+          // 4. 채팅 등록일 획득
+          function(id, username, chat_id, callback) {
+              var sql = (SQL
+                        `
+                        select regist_date
+                        from tbl_chat
+                        where id = ${chat_id};
+                        `
+                        )
+              common.logging_debug('sql', sql);
+              connection.query(sql, function(err, rows, fields) {
+                if (err == null){
+                    const regist_date = rows[0].regist_date;
+                    callback(null, id, username, regist_date)
+                } else {
+                    console.log('Error : ', err);
+                    return false;
+                }
+              });
+          },
+          // 5. 채팅 소켓 전송
+          function(id, username, regist_date, callback) {
+              const data = {
+                'username': username,
+                'content': chat,
+                'regist_date': regist_date
               }
-            });
-        },
-        // 3. 채팅 디비에 기록한 PK 획득
-        function(id, username, callback) {
-            var sql = (SQL
-                      `
-                      select LAST_INSERT_ID() as chat_id
-                      `
-                      )
-            common.logging_debug('sql', sql);
-            connection.query(sql, function(err, rows, fields) {
-              if (err == null){
-                  const chat_id = rows[0].chat_id;
-                  callback(null, id, username, chat_id)
-              } else {
-                  console.log('Error : ', err);
-                  return false;
-              }
-            });
-        },
-        // 4. 채팅 등록일 획득
-        function(id, username, chat_id, callback) {
-            var sql = (SQL
-                      `
-                      select regist_date
-                      from tbl_chat
-                      where id = ${chat_id};
-                      `
-                      )
-            common.logging_debug('sql', sql);
-            connection.query(sql, function(err, rows, fields) {
-              if (err == null){
-                  const regist_date = rows[0].regist_date;
-                  callback(null, id, username, regist_date)
-              } else {
-                  console.log('Error : ', err);
-                  return false;
-              }
-            });
-        },
-        // 5. 채팅 소켓 전송
-        function(id, username, regist_date, callback) {
-            const data = {
-              'username': username,
-              'content': chat,
-              'regist_date': regist_date
-            }
-            io.sockets.emit('chat', data);
-            return false;
-        }
-    ], function (err, result) {});
+              io.sockets.emit('chat', data);
+              return false;
+          }
+      ], function (err, result) {});
   })
 
 
   // 웹소켓 (한자 표기)
   socket.on('kanji', (kanji) => {
-    console.log('kanji -> ', kanji);
-    io.sockets.emit('kanji', kanji);
+      io.sockets.emit('kanji', kanji);
   })
 
   // 웹소켓 (이력 표기)
   socket.on('history', () => {
-    console.log('INFO -> WS : called history');
-    var sql = "select ifnull(y.username, 'PC') as username, ifnull(x.modify_date, '정답 미제출로 인한 pass') as modify_date, z.kanji, z.hiragana, z.hangul from tbl_japan_problem x left join tbl_user y on x.user_id = y.id join tbl_japan_store z on x.store_id = z.id where x.regist_date > DATE_FORMAT(date_sub(now(), interval 10 day),'%Y-%m-%d') order by x.regist_date desc limit 11";
+      var sql = (SQL
+                `
+                select  ifnull(y.username, 'PC') as username,
+                        ifnull(x.modify_date, '정답 미제출로 인한 pass') as modify_date,
+                        z.kanji,
+                        z.hiragana,
+                        z.hangul
+                from tbl_japan_problem x
+                left join tbl_user y
+                on x.user_id = y.id
+                join tbl_japan_store z
+                on x.store_id = z.id
+                where x.regist_date > DATE_FORMAT(date_sub(now(), interval 10 day),'%Y-%m-%d')
+                order by x.regist_date desc
+                limit 11
+                `
+                )
+    common.logging_debug('sql', sql);
     connection.query(sql, function(err, rows, fields) {
-      if (err == null) {
-        // console.log('DEBUG -> rows : ', rows);
-        io.sockets.emit('history', rows);
-      }
-      else {
-        console.log('ERROR -> ', err);
-      }
+        if (err == null) {
+            // console.log('DEBUG -> rows : ', rows);
+            io.sockets.emit('history', rows);
+        }
+        else {
+            console.log('ERROR -> ', err);
+        }
     });
   })
 
   socket.on('end', function (){
-    socket.disconnect(0);
+      socket.disconnect(0);
   });
 
   socket.on('disconnect', () => {
-    common.logging_info('socketio', 'disconnected');
+      common.logging_info('socketio', 'disconnected');
   })
 })
 

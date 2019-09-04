@@ -31,14 +31,14 @@ class Main extends React.Component {
       });
 
       /*
-      // 이력 기록 초기 로딩
+      // 이력 기록 초기 로딩 (작업필요)
       url = 'http://127.0.0.1:4000/api/getHistoryLog'
       axios.post(url).then(response => {
         response.data.result.shift();
         this.setState({history: response.data.result});
       });
 
-      // 현재 한자 초기 로딩
+      // 현재 한자 초기 로딩 (작업필요)
       url = 'http://127.0.0.1:4000/api/getCurrentKanji'
       axios.post(url).then(response => {
         this.setState({kanji: response.data.result[0]['kanji'] });
@@ -57,12 +57,12 @@ class Main extends React.Component {
           this.scrollToBottom();
       })
 
-      // 웹소켓 -> 한자 리스너
+      // 웹소켓 -> 한자 리스너 (작업필요)
       socket.on('kanji', (kanji) => {
           this.setState({kanji: kanji});
       })
 
-      // 웹소켓 -> 이력 리스너
+      // 웹소켓 -> 이력 리스너 (작업필요)
       socket.on('history', (history) => {
           console.log('INFO -> history : ', history);
           history.shift();
@@ -95,10 +95,10 @@ class Main extends React.Component {
     socket.emit('end');
   }
 
-  // 답안 전송 이벤트
+  // 답안 전송 이벤트 (작업필요)
   sendHiragana = () => {
     var content = this.state.inputHiragana;
-    var url = 'http://127.0.0.1:4000/api/sendHiragana'
+    var url = Config.backendUrl + '/api/sendHiragana'
     this.setState({inputHiragana: ''});
     axios.post(url, {content: content}).then(response => {
       console.log(response.data);
