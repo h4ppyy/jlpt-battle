@@ -2,19 +2,22 @@
 
 # JLPT Battle
 
-## お知らせ
-```
-2019.08.28 プロジェクトの立ち上げ
-2019.09.03 redux.jsを導入した
-```
+## Notification
 
+- 2019.08.28 Start `Project`
+- 2019.09.03 Start `redux.js`
+- 2019.09.04 completed `database migrate shell`
+
+------
+
+## Demo
 <img src="https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/www.gif?raw=true" width="100%"></img>
 
 <img src="https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/p4.png?raw=true" width="100%"></img>
 
 <img src="https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/p5.png?raw=true" width="100%"></img>
 
-### Development Environment
+## Development Environment
 ```
 ubuntu 16.04 / windows 10 / macOS
 node.js 10.16.3
@@ -23,29 +26,38 @@ mysql 5.7.27
 python 3.7.4
 ```
 
-### Configuring a project
+## Configuring a project
 
 ```bash
 $ git clone https://github.com/h4ppyy/jlpt-battle
 $ cd jlpt-battle
 ```
 
-### Getting Started with Project
-frontend
+## Getting Started with Project
+
+#### migrate  
+Modify the database information in `migrate.py` before you work
+```bash
+$ cd app_daemon
+$ python3 -m venv venv
+$ . venv/bin/activate
+$ pip install -r requirements.txt
+$ python migrate.py
+```
+
+#### frontend
+This server opens on port `3000`
 ```bash
 $ cd app_frontend
 $ yarn install
 $ yarn start
 ```
-backend  
+#### backend  
+Create `config.js` and modify the database information in `config.js` before you work  
+This server opens on port `4000`
 ```bash
 $ cd app_backend
 $ cp config/config.template config/config.js
-
-Create your database by referring to 'table.sql'
-above the directory 'database'
-And change the database connection information
-
 $ yarn install
 $ yarn start
 
@@ -53,16 +65,15 @@ If you're building a development environment
 $ yarn global add nodemon
 $ nodemon app.js
 ```
-daemon
-```
+#### daemon
+`daemon.py` is a great background daemon that presents the problem from the Japanese language repository.
+```bash
 $ cd app_daemon
-$ python3 -m venv venv
-$ . venv/bin/activate
-$ pip install -r requirements.txt
 $ python daemon.py
 ```
 Let's go !
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU0OTk1NDIwXX0=
+eyJoaXN0b3J5IjpbNDcyMzczMTQ5LDIxMDYyNjIyMTIsLTU0OT
+k1NDIwXX0=
 -->
