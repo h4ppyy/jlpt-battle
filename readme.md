@@ -5,7 +5,8 @@
 ## お知らせ
 ```
 2019.08.28 プロジェクトの立ち上げ
-2019.09.03 redux.jsを導入した
+2019.09.03 'redux.js' を導入した
+2019.09.04 'database migrate shell' 作成した
 ```
 
 <img src="https://github.com/h4ppyy/jlpt-battle/blob/master/dev_history/img/www.gif?raw=true" width="100%"></img>
@@ -64,5 +65,5 @@ $ python daemon.py
 Let's go !
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU0OTk1NDIwXX0=
+eyJoaXN0b3J5IjpbMjkyMzQ2OTA2LC01NDk5NTQyMF19
 -->
