@@ -9,6 +9,7 @@ import Mypage from './component/page/Mypage'
 import Ranking from './component/page/Ranking'
 import Login from './component/page/Login';
 import Regist from './component/page/Regist';
+import Channel from './component/page/Channel';
 
 import TestRedux1 from './sample/TestRedux1';
 import TestRedux2 from './sample/TestRedux2';
@@ -21,11 +22,13 @@ const App = () => {
     <div className="App">
       <Router>
         <Route component={Header} />
-        <Route path="/" exact component={Main} />
+        <Route path="/" exact component={Channel} />
+        <Route path="/main" exact component={Main} />
         <Route path="/mypage/" component={Mypage} />
         <Route path="/ranking/" component={Ranking} />
         <Route path="/login/" component={Login} />
         <Route path="/Regist/" component={Regist} />
+
         <Route path="/test/" component={TestRedux1} />
         <Route path="/test/" component={TestRedux2} />
         <Route path="/testclass/" component={TestReduxClass1} />

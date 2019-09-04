@@ -1,0 +1,44 @@
+.channel-box {
+  color: #ffffff;
+  margin-top: 70px;
+}
+.channel-title {
+  text-align: center;
+  font-size: 30px;
+}
+.channel-txt {
+  font-size: 30px;
+  margin-left: 10px;
+  color: #cdcdff;
+  margin-top: 5px;
+  font-weight: bold;
+}
+.card-box {
+  display: flex;
+  margin-top: 50px;
+  padding-left: 120px;
+  padding-right: 120px;
+}
+.channel-card {
+  flex: auto;
+  border: solid 3px #f9d7d7;
+  width: 180px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.channel-card:hover {
+  background: #782525;
+}
+.channel-card-title {
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+}
+.channel-card-img {
+  text-align: center;
+}
