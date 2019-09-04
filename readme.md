@@ -33,7 +33,7 @@ $ cd jlpt-battle
 
 ### Getting Started with Project
 
-migrate
+migrate  
 Modify the database information in `migrate.py` before you work on it
 ```bash
 $ cd app_daemon
@@ -73,5 +73,5 @@ $ python daemon.py
 Let's go !
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzc5Mzk2NTQwLC01NDk5NTQyMF19
+eyJoaXN0b3J5IjpbLTExMzcyODEyODQsLTU0OTk1NDIwXX0=
 -->
