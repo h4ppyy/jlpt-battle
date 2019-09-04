@@ -33,7 +33,7 @@ $ cd jlpt-battle
 
 ### Getting Started with Project
 
-migrate  
+#### migrate  
 Modify the database information in `migrate.py` before you work on it
 ```bash
 $ cd app_daemon
@@ -43,13 +43,13 @@ $ pip install -r requirements.txt
 $ python migrate.py
 ```
 
-frontend
+#### frontend
 ```bash
 $ cd app_frontend
 $ yarn install
 $ yarn start
 ```
-backend  
+#### backend  
 ```bash
 $ cd app_backend
 $ cp config/config.template config/config.js
@@ -65,7 +65,7 @@ If you're building a development environment
 $ yarn global add nodemon
 $ nodemon app.js
 ```
-daemon
+#### daemon
 ```bash
 $ cd app_daemon
 $ python daemon.py
@@ -73,5 +73,5 @@ $ python daemon.py
 Let's go !
 [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExMzcyODEyODQsLTU0OTk1NDIwXX0=
+eyJoaXN0b3J5IjpbMTczNTE4ODExOCwtNTQ5OTU0MjBdfQ==
 -->
