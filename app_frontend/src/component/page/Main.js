@@ -102,11 +102,20 @@ class Main extends React.Component {
 
   // 답안 전송 이벤트 (마지막 작업)
   sendHiragana = () => {
-    var content = this.state.inputHiragana;
     var url = Config.backendUrl + '/api/sendHiragana'
-    this.setState({inputHiragana: ''});
-    axios.post(url, {content: content}).then(response => {
-      console.log(response.data);
+    const jwt = localStorage.getItem("jwt");
+    var hiragana = this.state.inputHiragana;
+    var level = this.props.match.params.id
+    const payload = {
+      'hiragana': hiragana,
+      'level': level
+    }
+    axios.defaults.headers.common['authorization'] = jwt
+    axios.post(url, payload).then(response => {
+      var result = response.data.result
+      this.setState({inputHiragana: ''});
+
+      console.log('result -> ', result);
     });
   }
 

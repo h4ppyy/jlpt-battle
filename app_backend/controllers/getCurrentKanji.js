@@ -13,6 +13,7 @@ exports.getCurrentKanji = function(req, res) {
              "JOIN tbl_japan_store y "+
              "ON x.store_id = y.id "+
              "WHERE  x.regist_date > Date_format(Date_sub(Now(), INTERVAL "+common.SLOW_QUERY_SOLUTION+" day), '%Y-%m-%d') "+
+             "AND x.user_id is null "+
              "ORDER  BY x.regist_date DESC "+
              "LIMIT  1 ";
     common.logging_debug('sql', sql);

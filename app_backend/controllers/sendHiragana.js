@@ -1,5 +1,6 @@
 const async = require('async');
 const mysql = require('mysql');
+const SQL = require('sql-template-strings')
 const ioc = require("socket.io-client");
 
 const dbconfig   = require('../config/config.js').database;
@@ -12,11 +13,96 @@ exports.sendHiragana = function(req, res) {
     const connection = mysql.createConnection(dbconfig);
     const ioClient = ioc.connect(ioconfig);
 
-    var content = req.body.content;
-    var user_id = '1';
+    var hiragana = req.body.hiragana;
+    var level = req.body.level;
+    var decoded = req.decoded;
+    var id = decoded.id;
+    var username = decoded.username;
 
-    console.log('DEBUG -> content : ', content);
-    console.log('DEBUG -> user_id : ', user_id);
+    common.logging_debug('hiragana', hiragana);
+    common.logging_debug('level', level);
+    common.logging_debug('id', id);
+    common.logging_debug('username', username);
 
-    res.json({"result": "1"})
+    async.waterfall([
+        // 1. 제출할 수 있는 문제가 존재하는지 확인
+        // 2. 제출된 히라가나와 출제된 히라가나를 비교
+        function(callback) {
+            var sql = ""+
+                      "select x.id, y.hiragana "+
+                      "from tbl_problem_"+level+" x "+
+                      "join tbl_japan_store y "+
+                      "on x.store_id = y.id "+
+                      "where user_id is null; "
+            common.logging_debug('sql', sql);
+            connection.query(sql, function(err, rows, fields) {
+                if (err == null) {
+                    var check = rows.length
+                    common.logging_debug('check', check);
+                    if(check != 0){
+                        var problem_id = rows[0]['id']
+                        var problem_hiragana = rows[0]['hiragana']
+                        callback(null, problem_id, problem_hiragana);
+                    } else {
+                        res.json(
+                          {
+                            "result": common.CODE_PROBLEM_NULL
+                          }
+                        )
+                        connection.end()
+                        return false;
+                    }
+                }
+                else {
+                    common.logging_error('err', err);
+                    connection.end()
+                    return false;
+                }
+            });
+        },
+        // 2. 정답일 경우 사용자가 문제를 획득
+        function(problem_id, problem_hiragana, callback) {
+            common.logging_debug('problem_id', problem_id);
+            common.logging_debug('problem_hiragana', problem_hiragana);
+
+            if(hiragana == problem_hiragana){
+                common.logging_debug('status', 'correct');
+                var sql = ""+
+                          "update tbl_problem_"+level+" "+
+                          "set user_id = "+id+" "+
+                          ", modify_date = now() " +
+                          "where id = "+problem_id+" "
+                common.logging_debug('sql', sql);
+                connection.query(sql, function(err, rows, fields) {
+                    if (err == null) {
+                        callback(null);
+                    }
+                    else {
+                        common.logging_error('err', err);
+                        connection.end()
+                        return false;
+                    }
+                });
+            } else {
+                common.logging_debug('status', 'incorrect');
+                res.json(
+                  {
+                    "result": common.CODE_PROBLEM_FAIL
+                  }
+                )
+                connection.end()
+                return false;
+            }
+        },
+        // 3. 사용자에게 정답 제출 보상 포인트를 제공
+        function(callback) {
+
+            return false;
+        },
+        // 4. 소켓을 이용하여 한자와 이력 동기화
+        function(callback) {
+
+            return false;
+        },
+    ], function (err, result) {});
 }

@@ -25,6 +25,8 @@ module.exports = {
   CODE_ID_NOT_ALLOW: 308,           // 회원가입 - 아이디 허용 문자 외 입력
   CODE_PW_NOT_ALLOW: 309,           // 회원가입 - 비밀번호 허용 문자 외 입력
   CODE_ID_OR_PW_INCORRECT: 400,     // 로그인 - 아이디 또는 비밀번호 틀림
+  CODE_PROBLEM_NULL: 700,           // 정답제출 - 문제가 존재하지 않음
+  CODE_PROBLEM_FAIL: 701,           // 정답제출 - 오답 제출
 
   KANJI_NULL_TEXT: '출제된 문제 없음',  // 출제한자문구표기 - 데이터가 존재하지 않을 때
   KANJI_ERROR_TEXT: 'Error :(',     // 출제한자문구표기 - 로직 중 오류 발생 시
