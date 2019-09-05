@@ -71,7 +71,6 @@ class Main extends React.Component {
       var channel_history = 'history_' + level;
       socket.on(channel_history, (history) => {
           console.log('INFO -> history : ', history);
-          history.shift();
           this.setState({history: history});
       })
   }
@@ -114,7 +113,6 @@ class Main extends React.Component {
     axios.post(url, payload).then(response => {
       var result = response.data.result
       this.setState({inputHiragana: ''});
-
       console.log('result -> ', result);
     });
   }

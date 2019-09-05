@@ -179,7 +179,7 @@ io.on('connection', socket => {
                 "ON x.store_id = z.id "+
                 "WHERE  x.regist_date > Date_format(Date_sub(Now(), INTERVAL "+common.SLOW_QUERY_SOLUTION+" day), '%Y-%m-%d') "+
                 "ORDER  BY x.regist_date DESC "+
-                "LIMIT  11; "
+                "LIMIT  10; "
       return sql;
   }
 

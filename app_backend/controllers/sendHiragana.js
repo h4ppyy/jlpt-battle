@@ -119,10 +119,20 @@ exports.sendHiragana = function(req, res) {
                 }
             });
         },
-        // 4. 소켓을 이용하여 한자와 이력 동기화
+        // 4. 소켓을 이용하여 이력 동기화
         function(callback) {
-            // ioClient.emit("kanji", kanji);
-            // ioClient.emit("history");
+            var channel_history = 'history_' + level;
+            var channel_kanji = 'kanji_' + level;
+            common.logging_debug('channel_history', channel_history);
+            common.logging_debug('channel_kanji', channel_kanji);
+            ioClient.emit(channel_history);
+            ioClient.emit(channel_kanji, '');
+            res.json(
+              {
+                "result": common.CODE_SUCCESS
+              }
+            )
+            connection.end()
             return false;
         },
     ], function (err, result) {});
