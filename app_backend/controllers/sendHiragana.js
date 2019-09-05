@@ -29,7 +29,7 @@ exports.sendHiragana = function(req, res) {
         // 2. 제출된 히라가나와 출제된 히라가나를 비교
         function(callback) {
             var sql = ""+
-                      "select x.id, y.hiragana "+
+                      "select x.id, y.hiragana, y.level "+
                       "from tbl_problem_"+level+" x "+
                       "join tbl_japan_store y "+
                       "on x.store_id = y.id "+
@@ -42,7 +42,8 @@ exports.sendHiragana = function(req, res) {
                     if(check != 0){
                         var problem_id = rows[0]['id']
                         var problem_hiragana = rows[0]['hiragana']
-                        callback(null, problem_id, problem_hiragana);
+                        var problem_level = rows[0]['level']
+                        callback(null, problem_id, problem_hiragana, problem_level);
                     } else {
                         res.json(
                           {
@@ -61,9 +62,10 @@ exports.sendHiragana = function(req, res) {
             });
         },
         // 2. 정답일 경우 사용자가 문제를 획득
-        function(problem_id, problem_hiragana, callback) {
+        function(problem_id, problem_hiragana, problem_level, callback) {
             common.logging_debug('problem_id', problem_id);
             common.logging_debug('problem_hiragana', problem_hiragana);
+            common.logging_debug('problem_level', problem_level);
 
             if(hiragana == problem_hiragana){
                 common.logging_debug('status', 'correct');
@@ -75,7 +77,7 @@ exports.sendHiragana = function(req, res) {
                 common.logging_debug('sql', sql);
                 connection.query(sql, function(err, rows, fields) {
                     if (err == null) {
-                        callback(null);
+                        callback(null, problem_level);
                     }
                     else {
                         common.logging_error('err', err);
@@ -95,13 +97,32 @@ exports.sendHiragana = function(req, res) {
             }
         },
         // 3. 사용자에게 정답 제출 보상 포인트를 제공
-        function(callback) {
-
-            return false;
+        function(problem_level, callback) {
+            var point = common.givePoint(problem_level);
+            common.logging_debug('point', point);
+            var sql = (SQL
+                      `
+                      update tbl_user
+                      set point = point + ${point}
+                      where id = ${id}
+                      `
+                      )
+            common.logging_debug('sql', sql);
+            connection.query(sql, function(err, rows, fields) {
+                if (err == null) {
+                    callback(null)
+                }
+                else {
+                    common.logging_error('err', err);
+                    connection.end()
+                    return false;
+                }
+            });
         },
         // 4. 소켓을 이용하여 한자와 이력 동기화
         function(callback) {
-
+            // ioClient.emit("kanji", kanji);
+            // ioClient.emit("history");
             return false;
         },
     ], function (err, result) {});

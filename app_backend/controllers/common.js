@@ -66,6 +66,21 @@ module.exports = {
     return token;
   },
 
+  givePoint: function(problem_level) {
+    if (problem_level == 1){
+        var point = 5
+    } else if (problem_level == 2){
+        var point = 4
+    } else if (problem_level == 3){
+        var point = 3
+    } else if (problem_level == 4){
+        var point = 2
+    } else if (problem_level == 5){
+        var point = 1
+    }
+    return point
+  },
+
   logging_debug: function(key, val) {
     if(logging.debug == true) {
       console.log('DEBUG -> ' +key+ ' : ', val);
