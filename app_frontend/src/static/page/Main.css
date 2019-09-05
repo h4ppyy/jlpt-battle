@@ -119,3 +119,24 @@
 .nologin {
   text-align: center;
 }
+.history-null {
+  text-align: center;
+  margin-top: 10px;
+}
+.history-null-img {
+  border-radius: 35px;
+  width: 220px;
+}
+.history-null-txt {
+  margin-top: 235px;
+}
+.tac {
+  text-align: center;
+}
+.kanji-null-img {
+  margin-top: -100px;
+  width: 400px;
+}
+.chat-null-txt {
+  margin-top: 100px;
+}

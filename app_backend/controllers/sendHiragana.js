@@ -1,5 +1,6 @@
 const async = require('async');
 const mysql = require('mysql');
+const SQL = require('sql-template-strings')
 const ioc = require("socket.io-client");
 
 const dbconfig   = require('../config/config.js').database;
@@ -7,124 +8,122 @@ const ioconfig   = require('../config/config.js').socketio;
 const common = require('./common.js');
 
 
+// 정답 제출 시 호출되는 함수
 exports.sendHiragana = function(req, res) {
     const connection = mysql.createConnection(dbconfig);
     const ioClient = ioc.connect(ioconfig);
 
-    var content = req.body.content;
-    var user_id = '1';
+    var hiragana = req.body.hiragana;
+    var level = req.body.level;
+    var decoded = req.decoded;
+    var id = decoded.id;
+    var username = decoded.username;
 
-    console.log('DEBUG -> content : ', content);
-    console.log('DEBUG -> user_id : ', user_id);
+    common.logging_debug('hiragana', hiragana);
+    common.logging_debug('level', level);
+    common.logging_debug('id', id);
+    common.logging_debug('username', username);
 
-    // あいそう
     async.waterfall([
+        // 1. 제출할 수 있는 문제가 존재하는지 확인
+        // 2. 제출된 히라가나와 출제된 히라가나를 비교
         function(callback) {
-            var sql = "select x.id, y.hiragana from tbl_japan_problem x join tbl_japan_store y on x.store_id = y.id where x.delete_yn = 'N' and x.regist_date > DATE_FORMAT(date_sub(now(), interval 10 day),'%Y-%m-%d') and user_id is null order by x.regist_date desc limit 1";
-            console.log(sql);
+            var sql = ""+
+                      "select x.id, y.hiragana, y.level "+
+                      "from tbl_problem_"+level+" x "+
+                      "join tbl_japan_store y "+
+                      "on x.store_id = y.id "+
+                      "where user_id is null; "
+            common.logging_debug('sql', sql);
             connection.query(sql, function(err, rows, fields) {
-              if (err == null) {
-                var id = rows[0]['id'];
-                var hiragana = rows[0]['hiragana'];
-                callback(null, id, hiragana);
-              }
-              else {
-                console.log('ERROR -> ', err);
-              }
-            });
-        },
-        function(id, hiragana, callback) {
-            console.log('DEBUG -> id : ', id);
-            console.log('DEBUG -> hiragana : ', hiragana);
-
-            if(content == hiragana){
-              var sql = "update tbl_japan_problem set user_id = '"+user_id+"', modify_date = now() where id='"+id+"'"
-              console.log(sql);
-              connection.query(sql, function(err, rows, fields) {
                 if (err == null) {
-                  callback(null);
+                    var check = rows.length
+                    common.logging_debug('check', check);
+                    if(check != 0){
+                        var problem_id = rows[0]['id']
+                        var problem_hiragana = rows[0]['hiragana']
+                        var problem_level = rows[0]['level']
+                        callback(null, problem_id, problem_hiragana, problem_level);
+                    } else {
+                        res.json(
+                          {
+                            "result": common.CODE_PROBLEM_NULL
+                          }
+                        )
+                        connection.end()
+                        return false;
+                    }
                 }
                 else {
-                  console.log('ERROR -> ', err);
+                    common.logging_error('err', err);
+                    connection.end()
+                    return false;
                 }
-              });
+            });
+        },
+        // 2. 정답일 경우 사용자가 문제를 획득
+        function(problem_id, problem_hiragana, problem_level, callback) {
+            common.logging_debug('problem_id', problem_id);
+            common.logging_debug('problem_hiragana', problem_hiragana);
+            common.logging_debug('problem_level', problem_level);
+
+            if(hiragana == problem_hiragana){
+                common.logging_debug('status', 'correct');
+                var sql = ""+
+                          "update tbl_problem_"+level+" "+
+                          "set user_id = "+id+" "+
+                          ", modify_date = now() " +
+                          "where id = "+problem_id+" "
+                common.logging_debug('sql', sql);
+                connection.query(sql, function(err, rows, fields) {
+                    if (err == null) {
+                        callback(null, problem_level);
+                    }
+                    else {
+                        common.logging_error('err', err);
+                        connection.end()
+                        return false;
+                    }
+                });
             } else {
-                return false
+                common.logging_debug('status', 'incorrect');
+                res.json(
+                  {
+                    "result": common.CODE_PROBLEM_FAIL
+                  }
+                )
+                connection.end()
+                return false;
             }
         },
-
+        // 3. 사용자에게 정답 제출 보상 포인트를 제공
+        function(problem_level, callback) {
+            var point = common.givePoint(problem_level);
+            common.logging_debug('point', point);
+            var sql = (SQL
+                      `
+                      update tbl_user
+                      set point = point + ${point}
+                      where id = ${id}
+                      `
+                      )
+            common.logging_debug('sql', sql);
+            connection.query(sql, function(err, rows, fields) {
+                if (err == null) {
+                    callback(null)
+                }
+                else {
+                    common.logging_error('err', err);
+                    connection.end()
+                    return false;
+                }
+            });
+        },
+        // 4. 소켓을 이용하여 한자와 이력 동기화
         function(callback) {
-            sql = 'select count(*) as cnt from tbl_japan_store'
-            console.log(sql);
-            connection.query(sql, function(err, rows, fields) {
-              if (!err){
-                len_rows = rows[0]['cnt'];
-                callback(null, len_rows);
-              } else {
-                console.log('Error : ', err);
-              }
-            });
+            // ioClient.emit("kanji", kanji);
+            // ioClient.emit("history");
+            return false;
         },
-        function(len_rows, callback) {
-            console.log('rows : ', len_rows);
-            var searchId = common.getRandom(len_rows);
-            var sql = 'select * from tbl_japan_store where id = '+searchId+''
-            console.log(sql);
-            console.log('searchId : ', searchId);
-            connection.query(sql, function(err, rows, fields) {
-              if (!err){
-                rows = rows[0];
-                callback(null, rows);
-              } else {
-                console.log('Error : ', err);
-              }
-            });
-        },
-        function(rows, callback) {
-            var id = rows['id'];
-            var kanji = rows['kanji'];
-            var hiragana = rows['hiragana'];
-            var hangul = rows['hangul'];
-            var type = rows['type'];
-            var level = rows['level'];
-            var exam_yn = rows['exam_yn'];
-            var delete_yn = rows['delete_yn'];
-            var regist_date = rows['regist_date'];
-            var modify_date = rows['modify_date'];
-            var delete_date = rows['delete_date'];
-
-            console.log('id -> ', id);
-            console.log('kanji -> ', kanji);
-            console.log('hiragana -> ', hiragana);
-            console.log('hangul -> ', hangul);
-            console.log('type -> ', type);
-            console.log('level -> ', level);
-            console.log('exam_yn -> ', exam_yn);
-            console.log('delete_yn -> ', delete_yn);
-            console.log('regist_date -> ', regist_date);
-            console.log('modify_date -> ', modify_date);
-            console.log('delete_date -> ', delete_date);
-
-            var sql = 'insert into tbl_japan_problem(store_id, user_id) values('+id+', null);'
-            console.log(sql);
-            connection.query(sql, function(err, rows, fields) {
-              if (!err){
-                //console.log('rows -> ', rows);
-                callback(null, kanji);
-              } else {
-                console.log('Error : ', err);
-              }
-            });
-        },
-        function(kanji, callback) {
-            ioClient.emit("kanji", kanji);
-            ioClient.emit("history");
-            callback(null, 'done');
-        }
-    ], function (err, result) {
-          console.log('err -> ', err);
-          console.log('result -> ', result);
-    });
-
-    res.json({"result": "1"})
+    ], function (err, result) {});
 }

@@ -26,7 +26,7 @@ router.post('/api/getChatLog', getChatLogController.getChatLog)
 router.post('/api/getCurrentKanji', getCurrentKanjiController.getCurrentKanji)
 router.post('/api/getHistoryLog', getHistoryLogController.getHistoryLog)
 router.post('/api/getMypageInfo', checkJwt, getMypageInfoController.getMypageInfo)
-router.post('/api/sendHiragana', sendHiraganaController.sendHiragana)
+router.post('/api/sendHiragana', checkJwt, sendHiraganaController.sendHiragana)
 router.post('/test', checkJwt, testController.test)
 
 
