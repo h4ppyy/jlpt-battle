@@ -39,11 +39,11 @@ exports.loginUser = function(req, res) {
 
     var sql = (SQL
               `
-              select username, is_staff, count(*) as cnt
+              select id, username, is_staff, count(*) as cnt
               from tbl_user
               where username = ${username}
               and password = ${password}
-              group by username, is_staff;
+              group by id, username, is_staff;
               `
               )
     common.logging_debug('sql', sql);
@@ -52,10 +52,11 @@ exports.loginUser = function(req, res) {
         if (!err){
             if(rows.length != 0){
                 console.log('rows -> ', rows[0]);
+                var seq = rows[0].id;
                 var username = rows[0].username;
                 var is_staff = rows[0].is_staff;
                 var cnt = rows[0].cnt;
-                var jwttoken = common.getToken(username, is_staff);
+                var jwttoken = common.getToken(seq, username, is_staff);
                 common.logging_debug('jwttoken', jwttoken);
                 res.json({"token": jwttoken,"result": common.CODE_SUCCESS})
                 return false;

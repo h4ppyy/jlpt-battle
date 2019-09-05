@@ -66,17 +66,24 @@ function levelClassification(rows){
     };
 }
 
+function Eachlevel(rows) {
+
+}
+
 
 exports.getMypageInfo = function(req, res) {
+    console.log('decoded -> ', req.decoded);
+    console.log('decoded id->', req.decoded.id);
+    var username = req.decoded.id;
+    var seq = req.decoded.seq;
     const connection = mysql.createConnection(dbconfig);
-
     async.waterfall([
         function(callback) {
             var sql = (SQL
                       `
                       select username, jlpt_level, point, regist_date
                       from tbl_user
-                      where id = '1'
+                      where id = ${seq}
                       `
                       )
             common.logging_debug('sql', sql);
@@ -84,6 +91,7 @@ exports.getMypageInfo = function(req, res) {
                 if (err == null) {
                     if(rows.length != 0){
                         var user = rows[0]
+                        console.log('123123-->', rows[0]);
                         callback(null, user);
                     } else {
                         res.json({"result": 404})
@@ -100,10 +108,10 @@ exports.getMypageInfo = function(req, res) {
             var sql = (SQL
                       `
                       select level, count(*) as cnt
-                      from tbl_japan_problem x
+                      from tbl_problem_free x
                       join tbl_japan_store y
                       on x.store_id = y.id
-                      where user_id = '1'
+                      where user_id = ${seq}
                       group by level;
                       `
                       )

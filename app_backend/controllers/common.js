@@ -47,8 +47,9 @@ module.exports = {
       return year + "-" + month + "-" + day + "-" + hour + ":" + min + ":" + sec;
   },
 
-  getToken: function(id, staff) {
+  getToken: function(seq, id, staff) {
     var token = jwt.sign({
+        'seq': seq,
         'id': id,
         'staff': staff,
         'exp': Math.floor(Date.now() / 1000) + (60 * 60 * 24)
