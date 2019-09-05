@@ -100,7 +100,7 @@ class Main extends React.Component {
     socket.emit('end');
   }
 
-  // 답안 전송 이벤트 (작업필요)
+  // 답안 전송 이벤트 (마지막 작업)
   sendHiragana = () => {
     var content = this.state.inputHiragana;
     var url = Config.backendUrl + '/api/sendHiragana'

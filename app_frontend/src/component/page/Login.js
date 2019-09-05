@@ -62,6 +62,13 @@ class Login extends React.Component {
     });
   }
 
+  // 로그인 엔터키 이벤트
+  handleKeyDownLogin = (e) => {
+    if (e.key === 'Enter') {
+      this.sendLogin();
+    }
+  }
+
 
   render() {
     return (
@@ -73,12 +80,12 @@ class Login extends React.Component {
                 <i className="fas fa-user-shield mr8"></i>
                 아이디
               </label>
-              <input onChange={this.changeUsername.bind(this)} type="email" className="form-control input-control" id="login_id" placeholder=""/>
+              <input onKeyDown={this.handleKeyDownLogin} onChange={this.changeUsername.bind(this)} type="email" className="form-control input-control" id="login_id" placeholder=""/>
               <label>
                 <i className="fas fa-unlock-alt mr8"></i>
                 비밀번호
               </label>
-              <input onChange={this.changePassword.bind(this)} type="password" className="form-control input-control" id="login_password" placeholder=""/>
+              <input onKeyDown={this.handleKeyDownLogin} onChange={this.changePassword.bind(this)} type="password" className="form-control input-control" id="login_password" placeholder=""/>
             </div>
           </form>
           <div className="form-button">
