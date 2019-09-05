@@ -1,19 +1,15 @@
-const async = require('async');
 const mysql = require('mysql');
-const ioc = require("socket.io-client");
 const SQL = require('sql-template-strings')
-
 const dbconfig   = require('../config/config.js').database;
-const ioconfig   = require('../config/config.js').socketio;
 const common = require('./common.js');
 
 
+// 로그인 시 호출되는 함수
 exports.loginUser = function(req, res) {
     const connection = mysql.createConnection(dbconfig);
 
     var username = req.body.username;
     var password = req.body.password;
-
     common.logging_debug('username', username);
     common.logging_debug('password', password);
 
@@ -30,10 +26,12 @@ exports.loginUser = function(req, res) {
     // 유효성 로직 (프론트 엔드와 동기화)
     if(before_username != username){
         res.json({"result": common.CODE_ID_NOT_ALLOW})
+        connection.end()
         return false;
     }
     else if(before_password != password){
         res.json({"result": common.CODE_PW_NOT_ALLOW})
+        connection.end()
         return false;
     }
 
@@ -51,7 +49,6 @@ exports.loginUser = function(req, res) {
     connection.query(sql, function(err, rows, fields) {
         if (!err){
             if(rows.length != 0){
-                console.log('rows -> ', rows[0]);
                 var id = rows[0].id;
                 var username = rows[0].username;
                 var is_staff = rows[0].is_staff;

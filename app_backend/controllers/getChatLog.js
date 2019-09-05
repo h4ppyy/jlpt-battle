@@ -1,16 +1,12 @@
-const async = require('async');
 const mysql = require('mysql');
 const SQL = require('sql-template-strings')
-const ioc = require("socket.io-client");
-
 const dbconfig   = require('../config/config.js').database;
-const ioconfig   = require('../config/config.js').socketio;
 const common = require('./common.js');
 
 
+// 채팅로그를 가져오기 위해 호출되는 함수
 exports.getChatLog = function(req, res) {
     const connection = mysql.createConnection(dbconfig);
-
     var sql = (SQL
               `
               select y.username, x.content, x.regist_date
@@ -25,9 +21,13 @@ exports.getChatLog = function(req, res) {
     connection.query(sql, function(err, rows, fields) {
       if (err == null) {
         res.json({"result": rows})
+        connection.end()
+        return false;
       }
       else {
-        console.log('ERROR -> ', err);
+        common.logging_error('err', err);
+        connection.end()
+        return false;
       }
     });
 }

@@ -14,11 +14,13 @@ exports.test = function(req, res) {
 
     connection.query('select * from tbl_user', function(err, rows, fields) {
         if (err == null) {
-            //console.log('The solution is: ', rows);
+            common.logging_debug('rows', rows);
         }
         else {
-            //console.log('Error while performing Query.', err);
+            common.logging_error('err', err);
         }
     });
     res.json({"result":200})
+    connection.end()
+    return false;
 }

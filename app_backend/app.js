@@ -149,33 +149,31 @@ io.on('connection', socket => {
       io.sockets.emit('kanji', kanji);
   })
 
+
   // 웹소켓 (이력 표기)
   socket.on('history', () => {
-      var sql = (SQL
-                `
-                select  ifnull(y.username, 'PC') as username,
-                        ifnull(x.modify_date, '정답 미제출로 인한 pass') as modify_date,
-                        z.kanji,
-                        z.hiragana,
-                        z.hangul
-                from tbl_japan_problem x
-                left join tbl_user y
-                on x.user_id = y.id
-                join tbl_japan_store z
-                on x.store_id = z.id
-                where x.regist_date > DATE_FORMAT(date_sub(now(), interval 10 day),'%Y-%m-%d')
-                order by x.regist_date desc
-                limit 11
-                `
-                )
+    const sql = "SELECT Ifnull(y.username, 'PC') AS username, "+
+              "Ifnull(x.modify_date, '정답 미제출로 인한 pass') AS modify_date, "+
+              "z.kanji, "+
+              "z.hiragana, "+
+              "z.hangul "+
+              "FROM   tbl_problem_n1 x "+
+              "LEFT JOIN tbl_user y "+
+              "ON x.user_id = y.id "+
+              "JOIN tbl_japan_store z "+
+              "ON x.store_id = z.id "+
+              "WHERE  x.regist_date > Date_format(Date_sub(Now(), INTERVAL "+common.SLOW_QUERY_SOLUTION+" day), '%Y-%m-%d') "+
+              "ORDER  BY x.regist_date DESC "+
+              "LIMIT  11; "
     common.logging_debug('sql', sql);
     connection.query(sql, function(err, rows, fields) {
         if (err == null) {
-            // console.log('DEBUG -> rows : ', rows);
             io.sockets.emit('history', rows);
+            return false;
         }
         else {
-            console.log('ERROR -> ', err);
+            common.logging_error('err', err);
+            return false;
         }
     });
   })

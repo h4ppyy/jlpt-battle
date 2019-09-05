@@ -23,27 +23,31 @@ class Main extends React.Component {
 
   componentWillMount = () => {
 
-      // 채팅 기록 초기 로딩
-      const url = Config.backendUrl + '/api/getChatLog';
+      // 채팅 기록 초기 로딩 (공통)
+       var url = Config.backendUrl + '/api/getChatLog';
       axios.post(url).then(response => {
         this.setState({chat: response.data.result.reverse()});
         this.scrollToBottom();
       });
 
-      /*
-      // 이력 기록 초기 로딩 (작업필요)
-      url = 'http://127.0.0.1:4000/api/getHistoryLog'
-      axios.post(url).then(response => {
+      // 레벨 분리
+      var level = this.props.match.params.id
+      var param = {
+        'level': level
+      }
+
+      // 이력 기록 초기 로딩
+      var url = Config.backendUrl + '/api/getHistoryLog'
+      axios.post(url, param).then(response => {
         response.data.result.shift();
         this.setState({history: response.data.result});
       });
 
-      // 현재 한자 초기 로딩 (작업필요)
-      url = 'http://127.0.0.1:4000/api/getCurrentKanji'
-      axios.post(url).then(response => {
+      // 현재 한자 초기 로딩
+      var url = Config.backendUrl + '/api/getCurrentKanji'
+      axios.post(url, param).then(response => {
         this.setState({kanji: response.data.result[0]['kanji'] });
       });
-      */
 
       // 웹소켓 -> 채팅 리스너
       const socket = socketIOClient(Config.backendUrl);
@@ -137,9 +141,15 @@ class Main extends React.Component {
           <div className='main-content'>
             <div className='hanja-container'>
               <div className='hanja-box'>
-                <p>{this.state.kanji}</p>
-                <p>{this.props.match.params.id}</p>
-                <p>{this.props.loginStatus}</p>
+                {
+                  this.state.kanji === ''
+                  ?
+                  <div>
+                    <img className='kanji-null-img' src={process.env.PUBLIC_URL + '/move/move6.gif'}/>
+                  </div>
+                  :
+                  this.state.kanji
+                }
               </div>
             </div>
             <div className='sendbox-container'>
@@ -168,12 +178,22 @@ class Main extends React.Component {
               {this.state.chat.map((item, key) =>
                   <div key={key}>{item.username} : {item.content}</div>
               )}
+              {
+                this.state.chat.length === 0?
+                <div className='history-null'>
+                  <div className='chat-null-txt'>
+                     채팅내역이 존재하지 않습니다
+                  </div>
+                </div>
+                :
+                <div></div>
+              }
             </div>
             <div className='sendbox-container'>
               {
                 this.props.loginStatus === 0
                 ?
-                <input disabled value={this.state.inputChat} onKeyDown={this.handleKeyDownChat} onChange={this.onChangeChat.bind(this)} className='x' type="text" className="form-control nologin" placeholder="로그인 후 이용할 수 있습니다"></input>
+                <input disabled value={this.state.inputChat} onKeyDown={this.handleKeyDownChat} onChange={this.onChangeChat.bind(this)} className='x' type="text" className="form-control nologin x" placeholder="로그인 후 이용할 수 있습니다"></input>
                 :
                 <input value={this.state.inputChat} onKeyDown={this.handleKeyDownChat} onChange={this.onChangeChat.bind(this)} className='x' type="text" className="form-control" placeholder=""></input>
               }
@@ -216,6 +236,17 @@ class Main extends React.Component {
                   </div>
                 </div>
               )}
+              {
+                this.state.history.length === 0
+                ?
+                <div className='history-null'>
+                  <div className='history-null-txt'>
+                    이력이 존재하지 않습니다
+                  </div>
+                </div>
+                :
+                <div></div>
+              }
 
             </div>
           </div>

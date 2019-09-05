@@ -1,13 +1,11 @@
 const async = require('async');
 const mysql = require('mysql');
 const SQL = require('sql-template-strings')
-const ioc = require("socket.io-client");
-
 const dbconfig   = require('../config/config.js').database;
-const ioconfig   = require('../config/config.js').socketio;
 const common = require('./common.js');
 
 
+// 회원가입 시 호출되는 함수
 exports.createUser = function(req, res) {
     const connection = mysql.createConnection(dbconfig);
 
@@ -34,38 +32,47 @@ exports.createUser = function(req, res) {
     // 유효성 로직 (프론트 엔드와 동기화)
     if(username == ''){
         res.json({"result": common.CODE_ID_EMPTY})
+        connection.end()
         return false;
     }
     else if(before_username != username){
         res.json({"result": common.CODE_ID_NOT_ALLOW})
+        connection.end()
         return false;
     }
     else if(before_password != password){
         res.json({"result": common.CODE_PW_NOT_ALLOW})
+        connection.end()
         return false;
     }
     else if( !(username.length > 3 && username.length < 11) ){
         res.json({"result": common.CODE_ID_LENGTH_ERROR})
+        connection.end()
         return false;
     }
     else if(password == ''){
         res.json({"result": common.CODE_PW_EMPTY})
+        connection.end()
         return false;
     }
     else if( !(password.length > 3 && password.length < 11) ){
         res.json({"result": common.CODE_PW_LENGTH_ERROR})
+        connection.end()
         return false;
     }
     else if(passwordRe == ''){
         res.json({"result": common.CODE_PW_RE_EMPTY})
+        connection.end()
         return false;
     }
     else if(passwordRe != password){
         res.json({"result": common.CODE_PW_PWRE_NOT_SAME})
+        connection.end()
         return false;
     }
     else if(jlptLevel == ''){
         res.json({"result": common.CODE_JLPT_EMPTY})
+        connection.end()
         return false;
     }
 
@@ -119,7 +126,5 @@ exports.createUser = function(req, res) {
                 }
             });
         }
-    ], function (err, result) {
-        // pass
-    });
+    ], function (err, result) {});
 }
