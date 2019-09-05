@@ -61,18 +61,18 @@ class Main extends React.Component {
           this.scrollToBottom();
       })
 
-      // 웹소켓 -> 한자 리스너 (작업필요)
+      // 웹소켓 -> 한자 리스너
       var channel_kanji = 'kanji_' + level;
       socket.on(channel_kanji, (kanji) => {
           this.setState({kanji: kanji});
       })
 
-      // 웹소켓 -> 이력 리스너 (작업필요)
-      socket.on('history', (history) => {
+      // 웹소켓 -> 이력 리스너
+      var channel_history = 'history_' + level;
+      socket.on(channel_history, (history) => {
           console.log('INFO -> history : ', history);
           history.shift();
           this.setState({history: history});
-          this.setState({progress: 100});
       })
   }
 

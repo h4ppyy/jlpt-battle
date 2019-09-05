@@ -165,25 +165,102 @@ io.on('connection', socket => {
   })
 
 
+  // 히스토리 조회 쿼리 공통
+  function makeHistorySql(level){
+      var sql = "SELECT Ifnull(y.username, 'PC') AS username, "+
+                "Ifnull(x.modify_date, '0000-00-00 00:00:00') AS modify_date, "+
+                "z.kanji, "+
+                "z.hiragana, "+
+                "z.hangul "+
+                "FROM   tbl_problem_"+level+" x "+
+                "LEFT JOIN tbl_user y "+
+                "ON x.user_id = y.id "+
+                "JOIN tbl_japan_store z "+
+                "ON x.store_id = z.id "+
+                "WHERE  x.regist_date > Date_format(Date_sub(Now(), INTERVAL "+common.SLOW_QUERY_SOLUTION+" day), '%Y-%m-%d') "+
+                "ORDER  BY x.regist_date DESC "+
+                "LIMIT  11; "
+      return sql;
+  }
+
+
   // 웹소켓 (이력 표기)
-  socket.on('history', () => {
-    const sql = "SELECT Ifnull(y.username, 'PC') AS username, "+
-              "Ifnull(x.modify_date, '정답 미제출로 인한 pass') AS modify_date, "+
-              "z.kanji, "+
-              "z.hiragana, "+
-              "z.hangul "+
-              "FROM   tbl_problem_n1 x "+
-              "LEFT JOIN tbl_user y "+
-              "ON x.user_id = y.id "+
-              "JOIN tbl_japan_store z "+
-              "ON x.store_id = z.id "+
-              "WHERE  x.regist_date > Date_format(Date_sub(Now(), INTERVAL "+common.SLOW_QUERY_SOLUTION+" day), '%Y-%m-%d') "+
-              "ORDER  BY x.regist_date DESC "+
-              "LIMIT  11; "
+  socket.on('history_n1', () => {
+    sql = makeHistorySql('n1')
     common.logging_debug('sql', sql);
     connection.query(sql, function(err, rows, fields) {
         if (err == null) {
-            io.sockets.emit('history', rows);
+            io.sockets.emit('history_n1', rows);
+            return false;
+        }
+        else {
+            common.logging_error('err', err);
+            return false;
+        }
+    });
+  })
+  socket.on('history_n2', () => {
+    sql = makeHistorySql('n2')
+    common.logging_debug('sql', sql);
+    connection.query(sql, function(err, rows, fields) {
+        if (err == null) {
+            io.sockets.emit('history_n2', rows);
+            return false;
+        }
+        else {
+            common.logging_error('err', err);
+            return false;
+        }
+    });
+  })
+  socket.on('history_n3', () => {
+    sql = makeHistorySql('n3')
+    common.logging_debug('sql', sql);
+    connection.query(sql, function(err, rows, fields) {
+        if (err == null) {
+            io.sockets.emit('history_n3', rows);
+            return false;
+        }
+        else {
+            common.logging_error('err', err);
+            return false;
+        }
+    });
+  })
+  socket.on('history_n4', () => {
+    sql = makeHistorySql('n4')
+    common.logging_debug('sql', sql);
+    connection.query(sql, function(err, rows, fields) {
+        if (err == null) {
+            io.sockets.emit('history_n4', rows);
+            return false;
+        }
+        else {
+            common.logging_error('err', err);
+            return false;
+        }
+    });
+  })
+  socket.on('history_n5', () => {
+    sql = makeHistorySql('n5')
+    common.logging_debug('sql', sql);
+    connection.query(sql, function(err, rows, fields) {
+        if (err == null) {
+            io.sockets.emit('history_n5', rows);
+            return false;
+        }
+        else {
+            common.logging_error('err', err);
+            return false;
+        }
+    });
+  })
+  socket.on('history_free', () => {
+    sql = makeHistorySql('free')
+    common.logging_debug('sql', sql);
+    connection.query(sql, function(err, rows, fields) {
+        if (err == null) {
+            io.sockets.emit('history_free', rows);
             return false;
         }
         else {
@@ -193,10 +270,14 @@ io.on('connection', socket => {
     });
   })
 
+
+  // 웹소켓 (커넥션 끊기)
   socket.on('end', function (){
       socket.disconnect(0);
   });
 
+
+  // 웹소켓 (끊김 알림)
   socket.on('disconnect', () => {
       common.logging_info('socketio', 'disconnected');
   })
