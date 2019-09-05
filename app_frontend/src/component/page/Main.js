@@ -24,7 +24,7 @@ class Main extends React.Component {
   componentWillMount = () => {
 
       // 채팅 기록 초기 로딩 (공통)
-       var url = Config.backendUrl + '/api/getChatLog';
+      var url = Config.backendUrl + '/api/getChatLog';
       axios.post(url).then(response => {
         this.setState({chat: response.data.result.reverse()});
         this.scrollToBottom();
@@ -62,7 +62,8 @@ class Main extends React.Component {
       })
 
       // 웹소켓 -> 한자 리스너 (작업필요)
-      socket.on('kanji', (kanji) => {
+      var channel_kanji = 'kanji_' + level;
+      socket.on(channel_kanji, (kanji) => {
           this.setState({kanji: kanji});
       })
 

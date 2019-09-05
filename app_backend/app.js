@@ -145,8 +145,23 @@ io.on('connection', socket => {
 
 
   // 웹소켓 (한자 표기)
-  socket.on('kanji', (kanji) => {
-      io.sockets.emit('kanji', kanji);
+  socket.on('kanji_n1', (kanji) => {
+      io.sockets.emit('kanji_n1', kanji);
+  })
+  socket.on('kanji_n2', (kanji) => {
+      io.sockets.emit('kanji_n2', kanji);
+  })
+  socket.on('kanji_n3', (kanji) => {
+      io.sockets.emit('kanji_n3', kanji);
+  })
+  socket.on('kanji_n4', (kanji) => {
+      io.sockets.emit('kanji_n4', kanji);
+  })
+  socket.on('kanji_n5', (kanji) => {
+      io.sockets.emit('kanji_n5', kanji);
+  })
+  socket.on('kanji_free', (kanji) => {
+      io.sockets.emit('kanji_free', kanji);
   })
 
 
