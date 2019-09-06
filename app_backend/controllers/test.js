@@ -9,8 +9,8 @@ const common = require('./common.js');
 
 exports.test = function(req, res) {
     console.log('req.decoded -> ', req.decoded);
-    
-    const conn = mysql.createconn(dbconfig);
+
+    const conn = mysql.createConnection(dbconfig);
 
     var sql = ""
     common.logging_debug('sql', sql);

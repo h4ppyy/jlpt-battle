@@ -5,7 +5,7 @@ const common = require('./common.js');
 
 // 현재 난이도의 출제 한자를 가져오는 함수
 exports.getCurrentKanji = function(req, res) {
-    const conn = mysql.createconn(dbconfig);
+    const conn = mysql.createConnection(dbconfig);
     const level = req.body.level;
     const sql =""+
              "SELECT kanji "+

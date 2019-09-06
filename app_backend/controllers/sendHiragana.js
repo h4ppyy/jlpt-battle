@@ -10,7 +10,7 @@ const common = require('./common.js');
 
 // 정답 제출 시 호출되는 함수
 exports.sendHiragana = function(req, res) {
-    const conn = mysql.createconn(dbconfig);
+    const conn = mysql.createConnection(dbconfig);
     const ioClient = ioc.connect(ioconfig);
 
     var hiragana = req.body.hiragana;

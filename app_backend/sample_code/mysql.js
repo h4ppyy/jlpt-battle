@@ -1,4 +1,4 @@
-const conn = mysql.createconn(dbconfig);
+const conn = mysql.createConnection(dbconfig);
 
 var sql = ""
 common.logging_debug('sql', sql);

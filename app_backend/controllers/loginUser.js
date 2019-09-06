@@ -6,7 +6,7 @@ const common = require('./common.js');
 
 // 로그인 시 호출되는 함수
 exports.loginUser = function(req, res) {
-    const conn = mysql.createconn(dbconfig);
+    const conn = mysql.createConnection(dbconfig);
 
     var username = req.body.username;
     var password = req.body.password;

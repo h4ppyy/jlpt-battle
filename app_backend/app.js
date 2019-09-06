@@ -27,7 +27,7 @@ const io = socketIO(server);
 
 // mysql connect 구성
 const dbconfig   = require('./config/config.js').database;
-const connection = mysql.createConnection(dbconfig);
+const conn = mysql.createConnection(dbconfig);
 
 
 // 미들웨어 관리
@@ -83,7 +83,7 @@ io.on('connection', socket => {
                         `
                         )
               common.logging_debug('sql', sql);
-              connection.query(sql, function(err, rows, fields) {
+              conn.query(sql, function(err, rows, fields) {
                 if (err == null){
                     callback(null, id, username)
                 } else {
@@ -100,7 +100,7 @@ io.on('connection', socket => {
                         `
                         )
               common.logging_debug('sql', sql);
-              connection.query(sql, function(err, rows, fields) {
+              conn.query(sql, function(err, rows, fields) {
                 if (err == null){
                     const chat_id = rows[0].chat_id;
                     callback(null, id, username, chat_id)
@@ -120,7 +120,7 @@ io.on('connection', socket => {
                         `
                         )
               common.logging_debug('sql', sql);
-              connection.query(sql, function(err, rows, fields) {
+              conn.query(sql, function(err, rows, fields) {
                 if (err == null){
                     const regist_date = rows[0].regist_date;
                     callback(null, id, username, regist_date)
@@ -188,7 +188,7 @@ io.on('connection', socket => {
   socket.on('history_n1', () => {
     sql = makeHistorySql('n1')
     common.logging_debug('sql', sql);
-    connection.query(sql, function(err, rows, fields) {
+    conn.query(sql, function(err, rows, fields) {
         if (err == null) {
             io.sockets.emit('history_n1', rows);
             return false;
@@ -202,7 +202,7 @@ io.on('connection', socket => {
   socket.on('history_n2', () => {
     sql = makeHistorySql('n2')
     common.logging_debug('sql', sql);
-    connection.query(sql, function(err, rows, fields) {
+    conn.query(sql, function(err, rows, fields) {
         if (err == null) {
             io.sockets.emit('history_n2', rows);
             return false;
@@ -216,7 +216,7 @@ io.on('connection', socket => {
   socket.on('history_n3', () => {
     sql = makeHistorySql('n3')
     common.logging_debug('sql', sql);
-    connection.query(sql, function(err, rows, fields) {
+    conn.query(sql, function(err, rows, fields) {
         if (err == null) {
             io.sockets.emit('history_n3', rows);
             return false;
@@ -230,7 +230,7 @@ io.on('connection', socket => {
   socket.on('history_n4', () => {
     sql = makeHistorySql('n4')
     common.logging_debug('sql', sql);
-    connection.query(sql, function(err, rows, fields) {
+    conn.query(sql, function(err, rows, fields) {
         if (err == null) {
             io.sockets.emit('history_n4', rows);
             return false;
@@ -244,7 +244,7 @@ io.on('connection', socket => {
   socket.on('history_n5', () => {
     sql = makeHistorySql('n5')
     common.logging_debug('sql', sql);
-    connection.query(sql, function(err, rows, fields) {
+    conn.query(sql, function(err, rows, fields) {
         if (err == null) {
             io.sockets.emit('history_n5', rows);
             return false;
@@ -258,7 +258,7 @@ io.on('connection', socket => {
   socket.on('history_free', () => {
     sql = makeHistorySql('free')
     common.logging_debug('sql', sql);
-    connection.query(sql, function(err, rows, fields) {
+    conn.query(sql, function(err, rows, fields) {
         if (err == null) {
             io.sockets.emit('history_free', rows);
             return false;
