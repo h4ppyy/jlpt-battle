@@ -61,7 +61,12 @@ class Header extends React.Component {
                 </a>
               </span>
           </div>
+        </nav>
 
+        <nav className='mobile-header'>
+          <div className='header-flex-logo h-item mt15'>
+            <Link to="/">JLPT BATTLE</Link>
+          </div>
         </nav>
       </div>
     )

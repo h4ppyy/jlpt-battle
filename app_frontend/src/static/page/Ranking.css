@@ -9,6 +9,7 @@
   margin-left: auto;
   margin-right: auto;
   width: 800px;
+  color: #ffffff;
 }
 table {
   border-collapse: collapse;
@@ -63,4 +64,10 @@ tbody > tr:hover{
 }
 .rank-null-img{
   width: 100px;
+}
+@media screen and (max-width: 850px) {
+  .ranking-table {
+    width: 100%;
+    font-size: 10px;
+  }
 }

@@ -43,7 +43,7 @@ class Ranking extends React.Component {
             <span className='rank-top-title'>명예의 전당 TOP 100</span>
           </div>
 
-          <table className='ranking-table'>
+          <table className='ranking-table table'>
             <thead>
               <tr>
                 <td>순위</td>

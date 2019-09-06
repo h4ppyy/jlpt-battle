@@ -31,3 +31,8 @@
   background-color: #EB2119;
   border-color: #EB2119;
 }
+@media screen and (max-width: 540px) {
+  .form-container {
+      width: 100%;
+  }
+}

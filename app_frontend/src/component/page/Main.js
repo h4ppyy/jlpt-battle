@@ -258,7 +258,7 @@ class Main extends React.Component {
                     </div>
                   </div>
                   <div className='history-txt'>
-                    여기에 뜻 넣을 예정
+                    {item.hangul}
                   </div>
                   <div className='history-time'>
                     {item.modify_date}
