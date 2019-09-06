@@ -6,7 +6,7 @@ const common = require('./common.js');
 
 // 로그인 시 호출되는 함수
 exports.loginUser = function(req, res) {
-    const connection = mysql.createConnection(dbconfig);
+    const conn = mysql.createconn(dbconfig);
 
     var username = req.body.username;
     var password = req.body.password;
@@ -26,12 +26,12 @@ exports.loginUser = function(req, res) {
     // 유효성 로직 (프론트 엔드와 동기화)
     if(before_username != username){
         res.json({"result": common.CODE_ID_NOT_ALLOW})
-        connection.end()
+        conn.end()
         return false;
     }
     else if(before_password != password){
         res.json({"result": common.CODE_PW_NOT_ALLOW})
-        connection.end()
+        conn.end()
         return false;
     }
 
@@ -46,7 +46,7 @@ exports.loginUser = function(req, res) {
               )
     common.logging_debug('sql', sql);
 
-    connection.query(sql, function(err, rows, fields) {
+    conn.query(sql, function(err, rows, fields) {
         if (!err){
             if(rows.length != 0){
                 var id = rows[0].id;
@@ -56,16 +56,16 @@ exports.loginUser = function(req, res) {
                 var jwttoken = common.getToken(id, username, is_staff);
                 common.logging_debug('jwttoken', jwttoken);
                 res.json({"token": jwttoken,"result": common.CODE_SUCCESS})
-                connection.end()
+                conn.end()
                 return false;
             } else {
                 res.json({"result": common.CODE_ID_OR_PW_INCORRECT})
-                connection.end()
+                conn.end()
                 return false;
             }
         } else {
             common.logging_error('err', err);
-            connection.end()
+            conn.end()
             return false;
         }
     });

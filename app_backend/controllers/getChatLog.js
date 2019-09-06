@@ -6,7 +6,7 @@ const common = require('./common.js');
 
 // 채팅로그를 가져오기 위해 호출되는 함수
 exports.getChatLog = function(req, res) {
-    const connection = mysql.createConnection(dbconfig);
+    const conn = mysql.createconn(dbconfig);
     var sql = (SQL
               `
               select y.username, x.content, x.regist_date
@@ -18,15 +18,15 @@ exports.getChatLog = function(req, res) {
               `
               )
     common.logging_debug('sql', sql);
-    connection.query(sql, function(err, rows, fields) {
+    conn.query(sql, function(err, rows, fields) {
       if (err == null) {
         res.json({"result": rows})
-        connection.end()
+        conn.end()
         return false;
       }
       else {
         common.logging_error('err', err);
-        connection.end()
+        conn.end()
         return false;
       }
     });

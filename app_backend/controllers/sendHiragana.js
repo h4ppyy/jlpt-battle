@@ -10,7 +10,7 @@ const common = require('./common.js');
 
 // 정답 제출 시 호출되는 함수
 exports.sendHiragana = function(req, res) {
-    const connection = mysql.createConnection(dbconfig);
+    const conn = mysql.createconn(dbconfig);
     const ioClient = ioc.connect(ioconfig);
 
     var hiragana = req.body.hiragana;
@@ -35,7 +35,7 @@ exports.sendHiragana = function(req, res) {
                       "on x.store_id = y.id "+
                       "where user_id is null; "
             common.logging_debug('sql', sql);
-            connection.query(sql, function(err, rows, fields) {
+            conn.query(sql, function(err, rows, fields) {
                 if (err == null) {
                     var check = rows.length
                     common.logging_debug('check', check);
@@ -50,13 +50,13 @@ exports.sendHiragana = function(req, res) {
                             "result": common.CODE_PROBLEM_NULL
                           }
                         )
-                        connection.end()
+                        conn.end()
                         return false;
                     }
                 }
                 else {
                     common.logging_error('err', err);
-                    connection.end()
+                    conn.end()
                     return false;
                 }
             });
@@ -75,13 +75,13 @@ exports.sendHiragana = function(req, res) {
                           ", modify_date = now() " +
                           "where id = "+problem_id+" "
                 common.logging_debug('sql', sql);
-                connection.query(sql, function(err, rows, fields) {
+                conn.query(sql, function(err, rows, fields) {
                     if (err == null) {
                         callback(null, problem_level);
                     }
                     else {
                         common.logging_error('err', err);
-                        connection.end()
+                        conn.end()
                         return false;
                     }
                 });
@@ -92,7 +92,7 @@ exports.sendHiragana = function(req, res) {
                     "result": common.CODE_PROBLEM_FAIL
                   }
                 )
-                connection.end()
+                conn.end()
                 return false;
             }
         },
@@ -108,13 +108,13 @@ exports.sendHiragana = function(req, res) {
                       `
                       )
             common.logging_debug('sql', sql);
-            connection.query(sql, function(err, rows, fields) {
+            conn.query(sql, function(err, rows, fields) {
                 if (err == null) {
                     callback(null)
                 }
                 else {
                     common.logging_error('err', err);
-                    connection.end()
+                    conn.end()
                     return false;
                 }
             });
@@ -132,7 +132,7 @@ exports.sendHiragana = function(req, res) {
                 "result": common.CODE_SUCCESS
               }
             )
-            connection.end()
+            conn.end()
             return false;
         },
     ], function (err, result) {});

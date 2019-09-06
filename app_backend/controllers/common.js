@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const logging = require('../config/config.js').logging;
 const secret = require('../config/config.js').secret;
+const jlpt_point = require('../config/config.js').jlpt_point;
 
 
 /*
@@ -68,15 +69,15 @@ module.exports = {
 
   givePoint: function(problem_level) {
     if (problem_level == 1){
-        var point = 5
+        var point = jlpt_point.n1
     } else if (problem_level == 2){
-        var point = 4
+        var point = jlpt_point.n2
     } else if (problem_level == 3){
-        var point = 3
+        var point = jlpt_point.n3
     } else if (problem_level == 4){
-        var point = 2
+        var point = jlpt_point.n4
     } else if (problem_level == 5){
-        var point = 1
+        var point = jlpt_point.n5
     }
     return point
   },

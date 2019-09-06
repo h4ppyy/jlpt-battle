@@ -5,7 +5,7 @@ const common = require('./common.js');
 
 // 현재 난이도의 출제 한자를 가져오는 함수
 exports.getCurrentKanji = function(req, res) {
-    const connection = mysql.createConnection(dbconfig);
+    const conn = mysql.createconn(dbconfig);
     const level = req.body.level;
     const sql =""+
              "SELECT kanji "+
@@ -17,7 +17,7 @@ exports.getCurrentKanji = function(req, res) {
              "ORDER  BY x.regist_date DESC "+
              "LIMIT  1 ";
     common.logging_debug('sql', sql);
-    connection.query(sql, function(err, rows, fields) {
+    conn.query(sql, function(err, rows, fields) {
       if (err == null) {
           if(rows.length != 0){
               var kanji = rows[0]['kanji']
@@ -30,7 +30,7 @@ exports.getCurrentKanji = function(req, res) {
                   ]
                 }
               )
-              connection.end()
+              conn.end()
               return false;
           } else {
               res.json(
@@ -42,7 +42,7 @@ exports.getCurrentKanji = function(req, res) {
                   ]
                 }
               )
-              connection.end()
+              conn.end()
               return false;
           }
       }
@@ -57,7 +57,7 @@ exports.getCurrentKanji = function(req, res) {
             ]
           }
         )
-        connection.end()
+        conn.end()
         return false;
       }
     });
