@@ -55,11 +55,15 @@ class Main extends React.Component {
           const content = data.content;
           const regist_date = data.regist_date;
           const ranking = data.ranking;
+          const point = data.point;
+          const jlpt_level = data.jlpt_level;
           var data = {
             username: username,
             content: content,
             regist_date: regist_date,
             rank: ranking,
+            point: point,
+            jlpt_level: jlpt_level,
           }
           var tmp = this.state.chat;
           tmp.push(data)
@@ -160,6 +164,7 @@ class Main extends React.Component {
                   ?
                   <div>
                     <img className='kanji-null-img' src={process.env.PUBLIC_URL + '/move/move6.gif'}/>
+                    <div className='kanji-null-ttt'>문제 준비 중입니다...</div>
                   </div>
                   :
                   this.state.kanji
@@ -216,7 +221,7 @@ class Main extends React.Component {
                 ?
                 <input disabled value={this.state.inputChat} onKeyDown={this.handleKeyDownChat} onChange={this.onChangeChat.bind(this)} className='x' type="text" className="form-control nologin x" placeholder="로그인 후 이용할 수 있습니다"></input>
                 :
-                <input value={this.state.inputChat} onKeyDown={this.handleKeyDownChat} onChange={this.onChangeChat.bind(this)} className='x' type="text" className="form-control" placeholder=""></input>
+                <input value={this.state.inputChat} onKeyDown={this.handleKeyDownChat} onChange={this.onChangeChat.bind(this)} className='x' type="text" className="form-control x" placeholder=""></input>
               }
               {
                 this.props.loginStatus === 0
@@ -251,6 +256,9 @@ class Main extends React.Component {
                     <div className='flex-default'>
                       {item.hiragana}
                     </div>
+                  </div>
+                  <div className='history-txt'>
+                    여기에 뜻 넣을 예정
                   </div>
                   <div className='history-time'>
                     {item.modify_date}

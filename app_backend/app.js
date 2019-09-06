@@ -136,7 +136,10 @@ io.on('connection', socket => {
                         `
                         select rank, jlpt_level, point
                         from (
-                        select @curRank := @curRank + 1 AS rank, x.jlpt_level, x.point
+                        select @curRank := @curRank + 1 AS rank,
+                               x.id,
+                               x.jlpt_level,
+                               x.point
                         from tbl_user x, (SELECT @curRank := 0) r
                         order by point desc
                         ) t
