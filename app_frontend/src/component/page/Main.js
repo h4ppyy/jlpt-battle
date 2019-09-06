@@ -39,7 +39,6 @@ class Main extends React.Component {
       // 이력 기록 초기 로딩
       var url = Config.backendUrl + '/api/getHistoryLog'
       axios.post(url, param).then(response => {
-        response.data.result.shift();
         this.setState({history: response.data.result});
       });
 
@@ -55,6 +54,17 @@ class Main extends React.Component {
           const username = data.username;
           const content = data.content;
           const regist_date = data.regist_date;
+          const ranking = data.ranking;
+          const point = data.point;
+          const jlpt_level = data.jlpt_level;
+          var data = {
+            username: username,
+            content: content,
+            regist_date: regist_date,
+            rank: ranking,
+            point: point,
+            jlpt_level: jlpt_level,
+          }
           var tmp = this.state.chat;
           tmp.push(data)
           this.setState(tmp);
@@ -71,7 +81,6 @@ class Main extends React.Component {
       var channel_history = 'history_' + level;
       socket.on(channel_history, (history) => {
           console.log('INFO -> history : ', history);
-          history.shift();
           this.setState({history: history});
       })
   }
@@ -114,7 +123,6 @@ class Main extends React.Component {
     axios.post(url, payload).then(response => {
       var result = response.data.result
       this.setState({inputHiragana: ''});
-
       console.log('result -> ', result);
     });
   }
@@ -156,6 +164,7 @@ class Main extends React.Component {
                   ?
                   <div>
                     <img className='kanji-null-img' src={process.env.PUBLIC_URL + '/move/move6.gif'}/>
+                    <div className='kanji-null-ttt'>문제 준비 중입니다...</div>
                   </div>
                   :
                   this.state.kanji
@@ -186,7 +195,14 @@ class Main extends React.Component {
             </div>
             <div className='chat-content' ref={'thing'}>
               {this.state.chat.map((item, key) =>
-                  <div key={key}>{item.username} : {item.content}</div>
+                  <div className='c-row' key={key}>
+                      <span className='c-name'>{item.username}</span>
+                      <span className='c-rank'>랭킹 {item.rank}위</span>
+                      <span className='c-jlpt'>JLPT N{item.jlpt_level}</span>
+                      <span className='c-point'>{item.point} point</span>
+                      <div className='c-content'>{item.content}</div>
+                      <div className='c-date'>{item.regist_date}</div>
+                  </div>
               )}
               {
                 this.state.chat.length === 0?
@@ -205,7 +221,7 @@ class Main extends React.Component {
                 ?
                 <input disabled value={this.state.inputChat} onKeyDown={this.handleKeyDownChat} onChange={this.onChangeChat.bind(this)} className='x' type="text" className="form-control nologin x" placeholder="로그인 후 이용할 수 있습니다"></input>
                 :
-                <input value={this.state.inputChat} onKeyDown={this.handleKeyDownChat} onChange={this.onChangeChat.bind(this)} className='x' type="text" className="form-control" placeholder=""></input>
+                <input value={this.state.inputChat} onKeyDown={this.handleKeyDownChat} onChange={this.onChangeChat.bind(this)} className='x' type="text" className="form-control x" placeholder=""></input>
               }
               {
                 this.props.loginStatus === 0
@@ -240,6 +256,9 @@ class Main extends React.Component {
                     <div className='flex-default'>
                       {item.hiragana}
                     </div>
+                  </div>
+                  <div className='history-txt'>
+                    여기에 뜻 넣을 예정
                   </div>
                   <div className='history-time'>
                     {item.modify_date}

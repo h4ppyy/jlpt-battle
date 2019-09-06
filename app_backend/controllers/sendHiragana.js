@@ -10,7 +10,7 @@ const common = require('./common.js');
 
 // 정답 제출 시 호출되는 함수
 exports.sendHiragana = function(req, res) {
-    const connection = mysql.createConnection(dbconfig);
+    const conn = mysql.createConnection(dbconfig);
     const ioClient = ioc.connect(ioconfig);
 
     var hiragana = req.body.hiragana;
@@ -35,7 +35,7 @@ exports.sendHiragana = function(req, res) {
                       "on x.store_id = y.id "+
                       "where user_id is null; "
             common.logging_debug('sql', sql);
-            connection.query(sql, function(err, rows, fields) {
+            conn.query(sql, function(err, rows, fields) {
                 if (err == null) {
                     var check = rows.length
                     common.logging_debug('check', check);
@@ -50,13 +50,13 @@ exports.sendHiragana = function(req, res) {
                             "result": common.CODE_PROBLEM_NULL
                           }
                         )
-                        connection.end()
+                        conn.end()
                         return false;
                     }
                 }
                 else {
                     common.logging_error('err', err);
-                    connection.end()
+                    conn.end()
                     return false;
                 }
             });
@@ -75,13 +75,13 @@ exports.sendHiragana = function(req, res) {
                           ", modify_date = now() " +
                           "where id = "+problem_id+" "
                 common.logging_debug('sql', sql);
-                connection.query(sql, function(err, rows, fields) {
+                conn.query(sql, function(err, rows, fields) {
                     if (err == null) {
                         callback(null, problem_level);
                     }
                     else {
                         common.logging_error('err', err);
-                        connection.end()
+                        conn.end()
                         return false;
                     }
                 });
@@ -92,7 +92,7 @@ exports.sendHiragana = function(req, res) {
                     "result": common.CODE_PROBLEM_FAIL
                   }
                 )
-                connection.end()
+                conn.end()
                 return false;
             }
         },
@@ -108,21 +108,31 @@ exports.sendHiragana = function(req, res) {
                       `
                       )
             common.logging_debug('sql', sql);
-            connection.query(sql, function(err, rows, fields) {
+            conn.query(sql, function(err, rows, fields) {
                 if (err == null) {
                     callback(null)
                 }
                 else {
                     common.logging_error('err', err);
-                    connection.end()
+                    conn.end()
                     return false;
                 }
             });
         },
-        // 4. 소켓을 이용하여 한자와 이력 동기화
+        // 4. 소켓을 이용하여 이력 동기화
         function(callback) {
-            // ioClient.emit("kanji", kanji);
-            // ioClient.emit("history");
+            var channel_history = 'history_' + level;
+            var channel_kanji = 'kanji_' + level;
+            common.logging_debug('channel_history', channel_history);
+            common.logging_debug('channel_kanji', channel_kanji);
+            ioClient.emit(channel_history);
+            ioClient.emit(channel_kanji, '');
+            res.json(
+              {
+                "result": common.CODE_SUCCESS
+              }
+            )
+            conn.end()
             return false;
         },
     ], function (err, result) {});

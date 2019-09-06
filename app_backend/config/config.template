@@ -13,5 +13,12 @@ module.exports = {
     info: true,
     error: true,
   },
-  secret: 'helloworld'
+  secret: 'helloworld',
+  jlpt_point: {
+    n1: 5,
+    n2: 4,
+    n3: 3,
+    n4: 2,
+    n5: 1
+  }
 };
