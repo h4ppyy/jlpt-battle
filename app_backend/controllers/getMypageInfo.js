@@ -74,7 +74,7 @@ function Eachlevel(rows) {
 exports.getMypageInfo = function(req, res) {
     console.log('decoded -> ', req.decoded);
     console.log('decoded id->', req.decoded.id);
-    var username = req.decoded.id;
+    var username = req.decoded.username;
     var seq = req.decoded.seq;
     const connection = mysql.createConnection(dbconfig);
     async.waterfall([
@@ -115,6 +115,41 @@ exports.getMypageInfo = function(req, res) {
                       group by level;
                       `
                       )
+            common.logging_debug('sql', sql);
+            connection.query(sql, function(err, rows, fields) {
+                if (err == null) {
+                    if(rows.length != 0){
+                        var result = Eachlevel(rows)
+                        res.json(
+                          {
+                            "result": 200,
+                            "userInfo": user,
+                            "problemSolve": result
+                          }
+                        )
+                        return false;
+                    } else {
+                        res.json({"result": 404})
+                        return false;
+                    }
+                }
+                else {
+                    common.logging_error('err', err);
+                    return false;
+                }
+            });
+        },
+        function(callback) {
+            var sql = (SQL
+                    `
+                        SELECT
+                          (SELECT COUNT(*) FROM tbl_problem_n1 WHERE user_id = ${seq}) as level1Count, 
+                          (SELECT COUNT(*) FROM tbl_problem_n2 WHERE user_id = ${seq}) as level2Count,
+                          (SELECT COUNT(*) FROM tbl_problem_n3 WHERE user_id = ${seq}) as level3Count,
+                          (SELECT COUNT(*) FROM tbl_problem_n4 WHERE user_id = ${seq}) as level4Count,
+                          (SELECT COUNT(*) FROM tbl_problem_n5 WHERE user_id = ${seq}) as level5Count;
+                      `
+            )
             common.logging_debug('sql', sql);
             connection.query(sql, function(err, rows, fields) {
                 if (err == null) {

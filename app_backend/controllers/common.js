@@ -58,7 +58,6 @@ module.exports = {
 
   getToken: function(id, username, staff) {
     var token = jwt.sign({
-        'seq': seq,
         'id': id,
         'username': username,
         'staff': staff,
