@@ -39,7 +39,6 @@ class Main extends React.Component {
       // 이력 기록 초기 로딩
       var url = Config.backendUrl + '/api/getHistoryLog'
       axios.post(url, param).then(response => {
-        response.data.result.shift();
         this.setState({history: response.data.result});
       });
 
