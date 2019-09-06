@@ -9,12 +9,21 @@ exports.getChatLog = function(req, res) {
     const conn = mysql.createConnection(dbconfig);
     var sql = (SQL
               `
-              select y.username, x.content, x.regist_date
+              select y.username, x.content, DATE_FORMAT(x.regist_date, "%Y-%m-%d %H:%i:%s") as regist_date, z.rank, y.jlpt_level, y.point
               from tbl_chat x
               join tbl_user y
               on x.user_id = y.id
+              join (
+              	select rank, id
+              	from (
+              	select @curRank := @curRank + 1 AS rank, x.id
+              	from tbl_user x, (SELECT @curRank := 0) r
+              	order by point desc
+              	) t
+              ) z
+              on x.user_id = z.id
               order by regist_date desc
-              limit 30
+              limit 30;
               `
               )
     common.logging_debug('sql', sql);

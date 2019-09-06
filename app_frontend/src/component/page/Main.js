@@ -54,6 +54,13 @@ class Main extends React.Component {
           const username = data.username;
           const content = data.content;
           const regist_date = data.regist_date;
+          const ranking = data.ranking;
+          var data = {
+            username: username,
+            content: content,
+            regist_date: regist_date,
+            rank: ranking,
+          }
           var tmp = this.state.chat;
           tmp.push(data)
           this.setState(tmp);
@@ -183,7 +190,14 @@ class Main extends React.Component {
             </div>
             <div className='chat-content' ref={'thing'}>
               {this.state.chat.map((item, key) =>
-                  <div key={key}>{item.username} : {item.content}</div>
+                  <div className='c-row' key={key}>
+                      <span className='c-name'>{item.username}</span>
+                      <span className='c-rank'>랭킹 {item.rank}위</span>
+                      <span className='c-jlpt'>JLPT N{item.jlpt_level}</span>
+                      <span className='c-point'>{item.point} point</span>
+                      <div className='c-content'>{item.content}</div>
+                      <div className='c-date'>{item.regist_date}</div>
+                  </div>
               )}
               {
                 this.state.chat.length === 0?

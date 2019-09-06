@@ -114,7 +114,7 @@ io.on('connection', socket => {
           function(id, username, chat_id, callback) {
               var sql = (SQL
                         `
-                        select regist_date
+                        select DATE_FORMAT(regist_date, "%Y-%m-%d %H:%i:%s") as regist_date
                         from tbl_chat
                         where id = ${chat_id};
                         `
@@ -130,11 +130,36 @@ io.on('connection', socket => {
                 }
               });
           },
-          // 5. 채팅 소켓 전송
+          // 5. 사용자 랭킹 획득
           function(id, username, regist_date, callback) {
+              var sql = (SQL
+                        `
+                        select rank, jlpt_level, point
+                        from (
+                        select @curRank := @curRank + 1 AS rank, x.jlpt_level, x.point
+                        from tbl_user x, (SELECT @curRank := 0) r
+                        order by point desc
+                        ) t
+                        where t.id = ${id}
+                        `
+                        )
+              common.logging_debug('sql', sql);
+              conn.query(sql, function(err, rows, fields) {
+                if (err == null){
+                    const ranking = rows[0].rank;
+                    callback(null, id, username, regist_date, ranking)
+                } else {
+                    console.log('Error : ', err);
+                    return false;
+                }
+              });
+          },
+          // 5. 채팅 소켓 전송
+          function(id, username, regist_date, ranking, callback) {
               const data = {
                 'username': username,
                 'content': chat,
+                'ranking': ranking,
                 'regist_date': regist_date
               }
               io.sockets.emit('chat', data);

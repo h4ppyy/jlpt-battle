@@ -140,3 +140,56 @@
 .chat-null-txt {
   margin-top: 100px;
 }
+
+
+.c-row {
+  margin-bottom: 3px;
+  border: solid 1px #626262;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 5px;
+}
+.c-name {
+  margin-right: 3px;
+}
+.c-rank {
+  background: #c81e1e;
+  padding: 2px;
+  border-radius: 5px;
+  margin-left: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-right: 1px;
+}
+.c-jlpt {
+  background: #ff6a6a;
+  padding: 2px;
+  border-radius: 5px;
+  margin-left: 5px;
+  padding-left: 6px;
+  padding-right: 8px;
+  margin-right: 1px;
+}
+.c-point {
+  background: #2196f3;
+  padding: 2px;
+  border-radius: 5px;
+  margin-left: 5px;
+  padding-left: 6px;
+  padding-right: 8px;
+  margin-right: 1px;
+}
+.c-content {
+  white-space: nowrap;
+  width: 700px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: 1px solid #000000;
+}
+.c-date {
+  font-size: 12px;
+  color: #bdc0ff;
+  text-align: right;
+}
