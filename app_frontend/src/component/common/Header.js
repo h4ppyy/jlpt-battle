@@ -8,12 +8,23 @@ import '../../static/common/Header.css';
 class Header extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      menuActive : false
+    }
   }
 
   clickLogout = () => {
     localStorage.removeItem('jwt');
     this.props.logout();
     this.props.history.push('/login');
+  }
+
+  clickMenu = () => {
+    if(this.state.menuActive == true){
+      this.setState({menuActive: false});
+    } else {
+      this.setState({menuActive: true});
+    }
   }
 
   render() {
@@ -64,9 +75,52 @@ class Header extends React.Component {
         </nav>
 
         <nav className='mobile-header'>
-          <div className='header-flex-logo h-item mt15'>
-            <Link to="/">JLPT BATTLE</Link>
+          <div className='mobile-header-box'>
+            <div className='header-flex-logo h-item mt15'>
+              <Link to="/">JLPT BATTLE</Link>
+              <i onClick={() => this.clickMenu()} class="fas fa-bars hamberger"></i>
+            </div>
           </div>
+          <div className='mobile-menu-box' style={{display: this.state.menuActive ? 'block' : 'none' }}>
+            <div className='mobile-menu'>
+              <Link to="/ranking/">
+                <div className='mobile-menu-item'>
+                  랭킹
+                </div>
+              </Link>
+            </div>
+            {
+              this.props.loginStatus === 1
+              ?
+              <div className='mobile-menu'>
+                <Link to="/mypage/">
+                  <div className='mobile-menu-item'>
+                    내정보
+                  </div>
+                </Link>
+              </div>
+              :
+              <div></div>
+            }
+            <div className='mobile-menu'>
+            {
+              this.props.loginStatus === 0
+              ?
+              <Link to="/login/">
+                <div className='mobile-menu-item'>
+                  로그인
+                </div>
+              </Link>
+              :
+              <Link to="/logout/">
+                <div className='mobile-menu-item'>
+                  로그아웃
+                </div>
+              </Link>
+            }
+            </div>
+          </div>
+
         </nav>
       </div>
     )
