@@ -106,7 +106,7 @@ class Mypage extends React.Component {
             <img alt='teacher' className='mypage-img' src={process.env.PUBLIC_URL + '/mypage/teacher.png'}/>
           </div>
           <div>
-            <table className='mypage-table'>
+            <table className='mypage-table table'>
               <thead>
               </thead>
               <tbody>
