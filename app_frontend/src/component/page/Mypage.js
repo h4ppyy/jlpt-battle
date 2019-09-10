@@ -14,11 +14,11 @@ class Mypage extends React.Component {
       jlpt_level: '',
       point: '',
       regist_date: '',
-      progress_n1: 50,
-      progress_n2: 50,
-      progress_n3: 50,
-      progress_n4: 50,
-      progress_n5: 50,
+      progress_n1: '',
+      progress_n2: '',
+      progress_n3: '',
+      progress_n4: '',
+      progress_n5: '',
       solve_n1: '',
       solve_n2: '',
       solve_n3: '',
@@ -39,8 +39,10 @@ class Mypage extends React.Component {
     axios.post(url).then(response => {
       console.log('reponse.date.result->', response.data.result);
       if(response.data.result == 200){
-        var userInfo = response.data.userInfo;
-        var problemSolve = response.data.problemSolve
+        var userInfo = response.data.user;
+        var problemSolve = response.data.problemSolve;
+        console.log('problemSolve ==>', problemSolve);
+        console.log('userInfo ==>', userInfo);
 
         var username = userInfo.username;
         var jlpt_level = userInfo.jlpt_level;
@@ -52,6 +54,7 @@ class Mypage extends React.Component {
         var solve_n3 = problemSolve.n3;
         var solve_n4 = problemSolve.n4;
         var solve_n5 = problemSolve.n5;
+
 
         var progress_n1 = problemSolve.progress_n1;
         var progress_n2 = problemSolve.progress_n2;
