@@ -279,8 +279,8 @@ def endPoint(startTime):
 
 if __name__ == "__main__":
     conn = databaseConnect()
-    # dropTable(conn)
-    # createTable(conn)
+    dropTable(conn)
+    createTable(conn)
     for JLPT_LEVEL in range(1,6):
         startTime = startPoint()
         dataSet = readData(JLPT_LEVEL)
@@ -293,5 +293,5 @@ if __name__ == "__main__":
             print('Migration has already been completed : level N{JLPT_LEVEL}'.format(JLPT_LEVEL=JLPT_LEVEL))
 
         endPoint(startTime)
-    #insertSampleDate(conn)
+    insertSampleDate(conn)
     databaseClose(conn)

@@ -1,12 +1,11 @@
 import pymysql
 import time
 import json
-import asyncio
 import socketio
 
 
 # Repeat time
-REPEAT_SEC = 10
+REPEAT_SEC = 15
 
 
 # change the information in database.json
@@ -24,7 +23,7 @@ DB_NAME     = databaseInfo['DB_NAME']
 
 
 # socketio config
-SOCKET_CONNECT_URL = 'http://localhost:4000'
+SOCKET_CONNECT_URL = 'http://www.happyy.shop'
 
 
 def databaseConnect():
@@ -181,7 +180,7 @@ def createProblem(conn, level, id):
     conn.commit()
 
 
-async def createProblemTask(level):
+def createProblemTask(level):
 
     sio = socketio.Client()
     sio.connect(SOCKET_CONNECT_URL)
@@ -207,40 +206,11 @@ async def createProblemTask(level):
     sio.disconnect()
 
 
-async def main():
+if __name__ == "__main__":
     while(True):
-        task1 = asyncio.create_task(
-            createProblemTask('N1')
-        )
-
-        task2 = asyncio.create_task(
-            createProblemTask('N2')
-        )
-
-        task3 = asyncio.create_task(
-            createProblemTask('N3')
-        )
-
-        task4 = asyncio.create_task(
-            createProblemTask('N4')
-        )
-
-        task5 = asyncio.create_task(
-            createProblemTask('N5')
-        )
-
-        task6 = asyncio.create_task(
-            createProblemTask('Free')
-        )
-        print(f"INFO -> started at {time.strftime('%X')}")
-        await task1
-        await task2
-        await task3
-        await task4
-        await task5
-        await task6
-        print(f"INFO -> finished at {time.strftime('%X')}\n")
+        for level in range(1,7):
+            level = 'N' + str(level)
+            if level == 'N6':
+                level = 'Free'
+            createProblemTask(level)
         time.sleep(REPEAT_SEC)
-
-
-asyncio.run(main())
