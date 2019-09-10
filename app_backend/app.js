@@ -150,7 +150,9 @@ io.on('connection', socket => {
               conn.query(sql, function(err, rows, fields) {
                 if (err == null){
                     const ranking = rows[0].rank;
-                    callback(null, id, username, regist_date, ranking)
+                    const point = rows[0].point;
+                    const jlpt_level = rows[0].jlpt_level;
+                    callback(null, id, username, regist_date, ranking, point, jlpt_level)
                 } else {
                     console.log('Error : ', err);
                     return false;
@@ -158,11 +160,13 @@ io.on('connection', socket => {
               });
           },
           // 5. 채팅 소켓 전송
-          function(id, username, regist_date, ranking, callback) {
+          function(id, username, regist_date, ranking, point, jlpt_level, callback) {
               const data = {
                 'username': username,
                 'content': chat,
                 'ranking': ranking,
+                'point': point,
+                'jlpt_level': jlpt_level,
                 'regist_date': regist_date
               }
               io.sockets.emit('chat', data);
