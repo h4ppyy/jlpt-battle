@@ -4,6 +4,7 @@ import { Animated } from "react-animated-css";
 import { connect } from "react-redux";
 
 import '../../static/page/Mypage.css';
+const Config = require('../config/config.js');
 
 
 class Mypage extends React.Component {
@@ -34,15 +35,13 @@ class Mypage extends React.Component {
     }
 
     var jwt = localStorage.getItem("jwt");
-    var url = 'http://127.0.0.1:4000/api/getMypageInfo'
+    var url = Config.backendUrl + '/api/getMypageInfo'
     axios.defaults.headers.common['authorization'] = jwt
     axios.post(url).then(response => {
       console.log('reponse.date.result->', response.data.result);
       if(response.data.result == 200){
         var userInfo = response.data.user;
         var problemSolve = response.data.problemSolve;
-        console.log('problemSolve ==>', problemSolve);
-        console.log('userInfo ==>', userInfo);
 
         var username = userInfo.username;
         var jlpt_level = userInfo.jlpt_level;
