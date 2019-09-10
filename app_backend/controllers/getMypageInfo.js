@@ -1,8 +1,6 @@
 const async = require('async');
 const mysql = require('mysql');
 const SQL = require('sql-template-strings')
-const ioc = require("socket.io-client");
-
 const dbconfig   = require('../config/config.js').database;
 const common = require('./common.js');
 
@@ -13,8 +11,6 @@ function levelClassification(rows, eachCount){
     var n3 = 0;
     var n4 = 0;
     var n5 = 0;
-
-    
 
     for(i=0; i<rows.length; i++){
       var level = rows[i].level;
@@ -72,6 +68,8 @@ function levelClassification(rows, eachCount){
         'progress_n5': progress_n5,
     };
 }
+
+
 function zerolevel(eachCount) {
     var n1 = 0;
     var n2 = 0;
@@ -84,7 +82,7 @@ function zerolevel(eachCount) {
     n3 += eachCount.level3Count;
     n4 += eachCount.level4Count;
     n5 += eachCount.level5Count;
-    
+
 
     var solveList = [n1, n2, n3, n4, n5];
     var max = Math.max.apply(null, solveList);
@@ -109,12 +107,10 @@ function zerolevel(eachCount) {
 }
 
 
-
 exports.getMypageInfo = function(req, res) {
-    console.log('decoded -> ', req.decoded);
-    console.log('decoded id->', req.decoded.id);
     var username = req.decoded.username;
     var seq = req.decoded.id;
+
     const conn = mysql.createConnection(dbconfig);
     async.waterfall([
         function(callback) {
@@ -129,7 +125,6 @@ exports.getMypageInfo = function(req, res) {
             conn.query(sql, function(err, rows, fields) {
                 if (err == null) {
                     var check = rows.length
-                    common.logging_debug('check', check);
                     if(check != 0){
                         var user = rows[0]
                         callback(null, user);
@@ -152,23 +147,21 @@ exports.getMypageInfo = function(req, res) {
         },
         function(user, callback) {
             common.logging_debug('user', user);
-
             common.logging_debug('status', 'correct');
             var sql = (SQL
-                    `
-                            SELECT
-                              (SELECT COUNT(*) FROM tbl_problem_n1 WHERE user_id = ${seq}) as level1Count, 
-                              (SELECT COUNT(*) FROM tbl_problem_n2 WHERE user_id = ${seq}) as level2Count,
-                              (SELECT COUNT(*) FROM tbl_problem_n3 WHERE user_id = ${seq}) as level3Count,
-                              (SELECT COUNT(*) FROM tbl_problem_n4 WHERE user_id = ${seq}) as level4Count,
-                              (SELECT COUNT(*) FROM tbl_problem_n5 WHERE user_id = ${seq}) as level5Count;
-                          `
+                      `
+                      SELECT
+                        (SELECT COUNT(*) FROM tbl_problem_n1 WHERE user_id = ${seq}) as level1Count,
+                        (SELECT COUNT(*) FROM tbl_problem_n2 WHERE user_id = ${seq}) as level2Count,
+                        (SELECT COUNT(*) FROM tbl_problem_n3 WHERE user_id = ${seq}) as level3Count,
+                        (SELECT COUNT(*) FROM tbl_problem_n4 WHERE user_id = ${seq}) as level4Count,
+                        (SELECT COUNT(*) FROM tbl_problem_n5 WHERE user_id = ${seq}) as level5Count;
+                      `
             )
             common.logging_debug('sql', sql);
             conn.query(sql, function(err, rows, fields) {
                 if (err == null) {
                     var eachCount = rows[0];
-                    common.logging_error('eachCount ==>', eachCount);
                     callback(null, eachCount, user)
                 }
                 else {
@@ -201,6 +194,7 @@ exports.getMypageInfo = function(req, res) {
                                 "user": user
                             }
                         )
+                        conn.end()
                         return false;
                     } else {
                         var problemSolve = zerolevel(eachCount);
@@ -211,12 +205,14 @@ exports.getMypageInfo = function(req, res) {
                                 "user": user
                             }
                         )
+                        conn.end()
                         return false;
                     }
 
                 }
                 else {
                     common.logging_error('err', err);
+                    conn.end()
                     return false;
                 }
             });

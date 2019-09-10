@@ -19,6 +19,11 @@ class Main extends React.Component {
       chat          : [],
       history       : []
     };
+    this.socket = socketIOClient(Config.backendUrl);
+  }
+
+  componentWillUnmount = () => {
+    this.socket.emit('end');
   }
 
   componentWillMount = () => {
@@ -49,8 +54,7 @@ class Main extends React.Component {
       });
 
       // 웹소켓 -> 채팅 리스너
-      const socket = socketIOClient(Config.backendUrl);
-      socket.on('chat', (data) => {
+      this.socket.on('chat', (data) => {
           const username = data.username;
           const content = data.content;
           const regist_date = data.regist_date;
@@ -73,13 +77,13 @@ class Main extends React.Component {
 
       // 웹소켓 -> 한자 리스너
       var channel_kanji = 'kanji_' + level;
-      socket.on(channel_kanji, (kanji) => {
+      this.socket.on(channel_kanji, (kanji) => {
           this.setState({kanji: kanji});
       })
 
       // 웹소켓 -> 이력 리스너
       var channel_history = 'history_' + level;
-      socket.on(channel_history, (history) => {
+      this.socket.on(channel_history, (history) => {
           console.log('INFO -> history : ', history);
           this.setState({history: history});
       })
