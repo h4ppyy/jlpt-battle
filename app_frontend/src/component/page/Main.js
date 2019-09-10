@@ -104,6 +104,9 @@ class Main extends React.Component {
       'chat': content,
       'jwt': jwt
     }
+    if(content == ''){
+      return false;
+    }
     socket.emit('chat', payload);
     this.setState({inputChat: ''});
     socket.emit('end');
@@ -118,6 +121,9 @@ class Main extends React.Component {
     const payload = {
       'hiragana': hiragana,
       'level': level
+    }
+    if(hiragana == ''){
+      return false;
     }
     axios.defaults.headers.common['authorization'] = jwt
     axios.post(url, payload).then(response => {
