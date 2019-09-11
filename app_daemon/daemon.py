@@ -23,7 +23,7 @@ DB_NAME     = databaseInfo['DB_NAME']
 
 
 # socketio config
-SOCKET_CONNECT_URL = 'http://www.happyy.shop'
+SOCKET_CONNECT_URL = databaseInfo['SOCKET_URL']
 
 
 def databaseConnect():

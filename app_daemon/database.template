@@ -1,1 +1,1 @@
-{"DB_HOST": "xxx", "DB_USER": "xxx", "DB_PASSWORD": "xxx", "DB_NAME": "xxx"}
+{"DB_HOST": "xxx", "DB_USER": "xxx", "DB_PASSWORD": "xxx", "DB_NAME": "xxx", "SOCKET_URL": "http://127.0.0.1:4000"}
