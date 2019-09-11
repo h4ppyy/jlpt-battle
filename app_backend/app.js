@@ -309,7 +309,9 @@ io.on('connection', socket => {
 
   // 웹소켓 (커넥션 끊기)
   socket.on('end', function (){
+      clientCount -= 1;
       socket.disconnect(0);
+      common.logging_info('clientCount', clientCount);
   });
 
 
