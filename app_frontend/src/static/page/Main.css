@@ -237,6 +237,7 @@
 .moreinfo {
   text-align: center;
   margin-top: 15px;
+  padding-left: 15px;
 }
 .mr5 {
   margin-right: 5px;
@@ -279,5 +280,11 @@
 @media screen and (max-width: 550px) {
   .c-content {
     width: 300px
+  }
+}
+@media screen and (max-width: 500px) {
+  .moreinfo {
+    font-size: 10px;
+    padding-left: 30px;
   }
 }
