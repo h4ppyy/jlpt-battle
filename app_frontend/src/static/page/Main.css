@@ -144,7 +144,7 @@
   text-align: center;
 }
 .kanji-null-img {
-  margin-top: -30px;
+  margin-top: -55px;
   width: 200px;
 }
 .kanji-null-ttt {
@@ -221,6 +221,28 @@
 .p-color {
   color: #ff2424;
   font-size: 20px;
+}
+.pp1 {
+  color: #2196F3;
+  font-size: 20px;
+}
+.pp2 {
+  color: #49b5ff;
+  font-size: 20px;
+}
+.pp3 {
+  color: #8ca6ff;
+  font-size: 20px;
+}
+.moreinfo {
+  text-align: center;
+  margin-top: 15px;
+}
+.mr5 {
+  margin-right: 5px;
+}
+.mr20 {
+  margin-right: 20px;
 }
 
 @media screen and (max-width: 1000px) {

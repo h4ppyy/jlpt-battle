@@ -173,6 +173,14 @@ class Main extends React.Component {
       <div>
         <div className='main-container'>
           <div className='main-content'>
+            <div className='moreinfo'>
+            <i className="mr5 fas fa-sync-alt"></i>
+            <sapn className='mr20'>로테이션 <span className='pp1'>1</span> 회</sapn>
+            <i className="mr5 far fa-star"></i>
+            <sapn className='mr20'>회차 <span className='pp2'>30</span> 회</sapn>
+            <i className="mr5 fas fa-history"></i>
+            <sapn className='mr20'>문제생성간격 <span className='pp3'>15</span> 초</sapn>
+            </div>
             <div className='hanja-container'>
               <div className='hanja-box'>
                 {
@@ -208,7 +216,7 @@ class Main extends React.Component {
             <div className='chat-title'>
               <i className="far fa-comment-dots dotdot"></i>
               <span className='chat-title-font'>채팅방</span>
-              <span className='connect-info'>| 현재 접속자 수 : <span className='p-color'>{this.state.clientCount}</span> 명</span>
+              <span className='connect-info'>| 현재 접속자 수 <span className='p-color'>{this.state.clientCount}</span> 명</span>
             </div>
             <div className='chat-content' ref={'thing'}>
               {this.state.chat.map((item, key) =>
