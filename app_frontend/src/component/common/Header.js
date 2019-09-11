@@ -78,7 +78,7 @@ class Header extends React.Component {
           <div className='mobile-header-box'>
             <div className='header-flex-logo h-item mt15'>
               <Link to="/">JLPT BATTLE</Link>
-              <i onClick={() => this.clickMenu()} class="fas fa-bars hamberger"></i>
+              <i onClick={() => this.clickMenu()} className="fas fa-bars hamberger"></i>
             </div>
           </div>
           <div className='mobile-menu-box' style={{display: this.state.menuActive ? 'block' : 'none' }}>

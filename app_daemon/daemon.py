@@ -40,10 +40,55 @@ def databaseClose(conn):
     conn.close()
 
 
-def sendKanji(sio, level, kanji):
+def sendKanji(sio, level, kanji, rotateCnt, roundCnt, reloadCnt):
+    print('DEBUG -> rotateCnt : ', rotateCnt)
+    print('DEBUG -> roundCnt : ', roundCnt)
+    print('DEBUG -> reloadCnt : ', reloadCnt)
     level = level.lower()
     channel = 'kanji_' + level
-    sio.emit(channel, kanji)
+    payload = {
+        'kanji': kanji,
+        'rotateCnt': rotateCnt,
+        'roundCnt': roundCnt,
+        'reloadCnt': reloadCnt
+    }
+    sio.emit(channel, payload)
+
+
+def getMoreInfo(conn, level):
+    curs = conn.cursor()
+    if level == 'N1':
+        round_query = "select count(*) as cnt from tbl_japan_store where level=1 and check_each_yn = 'Y'"
+        rotate_query = "select global_value from tbl_global_var where global_key = 'rotate_n1'"
+    elif level == 'N2':
+        round_query = "select count(*) as cnt from tbl_japan_store where level=2 and check_each_yn = 'Y'"
+        rotate_query = "select global_value from tbl_global_var where global_key = 'rotate_n2'"
+    elif level == 'N3':
+        round_query = "select count(*) as cnt from tbl_japan_store where level=3 and check_each_yn = 'Y'"
+        rotate_query = "select global_value from tbl_global_var where global_key = 'rotate_n3'"
+    elif level == 'N4':
+        round_query = "select count(*) as cnt from tbl_japan_store where level=4 and check_each_yn = 'Y'"
+        rotate_query = "select global_value from tbl_global_var where global_key = 'rotate_n4'"
+    elif level == 'N5':
+        round_query = "select count(*) as cnt from tbl_japan_store where level=5 and check_each_yn = 'Y'"
+        rotate_query = "select global_value from tbl_global_var where global_key = 'rotate_n5'"
+    elif level == 'Free':
+        round_query = "select count(*) as cnt from tbl_japan_store where check_free_yn = 'Y'"
+        rotate_query = "select global_value from tbl_global_var where global_key = 'rotate_free'"
+
+    reload_query = "select global_value from tbl_global_var where global_key = 'reload_time'"
+
+    curs.execute(round_query)
+    roundCnt = curs.fetchall()[0][0]
+
+    curs.execute(rotate_query)
+    rotateCnt = curs.fetchall()[0][0]
+
+    curs.execute(reload_query)
+    reloadCnt = curs.fetchall()[0][0]
+
+    # return 로테이트 / 회차 / 문제생성간격
+    return rotateCnt, roundCnt, reloadCnt
 
 
 def getKanjiInStore(conn, level):
@@ -197,7 +242,8 @@ def createProblemTask(level):
         check = checkProblemData(conn, level)
         if check == True:
             createProblem(conn, level, id)
-            sendKanji(sio, level, kanji)
+            rotateCnt, roundCnt, reloadCnt = getMoreInfo(conn, level)
+            sendKanji(sio, level, kanji, rotateCnt, roundCnt, reloadCnt)
             print('INFO -> I entered the quiz into the database')
         else:
             pass

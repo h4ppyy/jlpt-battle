@@ -14,6 +14,9 @@ class Main extends React.Component {
     super(props);
     this.state = {
       clientCount   : 0,
+      rotateCnt     : 0,
+      roundCnt      : 0,
+      reloadCnt     : 0,
       kanji         : '',
       inputChat     : '',
       inputHiragana : '',
@@ -47,11 +50,13 @@ class Main extends React.Component {
       axios.post(url, param).then(response => {
         this.setState({history: response.data.result});
       });
-
       // 현재 한자 초기 로딩
       var url = Config.backendUrl + '/api/getCurrentKanji'
       axios.post(url, param).then(response => {
         this.setState({kanji: response.data.result[0]['kanji'] });
+        this.setState({rotateCnt: response.data.result[0]['rotateCnt'] });
+        this.setState({roundCnt: response.data.result[0]['roundCnt'] });
+        this.setState({reloadCnt: response.data.result[0]['reloadCnt'] });
       });
 
       // 웹소켓 -> 채팅 리스너
@@ -78,8 +83,22 @@ class Main extends React.Component {
 
       // 웹소켓 -> 한자 리스너
       var channel_kanji = 'kanji_' + level;
-      this.socket.on(channel_kanji, (kanji) => {
+      this.socket.on(channel_kanji, (payload) => {
+          var kanji = payload.kanji;
+          var rotateCnt = payload.rotateCnt;
+          var roundCnt = payload.roundCnt;
+          var reloadCnt = payload.reloadCnt;
+
           this.setState({kanji: kanji});
+          if(rotateCnt != ''){
+            this.setState({rotateCnt: rotateCnt});
+          }
+          if(roundCnt != ''){
+            this.setState({roundCnt: roundCnt});
+          }
+          if(reloadCnt != ''){
+            this.setState({reloadCnt: reloadCnt});
+          }
       })
 
       // 웹소켓 -> 접속자 수
@@ -90,7 +109,6 @@ class Main extends React.Component {
       // 웹소켓 -> 이력 리스너
       var channel_history = 'history_' + level;
       this.socket.on(channel_history, (history) => {
-          console.log('INFO -> history : ', history);
           this.setState({history: history});
       })
   }
@@ -167,6 +185,7 @@ class Main extends React.Component {
     }
   }
 
+
   render() {
     return (
       <Animated animationIn="fadeIn" animationOut="fadeInUpBig" isVisible={true}>
@@ -175,11 +194,11 @@ class Main extends React.Component {
           <div className='main-content'>
             <div className='moreinfo'>
             <i className="mr5 fas fa-sync-alt"></i>
-            <sapn className='mr20'>로테이션 <span className='pp1'>1</span> 회</sapn>
+            <span className='mr20'>로테이션 <span className='pp1'>{this.state.rotateCnt}</span> 회</span>
             <i className="mr5 far fa-star"></i>
-            <sapn className='mr20'>회차 <span className='pp2'>30</span> 회</sapn>
+            <span className='mr20'>회차 <span className='pp2'>{this.state.roundCnt}</span> 회</span>
             <i className="mr5 fas fa-history"></i>
-            <sapn className='mr20'>문제생성간격 <span className='pp3'>15</span> 초</sapn>
+            <span className='mr20'>문제생성간격 <span className='pp3'>{this.state.reloadCnt}</span> 초</span>
             </div>
             <div className='hanja-container'>
               <div className='hanja-box'>

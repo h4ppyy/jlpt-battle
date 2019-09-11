@@ -125,8 +125,15 @@ exports.sendHiragana = function(req, res) {
             var channel_kanji = 'kanji_' + level;
             common.logging_debug('channel_history', channel_history);
             common.logging_debug('channel_kanji', channel_kanji);
+
+            var payload = {
+              'kanji': '',
+              'rotateCnt': '',
+              'roundCnt': '',
+              'reloadCnt': ''
+            }
             ioClient.emit(channel_history);
-            ioClient.emit(channel_kanji, '');
+            ioClient.emit(channel_kanji, payload);
             res.json(
               {
                 "result": common.CODE_SUCCESS
