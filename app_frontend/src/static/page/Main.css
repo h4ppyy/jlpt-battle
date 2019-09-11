@@ -213,6 +213,15 @@
 .mobile-header {
   display: none;
 }
+.connect-info {
+  font-size: 15px;
+  font-weight: bold;
+  margin-left: 5px;
+}
+.p-color {
+  color: #ff2424;
+  font-size: 20px;
+}
 
 @media screen and (max-width: 1000px) {
   .main-container {

@@ -13,6 +13,7 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      clientCount   : 0,
       kanji         : '',
       inputChat     : '',
       inputHiragana : '',
@@ -79,6 +80,11 @@ class Main extends React.Component {
       var channel_kanji = 'kanji_' + level;
       this.socket.on(channel_kanji, (kanji) => {
           this.setState({kanji: kanji});
+      })
+
+      // 웹소켓 -> 접속자 수
+      this.socket.on('clientCount', (clientCount) => {
+          this.setState({clientCount: clientCount});
       })
 
       // 웹소켓 -> 이력 리스너
@@ -202,6 +208,7 @@ class Main extends React.Component {
             <div className='chat-title'>
               <i className="far fa-comment-dots dotdot"></i>
               <span className='chat-title-font'>채팅방</span>
+              <span className='connect-info'>| 현재 접속자 수 : <span className='p-color'>{this.state.clientCount}</span> 명</span>
             </div>
             <div className='chat-content' ref={'thing'}>
               {this.state.chat.map((item, key) =>

@@ -41,9 +41,13 @@ const urlsRouter = require('./routes/urls.js');
 app.use('', urlsRouter);
 
 
+var clientCount = 0;
 // 웹소켓 로직
 io.on('connection', socket => {
   common.logging_info('socketio', 'connection');
+  clientCount += 1;
+  io.sockets.emit('clientCount', clientCount);
+  common.logging_info('clientCount', clientCount);
 
 
   // 웹소켓 (채팅)
@@ -312,6 +316,9 @@ io.on('connection', socket => {
   // 웹소켓 (끊김 알림)
   socket.on('disconnect', () => {
       common.logging_info('socketio', 'disconnected');
+      clientCount -= 1;
+      io.sockets.emit('clientCount', clientCount);
+      common.logging_info('clientCount', clientCount);
   })
 })
 
