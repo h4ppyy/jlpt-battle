@@ -135,9 +135,9 @@ class Main extends React.Component {
     if(content == ''){
       return false;
     }
-    socket.emit('chat', payload);
+    this.socket.emit('chat', payload);
     this.setState({inputChat: ''});
-    socket.emit('end');
+    this.socket.emit('end');
   }
 
   // 답안 전송 이벤트 (마지막 작업)
