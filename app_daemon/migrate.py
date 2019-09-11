@@ -51,6 +51,48 @@ def insertSampleDate(conn):
         value('{ADMIN_ID}', '{ADMIN_PW}', 1);
     '''.format(ADMIN_ID=ADMIN_ID, ADMIN_PW=ADMIN_PW)
     curs.execute(sql)
+
+    sql = '''
+        insert into tbl_global_var(global_key, global_value)
+        value('rotate_n1', '0');
+    '''
+    curs.execute(sql)
+
+    sql = '''
+        insert into tbl_global_var(global_key, global_value)
+        value('rotate_n2', '0');
+    '''
+    curs.execute(sql)
+
+    sql = '''
+        insert into tbl_global_var(global_key, global_value)
+        value('rotate_n3', '0');
+    '''
+    curs.execute(sql)
+
+    sql = '''
+        insert into tbl_global_var(global_key, global_value)
+        value('rotate_n4', '0');
+    '''
+    curs.execute(sql)
+
+    sql = '''
+        insert into tbl_global_var(global_key, global_value)
+        value('rotate_n5', '0');
+    '''
+    curs.execute(sql)
+
+    sql = '''
+        insert into tbl_global_var(global_key, global_value)
+        value('rotate_free', '0');
+    '''
+    curs.execute(sql)
+
+    sql = '''
+        insert into tbl_global_var(global_key, global_value)
+        value('reload_time', '15');
+    '''
+    curs.execute(sql)
     conn.commit()
 
 
@@ -172,6 +214,18 @@ def createTable(conn):
     '''
     curs.execute(sql)
     print('INFO -> tbl_file create SUCCESS')
+
+    sql = '''
+        CREATE TABLE IF NOT EXISTS `tbl_global_var` (
+          `global_key` varchar(255) NOT NULL,
+          `global_value` varchar(255) NOT NULL,
+          `regist_date` datetime DEFAULT CURRENT_TIMESTAMP,
+          `modify_date` datetime DEFAULT CURRENT_TIMESTAMP,
+          PRIMARY KEY (`global_key`)
+        ) default character set utf8 collate utf8_general_ci;
+    '''
+    curs.execute(sql)
+    print('INFO -> tbl_global_var create SUCCESS')
 
 
 def readData(JLPT_LEVEL):
