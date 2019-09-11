@@ -152,11 +152,21 @@ def rollbackBasePoint(conn, level):
             set check_each_yn = 'N'
             where level = 1;
         '''
+        rotateIncreseSql = '''
+            update tbl_global_var
+            set global_value = global_value + 1
+            where global_key = 'rotate_n1';
+        '''
     elif level == 'N2':
         sql = '''
             update tbl_japan_store
             set check_each_yn = 'N'
             where level = 2;
+        '''
+        rotateIncreseSql = '''
+            update tbl_global_var
+            set global_value = global_value + 1
+            where global_key = 'rotate_n2';
         '''
     elif level == 'N3':
         sql = '''
@@ -164,11 +174,21 @@ def rollbackBasePoint(conn, level):
             set check_each_yn = 'N'
             where level = 3;
         '''
+        rotateIncreseSql = '''
+            update tbl_global_var
+            set global_value = global_value + 1
+            where global_key = 'rotate_n3';
+        '''
     elif level == 'N4':
         sql = '''
             update tbl_japan_store
             set check_each_yn = 'N'
             where level = 4;
+        '''
+        rotateIncreseSql = '''
+            update tbl_global_var
+            set global_value = global_value + 1
+            where global_key = 'rotate_n4';
         '''
     elif level == 'N5':
         sql = '''
@@ -176,12 +196,23 @@ def rollbackBasePoint(conn, level):
             set check_each_yn = 'N'
             where level = 5;
         '''
+        rotateIncreseSql = '''
+            update tbl_global_var
+            set global_value = global_value + 1
+            where global_key = 'rotate_n5';
+        '''
     elif level == 'Free':
         sql = '''
             update tbl_japan_store
             set check_free_yn = 'N';
         '''
+        rotateIncreseSql = '''
+            update tbl_global_var
+            set global_value = global_value + 1
+            where global_key = 'rotate_free';
+        '''
     curs.execute(sql)
+    curs.execute(rotateIncreseSql)
     conn.commit()
 
 

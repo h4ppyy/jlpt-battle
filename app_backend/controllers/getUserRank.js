@@ -16,7 +16,6 @@ exports.getUserRank = function(req, res) {
                     regist_date
               from tbl_user, (select @rownum :=0) as r
               where delete_yn = "N"
-              and is_staff = "0"
               order by point desc
               limit 100
               `
