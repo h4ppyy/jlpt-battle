@@ -50,12 +50,14 @@ exports.sendHiragana = function(req, res) {
                             "result": common.CODE_PROBLEM_NULL
                           }
                         )
+                        ioClient.emit('end');
                         conn.end()
                         return false;
                     }
                 }
                 else {
                     common.logging_error('err', err);
+                    ioClient.emit('end');
                     conn.end()
                     return false;
                 }
@@ -81,6 +83,7 @@ exports.sendHiragana = function(req, res) {
                     }
                     else {
                         common.logging_error('err', err);
+                        ioClient.emit('end');
                         conn.end()
                         return false;
                     }
@@ -92,6 +95,7 @@ exports.sendHiragana = function(req, res) {
                     "result": common.CODE_PROBLEM_FAIL
                   }
                 )
+                ioClient.emit('end');
                 conn.end()
                 return false;
             }
@@ -114,6 +118,7 @@ exports.sendHiragana = function(req, res) {
                 }
                 else {
                     common.logging_error('err', err);
+                    ioClient.emit('end');
                     conn.end()
                     return false;
                 }
@@ -134,12 +139,12 @@ exports.sendHiragana = function(req, res) {
             }
             ioClient.emit(channel_history);
             ioClient.emit(channel_kanji, payload);
-            ioClient.emit('end');
             res.json(
               {
                 "result": common.CODE_SUCCESS
               }
             )
+            ioClient.emit('end');
             conn.end()
             return false;
         },
