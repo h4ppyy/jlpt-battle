@@ -134,6 +134,7 @@ exports.sendHiragana = function(req, res) {
             }
             ioClient.emit(channel_history);
             ioClient.emit(channel_kanji, payload);
+            ioClient.emit('end');
             res.json(
               {
                 "result": common.CODE_SUCCESS
