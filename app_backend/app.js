@@ -311,6 +311,7 @@ io.on('connection', socket => {
   socket.on('end', function (){
       clientCount -= 1;
       socket.disconnect(0);
+      io.sockets.emit('clientCount', clientCount);
       common.logging_info('clientCount', clientCount);
   });
 
