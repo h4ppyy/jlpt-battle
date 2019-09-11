@@ -133,11 +133,12 @@ class Main extends React.Component {
       'jwt': jwt
     }
     if(content == ''){
+      socket.emit('end');
       return false;
     }
-    this.socket.emit('chat', payload);
+    socket.emit('chat', payload);
     this.setState({inputChat: ''});
-    this.socket.emit('end');
+    socket.emit('end');
   }
 
   // 답안 전송 이벤트 (마지막 작업)
